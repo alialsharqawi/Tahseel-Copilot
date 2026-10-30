@@ -47,6 +47,9 @@ Technical framing (architecture section only): an agentic credit-control copilot
 | 14 | **Instant Receivables Health Report** on first upload (aging, risk distribution, top 20 accounts to chase, expected cash) |
 | 15 | **Full Arabic (RTL) and full English UI** with a language toggle |
 | 16 | **Production practices:** Docker Compose, HTTPS, CI, migrations, logging, per-run LLM cost logging |
+| 17 | **Two-layer policy:** structured rules in tenant configuration evaluated by code, plus document RAG for explanation and citation (D21) |
+| 18 | **Tenant configuration and adaptability:** grace periods, risk weights, escalation triggers, reminder cap, tone defaults in settings; canonical data schema with a CSV/Excel adapter (D22) |
+| 19 | **Lite guardrails:** human-set `disputed` invoice status, reminder frequency cap, rule-based draft check (D23) |
 
 ### Simplified for the capstone
 
@@ -159,6 +162,8 @@ Every table carries `tenant_id`. Every agent run, recommendation, approval, and 
 
 `customers` also carries `tier` (strategic / regular) and `sales_rep`, used by relationship-aware recommendations. Cheque tracking is deferred to the roadmap until validated.
 
+Added by D21 to D23: `policy_rules` (structured rules with source document and section), `tenant_settings` (thresholds, weights, grace periods, escalation triggers, reminder cap, tone defaults), invoice status `disputed`, and `draft_versions` (original and edited text with the reason).
+
 Key additions versus the PRD: `recommendations` (status: pending / approved / edited / rejected), `conversations` + `messages` (conversation memory), `customer_notes` (customer memory), `document_chunks` (RAG).
 
 ---
@@ -210,6 +215,10 @@ Key additions versus the PRD: `recommendations` (status: pending / approved / ed
 ## 12. Decisions
 
 **Resolved** (details in `Tahseel_AI_Decision_Log.md`, section C): OpenRouter as the LLM gateway behind our own `LLMClient`; plain tool-calling loop; full Arabic (RTL) and English UI; three roles (Owner, Finance Manager, Collector); collector notes embedded in pgvector; production-minded delivery with HTTPS deployment and a recorded demo as fallback.
+
+**Added 30 Oct 2026** (Decision Log, section F): two-layer policy design (structured rules plus RAG), canonical schema with adapter interface and tenant configuration, lite guardrails (disputed status, reminder cap, draft check), English documentation, and the project name Tahseel AI.
+
+**Roadmap only:** Odoo and ETA adapters, Sales approval step, risk re-calibration from outcomes, send-time pattern learning, OCR receipt reconciliation, field-collector app, cheque tracking.
 
 ### Original open questions (superseded)
 

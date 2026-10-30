@@ -1,16 +1,16 @@
-# Tahseel AI: المعمارية الهندسية واستراتيجية التكيف مع مختلف القطاعات التجارية
+# Tahseel AI: Engineering Architecture and Adaptation Strategy for Various Commercial Sectors
 
-## 1. السؤال الجوهري (The Architectural Adaptability Question)
+1. ## The Architectural Adaptability Question
 
-> **السؤال:** "إزاي الفكرة هتتصمم هندسياً علشان تناسب قطاعات وبيزنيسز مختلفة (B2B Businesses) بمتطلبات وسلوكيات متعددة، بدون ما نحتاج نغير الكود لكل عميل؟"
+> **Question:** "How will the idea be engineered to suit different B2B businesses with diverse requirements and behaviors, without needing to change the core code for every single client?"
 
 ---
 
-## 2. الرؤية الهندسية للتكيف (Multi-Tenant & Domain-Agnostic Engine)
+## 2. Engineering Vision for Adaptation (Multi-Tenant & Domain-Agnostic Engine)
 
-لكي تتحول منصة **Tahseel AI** من تطبيق برمجي صلب (Hardcoded Software) إلى منصة تشغيلية مرنة (Scalable Operational Engine)، يجب أن تبنى المعمارية البرمجية على مفهوم **تجريد نطاق العمل (Domain Abstraction)** وتفكيك الخدمات إلى وحدات مستقلة (Modular Service Architecture). 
+To transform **Tahseel AI** from a hardcoded software application into a scalable operational engine, its software architecture must be built upon the concept of **Domain Abstraction** and a **Modular Service Architecture**. 
 
-المنصة لا ترتبط بنوع بضاعة معينة (قطع غيار، أغذية، مواد بناء، أو أدوية)، بل تتعامل مع **نمط تجاري موحد: ديون مالية آجلّة تتطلب متابعة حازمة وحوكمة بشرية.**
+The platform is not bound to a specific category of goods (auto parts, groceries, building materials, or pharmaceuticals); instead, it handles a **unified commercial pattern: deferred financial debts requiring rigorous tracking and human governance.**
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -41,63 +41,62 @@
 
 ---
 
-## 3. الركائز الهندسية الخمس للتكيف والتوسع (The 5 Pillars of Adaptability)
+## 3. The 5 Pillars of Adaptability
 
-### الركيزة الأولى: طبقة توحيد البيانات وشبكة المحولات (Universal Data Adapter Network)
+### Pillar 1: Universal Data Adapter Network
 
-**التحدي:** الشركات المختلفة تستخدم مصادر بيانات متباينة؛ بدءاً من ملفات الإكسل اليدوية المليئة بالأخطاء، وصولاً إلى أنظمة الـ ERP المعقدة مثل Odoo، SAP، أو شبكة الفاتورة الإلكترونية المصرية (ETA).
+**The Challenge:** Different companies use disparate data sources—ranging from manual, error-prone Excel sheets to complex ERP systems like Odoo, SAP, or the Egyptian e-Invoicing network (ETA).
 
-**الحل المعماري:**
-* **نموذج البيانات الموحد (Canonical Data Schema):** الكود الأساسي للمنصة لا يتعامل مع بيانات المصدر مباشرة، بل ينفذ استعلاماته وحساباته على هيكل بيانات معياري موحد يحتوي على العوامل الأساسية:
-  * `Customer_Profile`
-  * `Invoice_Line_Items`
-  * `Payment_Terms`
-  * `Historical_Transactions`
-* **محولات البيانات (Adapter Pattern):** تطوير محولات وسيطة تُترجم مخرجات أي نظام (Excel / CSV / Odoo API / ETA Invoices) وتحولها إلى النموذج الموحد تلقائياً.
-* **محرك تنظيف وتحقق من البيانات (Automated Sanitation Pipeline):** معالجة الاختلافات الشائعة في البيانات المحلية (مثل تباين أرقام الهواتف المصرية، الأسماء المركبة للشركات، والصيغ المختلفة للتواريخ) قبل إدخالها للنظام.
-
----
-
-### الركيزة الثانية: محرك السياسات والقواعد الموجه بالإعدادات (Configuration-Driven Engine)
-
-**التحدي:** القواعد المالية والائتمانية تختلف جذرياً بين القطاعات؛ فشركات قطع غيار السيارات قد تمنح مهلة 30 يوماً مع تطبيق إجراءات حازمة فور التأخير، بينما تجارة الأدوية والمستلزمات الطبية قد تعتمد فترات سماح أطول وخطط سداد مقسطة.
-
-**الحل المعماري:**
-* **عزل المنطق التجاري عن الكود (Separation of Rules from Code):** لا يتم كتابة أي "شروط دفع" أو "درجات مخاطر" ثابتة داخل الكود (No Hardcoded Thresholds).
-* **ملف تهيئة المؤسسة (Tenant Policy Specification):** كل شركة تملك ملف تهيئة مخصص (Database JSON / Policy Store) يحدد:
-  * **فترات الاستحقاق وفترات السماح (Grace Periods):** مثل `grace_period_days: 7`.
-  * **أوزان حساب المخاطر (Risk Scoring Weights):** توزيع الأوزان النسبية بين (تاريخ التأخير السابق، حجم الدين، وسلوك العميل).
-  * **مسارات التصعيد (Escalation Triggers):** متى يتم نقل الفاتورة من متابعة عادية إلى تصعيد لمدير المالية أو المبيعات.
+**Architectural Solution:**
+- **Canonical Data Schema:** The core platform code does not interact directly with source data structures. Instead, it executes queries and calculations on a standardized normative data model containing core attributes:
+  - `Customer_Profile`
+  - `Invoice_Line_Items`
+  - `Payment_Terms`
+  - `Historical_Transactions`
+- **Adapter Pattern:** Developing intermediary adapters that translate outputs from any system (Excel / CSV / Odoo API / ETA Invoices) into the canonical schema automatically.
+- **Automated Sanitation Pipeline:** Handling common local data discrepancies (such as variations in local phone numbers, compound corporate names, and different date formats) prior to onboarding data into the system.
 
 ---
 
-### الركيزة الثالثة: إدارة السياق والشخصية للذكاء الاصطناعي (Dynamic Prompt & Context Injection)
+### Pillar 2: Configuration-Driven Engine
 
-**التحدي:** طريقة التواصل ونبرة الخطاب تختلف بوضوح حسب القطاع وطبيعة العلاقة التجارية؛ التواصل مع صيدلية لشراء مستلزمات طبية يختلف عن المتابعة مع ورشة صيانة لشراء قطع غيار.
+**The Challenge:** Financial and credit policies vary radically across sectors; automotive spare parts businesses might grant a 30-day payment term with strict immediate enforcement upon delay, whereas pharmaceutical and medical supply trade might rely on longer grace periods and installment payment plans.
 
-**الحل المعماري:**
-* **تحديد البروفايل اللغوي (Brand Personality Profile):** تتيح المنصة للشركة اختيار نبرة الخطاب المفضلة (`Formal` / `Friendly` / `Firm`).
-* **حقن السياسات المعرفية عبر الـ RAG:** يُسحب سياق الخطاب من مستندات السياسة الائتمانية الخاصة بالشركة المصممة عبر الـ Vector Database (ChromaDB / Qdrant)، ليقوم الـ LLM بصياغة الرسالة وفق حدود تلك السياسة ونبرة الشركة المحددة حصراً.
-
----
-
-### الركيزة الرابعة: معمارية العزل المتعدد وتحديد الصلاحيات (Multi-Tenant Isolation & RBAC)
-
-**التحدي:** ضمان أمان وحماية بيانات أكثر من شركة توزيع تعمل على نفس المنصة دون تداخل البيانات أو تسريب أرقام مالية حساسة، مع دعم الصلاحيات الداخلية المتباينة (مدير مالية، مسؤول تحصيل، مندوب مبيعات).
-
-**الحل المعماري:**
-* **العزل المنطقي للبيانات (Logical Data Partitioning):** تضمين معرّف المنشأة (`tenant_id`) كشرط إجباري وغير قابل للتجاوز في كافة استعلامات قاعدة البيانات وقواعد الـ RAG Vector Stores.
-* **التحكم بالوصول القائم على الأدوار (Role-Based Access Control - RBAC):**
-  * **مسؤول التحصيل (Collection Officer):** رؤية جدول المتابعة اليومي ومسودات الرسائل الخاصة بعملائه فقط.
-  * **مدير المبيعات (Sales Manager):** إمكانية إبداء الرأي أو الاعتراض على تذكيرات عملاء استراتيجيين قبل الإرسال.
-  * **المدير المالي (CFO):** الاعتماد النهائي، تعديل سياسات المخاطر، ورؤية لوحة التنبؤ النقدي الكاملة.
+**Architectural Solution:**
+- **Separation of Rules from Code:** No hardcoded payment terms or static risk scores are embedded inside the codebase (No Hardcoded Thresholds).
+- **Tenant Policy Specification:** Each company owns a dedicated configuration file (Database JSON / Policy Store) defining:
+  - **Grace Periods:** e.g., `grace_period_days: 7`.
+  - **Risk Scoring Weights:** Allocating relative weights between historical delay duration, debt volume, and customer behavior.
+  - **Escalation Triggers:** Determining when an invoice transitions from standard follow-up to escalation toward the finance or sales manager.
 
 ---
 
-### الركيزة الخامسة: بوابة الحوكمة المستقلة (Pluggable Governance Pipeline)
+### Pillar 3: Dynamic Prompt & Context Injection (Agentic RAG & Copilot)
 
-**التحدي:** اختلاف شروط الموافقة والإجراءات التنفيذية بين الشركات؛ بعض الشركات تطلب موافقة المبيعات والمالية معاً للرسائل الحاسمة، بينما تكتفي شركات أخرى بموافقة مسؤول التحصيل على الرسائل الروتينية.
+**The Challenge:** Communication style and tone vary clearly according to the sector and commercial relationship context; communicating with a pharmacy for medical supplies differs significantly from following up with a maintenance workshop for spare parts.
 
-**الحل المعماري:**
-* **خط أنابيب الموافقات المرن (Configurable Human-in-the-Loop Pipeline):** توفير مسار موافقة برمجي (Approval Pipeline) يعمل على مستوى الـ API.
-* **س
+**Architectural Solution:**
+- **Brand Personality Profile:** The platform allows companies to select their preferred communication tone (`Formal` / `Friendly` / `Firm`).
+- **Cognitive Policy Injection via RAG:** The communication context is retrieved from the company's proprietary credit policy documents stored in a Vector Database (ChromaDB / Qdrant), enabling the LLM to draft messages strictly within the boundaries of those policies and the specified corporate tone.
+
+---
+
+### Pillar 4: Multi-Tenant Isolation & RBAC
+
+**The Challenge:** Ensuring absolute security and data protection for multiple distribution companies operating on the same platform without data cross-contamination or leaking sensitive financial figures, while supporting distinct internal permission structures.
+
+**Architectural Solution:**
+- **Logical Data Partitioning:** Embedding the enterprise identifier (`tenant_id`) as a mandatory, immutable condition across all database queries and RAG vector store lookups.
+- **Role-Based Access Control (RBAC):**
+  - **Collection Officer:** Restricted to viewing daily follow-up schedules and message drafts exclusively for their assigned customers.
+  - **Sales Manager:** Granted the ability to review or object to reminders for strategic clients prior to dispatch.
+  - **CFO:** Final approval authority, credit risk policy modifications, and access to the complete cash forecasting dashboard.
+
+---
+
+### Pillar 5: Pluggable Governance Pipeline
+
+**The Challenge:** Varying approval terms and executive workflows across companies; some companies require joint sales and finance approval for critical messages, while others are content with the collection officer's approval for routine notices.
+
+**Architectural Solution:**
+- **Configurable Human-in-the-Loop Pipeline:** Providing a programmatic approval pipeline operating at the API level.

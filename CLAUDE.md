@@ -6,10 +6,12 @@ This file is read automatically by Claude Code. For other tools, rename or copy 
 
 1. `README.md` (big picture and the 12 key facts)
 2. `PROJECT_STATUS.md` (where we are, what is next, what is open)
-3. `docs/foundation/Tahseel_AI_Decision_Log.md` (every decision and why)
+3. `docs/governance/Tahseel_AI_Decision_Log.md` (every decision and why)
 4. `docs/foundation/Tahseel_AI_Final_Concept.md` (exact scope)
 
-Then, as needed: `LMS_Requirements.md`, `docs/foundation/Tahseel_AI_Technical_Strength.md`, `docs/foundation/Tahseel_AI_Business_Strength.md`, `docs/presentation/Tahseel_AI_Final_Pitch.md`, `docs/foundation/Tahseel_AI_PRD.md` (original, wider than the MVP), `GLOSSARY.md`, `TEAM.md`.
+Then, as needed: `LMS_Requirements.md`, `docs/technical/Tahseel_AI_Technical_Strength.md`, `docs/business/Tahseel_AI_Business_Strength.md`, `docs/presentation/Tahseel_AI_Final_Pitch.md`, `docs/technical/Tahseel_AI_PRD.md` (original, wider than the MVP), `GLOSSARY.md`, `TEAM.md`.
+
+Some documents in `docs/governance`, `docs/business`, and `docs/architecture` were written later in separate sessions (critiques, market validation, adaptability). Read them before changing scope or positioning. If any of them contradicts the Decision Log, flag it to the user and resolve it in the log. Known conflicts and their status are in `docs/governance/Tahseel_AI_Reconciliation_Notes.md`; until an item there is resolved, the Decision Log wins.
 
 Before starting work, summarize in about 10 lines what you understood (problem, key decisions, current status, next step) so the user can confirm. If files contradict each other, say so; do not pick silently.
 

@@ -37,7 +37,7 @@ Tahseel turns that spreadsheet into a ranked daily call list. For each customer 
 
 **Why you can trust it.** Every number comes from tested code, not from the language model. Policy statements are cited, and when no policy exists the system says so. The AI drafts and recommends, but nothing executes without human approval, and every step is logged. We measure this: on the same questions, a model reading a raw spreadsheet makes numeric mistakes that the tool-grounded system does not. [Insert ablation result.]
 
-**Value.** Cash released = annual credit sales divided by 365, times days of DSO reduction. As an illustrative scenario, a distributor with EGP 150M in annual credit sales that cuts DSO by 5 days frees about EGP 2.05M of working capital. This is a scenario, not a measured result.
+**Value.** Tahseel does not prevent lateness. It shortens it and reduces forgetting. Cash released = annual credit sales divided by 365, times days of DSO reduction. As an illustrative scenario, a distributor with EGP 150M in annual credit sales that cuts DSO by 5 days frees about EGP 2.05M of working capital. This is a scenario, not a measured result.
 
 **What is next.** We built and tested on synthetic data. The next step is validation with real distributors, starting with a free Receivables Health Check, then connecting to the ERPs they actually use.
 
@@ -106,6 +106,14 @@ Use the synthetic dataset and say so. Replace bracketed numbers with the real ge
 | How would it make money? | Hypothesis: setup fee plus monthly subscription by finance users or active customers, possibly with paid onboarding and policy documentation. We will not set prices before customer conversations. |
 | Who are the competitors? | The real competitor is Excel plus a good collector. Global AR tools we reviewed are built around accounting software like Xero and focus on email and SMS reminders. We found no Egyptian specialist in a quick search, which is not proof, so we list it as to verify. |
 | What would you do with one more month? | Real pilots through Health Checks, an Odoo connector, WhatsApp draft-to-send with approval, and cheque tracking if interviews confirm it matters. |
+| Isn't lateness just normal? What does Tahseel actually change? | Yes, lateness is the market default, and Tahseel does not prevent it. It shortens it by following up earlier and more consistently, keeps the supplier at the front of the payment queue, and stops cash being lost to forgetting. These are hypotheses we plan to validate. |
+| Retailers and workshops run on cash and word of mouth. How does a dashboard make them pay? | It does not try to change the retailer. It fixes the distributor's internal follow-up: who is chased, when, and with what context. Drafts go out through channels retailers already use, such as WhatsApp, sent by a person. |
+| What if the AI drafts a harsh or wrong message to a key customer? | Nothing is ever sent by the system on its own. Drafts pass a rule-based check (for example no legal threats), tone follows the customer tier, strategic accounts route to the sales rep first, a human approves, and the approval is logged. |
+| Could policy retrieval be wrong or outdated? | Hard thresholds are structured rules evaluated by code, each linked to its source section. RAG only explains and cites. If policies conflict or none is found, the system says so. |
+| Odoo or another ERP vendor could add WhatsApp reminders. What stops them? | A reminder is not a decision. Tahseel adds prioritization, explainable risk, policy grounding, memory, and drafts, designed to sit on top of whatever system holds the data. Honest caveat: the MVP ingests Excel only; ERP adapters are roadmap. |
+| B2B sales cycles are long. How does a startup survive? | Start from an Excel upload with no integration and show value through the Health Report before asking for a commitment. Pricing is a hypothesis we will test in interviews. |
+| How secure is the data? | Tenant isolation, TLS in transit, encryption at rest as a deployment setting, minimal personal data in prompts, and an audit log. The demo uses synthetic data. Because models are reached through a third-party gateway, we rely on provider data policies and would restrict providers before using real data. |
+| Does the system learn? | It remembers human-confirmed events (notes, promises, approvals, edits, rejections) and uses them as context. It does not retrain models or silently change risk weights. |
 
 ---
 
@@ -115,6 +123,7 @@ Use the synthetic dataset and say so. Replace bracketed numbers with the real ge
 - "Synthetic data", "illustrative scenario", "hypothesis", "indicative source".
 - "The AI recommends, the human decides."
 - "Expected cash, not guaranteed cash."
+- "Tahseel does not prevent lateness. It shortens it and reduces forgetting."
 
 **Do not say**
 - Anything implying real customers, pilots, or interviews.
@@ -122,6 +131,7 @@ Use the synthetic dataset and say so. Replace bracketed numbers with the real ge
 - A market size without a source and stated assumptions.
 - That the risk score is machine learning.
 - That a forecast is accurate on real data.
+- "End-to-end encryption", "hallucination eliminated", "100% tested", "payback in N days", or that human approval transfers liability (see Decision Log D27).
 
 ---
 

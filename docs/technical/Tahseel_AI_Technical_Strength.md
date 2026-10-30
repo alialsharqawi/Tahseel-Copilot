@@ -40,6 +40,7 @@ A finance team will not adopt a copilot it cannot verify. So the design goal is 
 | D5 | **Human approval and audit by design.** Approval is enforced at the API, not only the UI. | Test: execute endpoint rejects any recommendation without approved status |
 | D6 | **Tenant isolation and injection-aware retrieval.** Tenant filter is part of the vector query; retrieved text is treated as data. | Cross-tenant test; prompt-injection test documents |
 | D7 | **AI-assisted import.** LLM proposes column mapping; user confirms before import. | Mapping accuracy on messy sample files |
+| D8 | **Operational guardrails.** Human-set dispute status pauses follow-up; reminder frequency cap; rule-based draft check. | Tests: disputed invoices leave the queue; the cap blocks the extra draft; drafts with legal-threat phrases are flagged |
 
 ---
 
@@ -50,7 +51,7 @@ A finance team will not adopt a copilot it cannot verify. So the design goal is 
 | Conversation memory | System (messages) | n/a | Follow-ups in the same thread | Last N turns plus a running summary injected into the agent |
 | Customer notes | Collector | The author | Context and semantic recall ("what did we agree last time?") | Agent cites the note; shown in UI |
 | Promise outcomes | Collector records the promise; system marks kept or broken from payments | Rule plus collector | Risk factor and message tone | Broken promise adds risk points and escalates tone |
-| Recommendation outcomes | Approver (approve, edit, reject, with reason) | Human decision | Calibration | A rejected recommendation with a reason is surfaced next time; approval rate is a KPI |
+| Recommendation outcomes | Approver (approve, edit, reject, with reason); original and edited draft text stored | Human decision | Calibration | A rejected recommendation with a reason is surfaced next time; approval rate is a KPI |
 | Contact preferences (channel, contact person) | Collector | The author | Message drafting | Draft uses preferred channel and contact |
 
 **Write rules**
@@ -84,7 +85,9 @@ Targets are goals to aim for, not results. We report actual results in the READM
 | Risk score | Explainable, rule-based, configurable weights | A trained ML model |
 | Forecast | Expected cash with a range and a confidence label; backtest harness (time-split) exists | Guaranteed cash; accuracy proven on real data |
 | Arabic drafts | Tone options, reviewed by native speakers on the team | Validated by real collectors |
-| Policies | Retrieved and cited from provided documents | Legal or credit-decision authority |
+| Policies | Structured rules evaluated by code, plus retrieved and cited document passages | Legal or credit-decision authority |
+| Hallucination | Numeric hallucination is reduced by construction and measured in the ablation | That hallucination is eliminated |
+| Security and privacy | Tenant isolation, TLS in transit, encryption at rest as a deployment setting, minimal personal data in prompts, synthetic data only in the demo | End-to-end encryption, or absolute promises about how third-party model providers handle data |
 
 The backtest harness runs on synthetic data now and is ready to rerun on real data later.
 
@@ -100,6 +103,8 @@ The backtest harness runs on synthetic data now and is ready to rerun on real da
 | ADR-4 | Approval enforced at the API | UI bugs cannot bypass it | More backend code |
 | ADR-5 | Append-only audit log of recommendations, approvals, tool calls | Traceability | Storage growth |
 | ADR-6 | Multilingual embedding model | Policies and notes may be Arabic or mixed | Must test Arabic retrieval quality |
+| ADR-7 | Two-layer policy: structured rules evaluated by the deterministic engine, plus document RAG for explanation and citation (D21) | Hard thresholds must not depend on semantic search; users still need readable, cited explanations | Rules must be entered or extracted, then confirmed by a human |
+| ADR-8 | Canonical data schema with an adapter interface; tenant configuration instead of hard-coded thresholds (D22) | Adaptability across sectors without code changes | One more abstraction to maintain; only one adapter is built in the MVP |
 
 ---
 

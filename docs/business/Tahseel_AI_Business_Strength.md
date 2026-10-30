@@ -18,6 +18,18 @@
 
 Words like agentic, RAG, and memory belong in the architecture section, not in the first sentence.
 
+### Value framing: what we claim and what we do not
+
+**Late payment is the market's default behavior. Tahseel does not prevent it and cannot create cash a customer does not have.**
+
+What Tahseel changes (these are hypotheses to validate, see section 8):
+1. **It shortens lateness.** Follow-up starts earlier and stays consistent, instead of a spreadsheet review that remembers the customer at day 40 or 50.
+2. **It keeps the supplier at the front of the payment queue.** Smaller buyers tend to pay the suppliers who follow up persistently and professionally (sourced, see section 2).
+3. **It protects cash from human forgetting:** missed calls, forgotten promises, unresolved disputes.
+4. **It saves the finance team's time.**
+
+Evidence level: point 2 has a source. Points 1, 3, and 4 are hypotheses (assumptions A1 and A2).
+
 ---
 
 ## 2. Problem Evidence (desk research)
@@ -34,11 +46,16 @@ Words like agentic, RAG, and memory belong in the architecture section, not in t
 
 **What we do not have:** customer interviews, real receivables data, willingness-to-pay evidence, market size.
 
+Statements found in earlier notes without a source in our research (for example that late collection is the leading cause of SME failure, or that credit sales are the universal norm in every distribution sector) are not used as evidence.
+
 ---
 
 ## 3. Customer Map
 
 **Ideal customer:** Egyptian B2B distributor with recurring credit sales, 50+ active credit customers, a finance or collection team, Excel or ERP exports, and documented (or documentable) payment terms.
+
+**Target verticals:** auto parts; building materials and sanitaryware; food and beverage wholesale; electrical and industrial supplies; medical and pharmaceutical supplies.
+**Typical scale:** 50 to 500 or more active credit customers and hundreds to thousands of open invoices, managed in Excel or a mid-size ERP (Odoo appears in Cairo job postings; anecdotal), with a finance manager and at least one collector.
 
 | Role | Relation to the product | What they care about |
 |---|---|---|
@@ -82,6 +99,12 @@ These are scenarios to be replaced with real inputs from a pilot. We never prese
 | **ERP aging reports** (Odoo setups appear common in Cairo job postings) | Reports from existing accounting data | Data already there | Reports, not decisions; no policy grounding or drafting |
 | **Global AR automation tools** (for example ezyCollect, CreditorWatch Collect) | Per their public pages: add-ons to accounting software such as Xero, MYOB, NetSuite; automated reminders, call lists, payment links | Mature workflows | Built around those ecosystems and email/SMS; Arabic, WhatsApp, and Egyptian ERP setups not their focus (verify) |
 | **Local competitors** | None identified in a quick search | n/a | A quick search is not proof; run a proper scan of Google, LinkedIn, ERP vendors, and app directories |
+
+Other global AR tools named in our notes (Chaser, Upflow, Gaviti) were not reviewed by us. Any claim that they are email-first or lack Arabic support is **to verify**.
+
+**Positioning:** Tahseel is not a market leader and not a narrow niche. It is a specialized workflow, accounts receivable and credit control, that sits as an intelligence layer on top of the accounting or ERP data a company already has.
+
+**ERP vendors could add reminder modules.** A reminder is not a decision: Tahseel adds prioritization, explainable risk, policy grounding, memory, and drafts. Honest caveat: in the MVP we ingest Excel only, and ERP adapters are roadmap.
 
 ---
 
