@@ -1,3 +1,5 @@
+> **Superseded raw material. Not requirements.** This file may contain claims the Decision Log rejected. See D31 in `docs/governance/Tahseel_AI_Decision_Log.md`. Kept for history only.
+
 # Reconciliation Notes
 
 **Purpose:** Six documents were added in separate sessions without the Decision Log in view. This file records what each contains, where they conflict with the Decision Log, and the recommended resolution for each conflict.

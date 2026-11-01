@@ -1,3 +1,5 @@
+> **Superseded raw material. Not requirements.** This file may contain claims the Decision Log rejected. See D31 in `docs/governance/Tahseel_AI_Decision_Log.md`. Kept for history only.
+
 # Tahseel AI: Core Challenges & the Enterprise Trust and Continuous Learning Framework
 
 This document addresses the most sensitive challenges in the **Tahseel AI** project and explains how they are addressed from both engineering and operational perspectives to achieve an enterprise-grade standard.

@@ -1,3 +1,5 @@
+> **Superseded raw material. Not requirements.** This file may contain claims the Decision Log rejected. See D31 in `docs/governance/Tahseel_AI_Decision_Log.md`. Kept for history only.
+
 # Tahseel AI: Comprehensive Audit Session & Operational Stress Test (Institutional Grill Session)
 
 This document presents a comprehensive accountability review and critical examination (Grill Session) of **Tahseel AI** from the perspectives of a venture capitalist (VC), a Treasury and Credit Manager, and a cybersecurity expert. These questions are designed to challenge any superficial assumptions and provide strengthened strategic responses that demonstrate the model's robustness.

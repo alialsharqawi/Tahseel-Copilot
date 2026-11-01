@@ -1,3 +1,5 @@
+> **Superseded raw material. Not requirements.** This file may contain claims the Decision Log rejected. See D31 in `docs/governance/Tahseel_AI_Decision_Log.md`. Kept for history only.
+
 # Tahseel AI: Critique of Validation & True Operational Value
 
 ## 1. Sources of Analysis & Operational Logic (Sources & Operational Logic)

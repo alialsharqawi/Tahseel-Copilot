@@ -1,3 +1,5 @@
+> **Superseded raw material. Not requirements.** This file may contain claims the Decision Log rejected. See D31 in `docs/governance/Tahseel_AI_Decision_Log.md`. Kept for history only.
+
 # Tahseel AI: Market Research, Independent Validation & Competitive Analysis
 
 ## 1. Strategic Product Evaluation & Final Platform Architecture
