@@ -1,102 +1,133 @@
-# Tahseel AI: Engineering Architecture and Adaptation Strategy for Various Commercial Sectors
+# Tahseel AI — Adaptability Strategy
 
-1. ## The Architectural Adaptability Question
-
-> **Question:** "How will the idea be engineered to suit different B2B businesses with diverse requirements and behaviors, without needing to change the core code for every single client?"
+**Purpose:** How one platform can serve different B2B distributors, with different policies and behaviors, without changing the core code for each client.
+**Status:** Design document, consolidated 31 October 2026. This file owns the multi-sector design (D35). Each pillar says what the MVP builds and what stays on the roadmap.
+**Companions:** `Tahseel_AI_Decision_Log.md` (D21, D22, D23), `Tahseel_AI_Final_Concept.md`, `Tahseel_AI_PRD.md` (schema and API), `Tahseel_AI_Technical_Strength.md`.
 
 ---
 
-## 2. Engineering Vision for Adaptation (Multi-Tenant & Domain-Agnostic Engine)
+## 1. Design Goal
 
-To transform **Tahseel AI** from a hardcoded software application into a scalable operational engine, its software architecture must be built upon the concept of **Domain Abstraction** and a **Modular Service Architecture**. 
+Sector differences should be **configuration, not code**. An auto-parts distributor may grant 30 days and escalate quickly after a delay. A medical-supplies distributor may allow longer grace periods. The engine, the schema, and the agent stay the same; the tenant's settings and policy rules change.
 
-The platform is not bound to a specific category of goods (auto parts, groceries, building materials, or pharmaceuticals); instead, it handles a **unified commercial pattern: deferred financial debts requiring rigorous tracking and human governance.**
+The platform is not tied to a product category. It handles one commercial pattern: **credit sales that need tracking and human governance.**
 
+**What we claim:** the design makes sector differences a matter of configuration. **What we do not claim:** that it has been validated across real sectors. The MVP is demonstrated on one synthetic dataset, and optionally on two seeded tenant profiles (see section 4).
+
+---
+
+## 2. Architecture for Adaptation
+
+```text
++-------------------------------------------------------------+
+| Data ingestion                                              |
+| CSV / Excel adapter  [MVP]                                  |
+| Odoo adapter, ETA adapter  [roadmap]                        |
++--------------------------------+----------------------------+
+                                 | canonical schema (PRD, section 19)
+                                 v
++-------------------------------------------------------------+
+| Tenant configuration  [MVP]                                 |
+| tenant_settings (weights, caps, grace periods, triggers,    |
+| reminder cap, tone defaults) and policy_rules               |
++--------------------------------+----------------------------+
+                                 |
+                +----------------+----------------+
+                v                                 v
++-------------------------------+  +-------------------------------+
+| Deterministic engine          |  | Agent with policy RAG         |
+| risk, priority, forecast,     |  | tools, citations, drafts      |
+| rule evaluation               |  | (LLM never calculates)        |
++---------------+---------------+  +---------------+---------------+
+                +----------------+----------------+
+                                 v
++-------------------------------------------------------------+
+| Human approval gateway, enforced at the API  [MVP]          |
+| (tenant-isolated; configurable multi-step approval: roadmap)|
++-------------------------------------------------------------+
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                 Universal Data Ingestion                    │
-│        (Excel Cleaners, Odoo Adapters, E-Invoicing)        │
-└──────────────────────────────┬──────────────────────────────┘
-                               │ (Unified Canonical Schema)
-                               ▼
-┌─────────────────────────────────────────────────────────────┐
-│             Tenant Configuration & Policy Store             │
-│        (Custom Rules, Thresholds, Risk Weightings)          │
-└──────────────────────────────┬──────────────────────────────┘
-                               │
-               ┌───────────────┴───────────────┐
-               ▼                               ▼
-┌──────────────────────────────┐┌──────────────────────────────┐
-│  Deterministic Engine        ││  Agentic RAG & Copilot       │
-│  (Isolated Math, Risk Scores)││  (Context, Persona, Prompts) │
-└──────────────┬───────────────┘└──────────────┬───────────────┘
-               │                               │
-               └───────────────┬───────────────┘
-                               ▼
-┌─────────────────────────────────────────────────────────────┐
-│           Enforced Human-in-the-Loop Gateway                │
-│            (Tenant-Isolated Approval Pipeline)             │
-└─────────────────────────────────────────────────────────────┘
-```
 
 ---
 
-## 3. The 5 Pillars of Adaptability
+## 3. The Five Pillars
 
-### Pillar 1: Universal Data Adapter Network
+### Pillar 1: Data adapters and the canonical schema
 
-**The Challenge:** Different companies use disparate data sources—ranging from manual, error-prone Excel sheets to complex ERP systems like Odoo, SAP, or the Egyptian e-Invoicing network (ETA).
+**Challenge.** Companies keep data in different places: Excel sheets, ERP systems such as Odoo, or e-invoicing records.
 
-**Architectural Solution:**
-- **Canonical Data Schema:** The core platform code does not interact directly with source data structures. Instead, it executes queries and calculations on a standardized normative data model containing core attributes:
-  - `Customer_Profile`
-  - `Invoice_Line_Items`
-  - `Payment_Terms`
-  - `Historical_Transactions`
-- **Adapter Pattern:** Developing intermediary adapters that translate outputs from any system (Excel / CSV / Odoo API / ETA Invoices) into the canonical schema automatically.
-- **Automated Sanitation Pipeline:** Handling common local data discrepancies (such as variations in local phone numbers, compound corporate names, and different date formats) prior to onboarding data into the system.
+**Design.** The engine never touches source structures. It runs on the canonical schema, which is the data model in the PRD (section 19). An **adapter** is a component that reads one source and returns canonical records plus a validation report.
+
+| Canonical entity | Where it lives in the schema |
+|---|---|
+| Customer profile | `customers` (tier, sales rep, assigned collector, payment terms) |
+| Invoice | `invoices` (invoice-level only; line items are not modeled in the MVP) |
+| Payment terms | `customers.payment_terms` and each invoice's `due_date` |
+| Historical transactions | `payments`, `promises_to_pay`, `customer_notes` |
+
+| | Scope |
+|---|---|
+| **MVP** | The CSV/Excel adapter with column mapping (proposed by the LLM from headers and masked samples, confirmed by the user), validation, and preview. Cleaning covers date and number formats, trimmed text, and duplicate detection |
+| **Stretch** | Phone-number normalization and handling of compound company names |
+| **Roadmap** | Odoo and ETA e-invoicing adapters. An SAP adapter is not planned |
+
+### Pillar 2: Configuration-driven engine
+
+**Challenge.** Credit policies differ across sectors.
+
+**Design.** No payment term, threshold, or weight is hard-coded.
+- `tenant_settings` holds risk weights and caps, grace periods, escalation triggers, follow-up interval, reminder cap, and tone defaults. A typed schema validates it, and changes are written to the audit log.
+- `policy_rules` holds structured rules (for example "manager review above 30 days overdue"), each linked to its source document and section and confirmed by a Finance Manager (D21).
+
+| | Scope |
+|---|---|
+| **MVP** | Both tables, with defaults, evaluated by the deterministic engine. Rules are entered manually or loaded by the seed script |
+| **Stretch** | Two seeded tenant profiles (for example a strict auto-parts profile and a longer-grace medical-supplies profile) so the demo can show the same data behaving differently |
+| **Roadmap** | Extracting rules from policy documents with LLM help, followed by human confirmation. Installment payment plans are out of scope |
+
+### Pillar 3: Tone and policy context
+
+**Challenge.** Tone and communication style differ by sector and by relationship.
+
+**Design.**
+- Message tone options are **formal, friendly, and firm**. The default comes from the customer's tier (strategic or regular) and from the tenant's tone defaults (D23).
+- The agent retrieves passages from the tenant's own policy documents (pgvector, with the tenant filter inside the query) and uses them to explain and cite. Drafts are **guided by** the retrieved policy and pass a rule-based check (no legal threats, no forbidden phrases). A human reviews every draft.
+
+| | Scope |
+|---|---|
+| **MVP** | Tone options, tier-driven defaults, policy-guided drafts, the rule-based check |
+| **Roadmap** | Per-tenant "brand voice" profiles learned from edits (needs real data) |
+
+### Pillar 4: Tenant isolation and access control
+
+**Challenge.** Several companies share the platform. No data may cross between them, and each company needs its own permission structure.
+
+**Design.** `tenant_id` is on every table. All access goes through a tenant-scoped layer, and every vector query carries the tenant filter. Three roles are enforced on the server: Owner, Finance Manager, and Collector (a Collector sees only assigned customers). The permission matrix is in the Decision Log (D15, D30).
+
+| | Scope |
+|---|---|
+| **MVP** | Three roles, a cross-tenant test |
+| **Roadmap** | A Sales Manager role (to review or object to reminders for strategic clients before they go out) and a read-only Viewer role |
+
+### Pillar 5: Approval pipeline
+
+**Challenge.** Companies approve things differently. Some want the collector's approval for routine notices; others want finance and sales together for critical ones.
+
+**Design (MVP).** A fixed routing, enforced at the API:
+- A routine draft is approved by the Collector (for assigned customers), a Finance Manager, or the Owner.
+- A recommendation flagged `requires_manager_review` by a policy rule goes to a Finance Manager or the Owner.
+- A reminder beyond the configured cap needs a manager override.
+- Every recommendation, approval, edit, rejection, and override is written to the append-only audit log.
+
+**Roadmap.** A configurable multi-step pipeline, including a Sales sign-off step for strategic accounts. Until then, the relationship-aware recommendation `TALK_TO_SALES_REP` covers the need (D36).
 
 ---
 
-### Pillar 2: Configuration-Driven Engine
+## 4. What the MVP Shows
 
-**The Challenge:** Financial and credit policies vary radically across sectors; automotive spare parts businesses might grant a 30-day payment term with strict immediate enforcement upon delay, whereas pharmaceutical and medical supply trade might rely on longer grace periods and installment payment plans.
-
-**Architectural Solution:**
-- **Separation of Rules from Code:** No hardcoded payment terms or static risk scores are embedded inside the codebase (No Hardcoded Thresholds).
-- **Tenant Policy Specification:** Each company owns a dedicated configuration file (Database JSON / Policy Store) defining:
-  - **Grace Periods:** e.g., `grace_period_days: 7`.
-  - **Risk Scoring Weights:** Allocating relative weights between historical delay duration, debt volume, and customer behavior.
-  - **Escalation Triggers:** Determining when an invoice transitions from standard follow-up to escalation toward the finance or sales manager.
-
----
-
-### Pillar 3: Dynamic Prompt & Context Injection (Agentic RAG & Copilot)
-
-**The Challenge:** Communication style and tone vary clearly according to the sector and commercial relationship context; communicating with a pharmacy for medical supplies differs significantly from following up with a maintenance workshop for spare parts.
-
-**Architectural Solution:**
-- **Brand Personality Profile:** The platform allows companies to select their preferred communication tone (`Formal` / `Friendly` / `Firm`).
-- **Cognitive Policy Injection via RAG:** The communication context is retrieved from the company's proprietary credit policy documents stored in a Vector Database (ChromaDB / Qdrant), enabling the LLM to draft messages strictly within the boundaries of those policies and the specified corporate tone.
-
----
-
-### Pillar 4: Multi-Tenant Isolation & RBAC
-
-**The Challenge:** Ensuring absolute security and data protection for multiple distribution companies operating on the same platform without data cross-contamination or leaking sensitive financial figures, while supporting distinct internal permission structures.
-
-**Architectural Solution:**
-- **Logical Data Partitioning:** Embedding the enterprise identifier (`tenant_id`) as a mandatory, immutable condition across all database queries and RAG vector store lookups.
-- **Role-Based Access Control (RBAC):**
-  - **Collection Officer:** Restricted to viewing daily follow-up schedules and message drafts exclusively for their assigned customers.
-  - **Sales Manager:** Granted the ability to review or object to reminders for strategic clients prior to dispatch.
-  - **CFO:** Final approval authority, credit risk policy modifications, and access to the complete cash forecasting dashboard.
-
----
-
-### Pillar 5: Pluggable Governance Pipeline
-
-**The Challenge:** Varying approval terms and executive workflows across companies; some companies require joint sales and finance approval for critical messages, while others are content with the collection officer's approval for routine notices.
-
-**Architectural Solution:**
-- **Configurable Human-in-the-Loop Pipeline:** Providing a programmatic approval pipeline operating at the API level.
+| Pillar | Built in the MVP | Roadmap | How the demo shows it |
+|---|---|---|---|
+| 1. Adapters | CSV/Excel adapter, mapping, validation, preview | Odoo, ETA | Upload a messy file and confirm the mapping |
+| 2. Configuration | `tenant_settings`, `policy_rules`, defaults | LLM rule extraction | Change a weight or a rule and watch the score or outcome change with no code change; optionally switch between two seeded profiles |
+| 3. Tone and context | Three tones, tier defaults, rule-based draft check | Learned brand voice | Switch tone on a draft |
+| 4. Isolation and roles | Three roles, cross-tenant test | Sales Manager, Viewer | Switch role; show the cross-tenant test |
+| 5. Approval | Fixed routing at the API | Configurable multi-step approval | Approve as a Collector, then see a flagged item go to a manager |

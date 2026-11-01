@@ -41,7 +41,7 @@ Capabilities are grouped in three tiers (D29). The cut order is in the Decision 
 | C6 | **Memory** (see section 6.3): customer memory and conversation memory (D28) |
 | C7 | **Recording notes, promises to pay, and call outcomes.** This is how customer memory is written; the agent never writes it (D28) |
 | C8 | Agent with tool calling: answers questions about a customer and recommends the next action. Token and cost logging per run (D12) |
-| C9 | Message draft generator (Arabic, selectable tone) |
+| C9 | Message draft generator (Arabic; tone options formal, friendly, or firm; the default follows the customer tier, D23) |
 | C10 | Human approval gate (Approve / Edit / Reject), enforced at the API |
 | C11 | Task creation and an append-only audit log of every recommendation, approval, and tool call |
 | C12 | Dashboard: three screens (Executive, Queue, Customer Profile with the AI panel) |

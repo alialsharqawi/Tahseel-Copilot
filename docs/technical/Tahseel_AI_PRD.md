@@ -743,7 +743,7 @@ Creates a draft using:
 - invoice
 - amount
 - days overdue
-- tone
+- tone (formal, friendly, or firm)
 - policy context
 - customer tier (the tone default)
 
