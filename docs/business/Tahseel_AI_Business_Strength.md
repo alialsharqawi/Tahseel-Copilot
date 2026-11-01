@@ -1,8 +1,9 @@
 # Tahseel AI — Business Strength
 
 **Purpose:** Why the business case is credible, what is evidenced vs assumed, and how we validate it next.
-**Status:** Desk research only. No customer interviews, no real data, no pilots yet. Every claim carries an evidence label.
-**Companions:** `Tahseel_AI_Final_Concept.md` and `Tahseel_AI_Technical_Strength.md`.
+**Status:** Desk research only. Last updated 31 October 2026. No customer interviews, no real data, no pilots yet. Every claim carries an evidence label.
+**Evidence labels** (defined in `GLOSSARY.md`): **Sourced** (source cited, caveats stated), **Indicative** (sourced, but small or dated), **Hypothesis** (to be tested), **Assumption** (an input we chose), **To verify** (source not checked).
+**Companions:** `Tahseel_AI_Decision_Log.md`, `Tahseel_AI_Final_Concept.md`, `Tahseel_AI_Technical_Strength.md`, `Tahseel_AI_PRD.md`.
 
 ---
 
@@ -20,49 +21,80 @@ Words like agentic, RAG, and memory belong in the architecture section, not in t
 
 ### Value framing: what we claim and what we do not
 
-**Late payment is the market's default behavior. Tahseel does not prevent it and cannot create cash a customer does not have.**
+**Late payment is common in Egypt (section 2). Tahseel does not prevent it and cannot create cash a customer does not have.**
 
-What Tahseel changes (these are hypotheses to validate, see section 8):
-1. **It shortens lateness.** Follow-up starts earlier and stays consistent, instead of a spreadsheet review that remembers the customer at day 40 or 50.
-2. **It keeps the supplier at the front of the payment queue.** Smaller buyers tend to pay the suppliers who follow up persistently and professionally (sourced, see section 2).
-3. **It protects cash from human forgetting:** missed calls, forgotten promises, unresolved disputes.
-4. **It saves the finance team's time.**
+What Tahseel is designed to change:
 
-Evidence level: point 2 has a source. Points 1, 3, and 4 are hypotheses (assumptions A1 and A2).
+| # | Claim | Label |
+|---|---|---|
+| 1 | It shortens lateness: follow-up starts earlier and stays consistent, instead of a spreadsheet review that remembers the customer at day 40 or 50 | Hypothesis (A1, A8) |
+| 2 | It keeps the supplier at the front of the payment queue: smaller enterprises may pay selectively, favoring suppliers who follow up persistently | Sourced (Allianz Trade; the source says "may") |
+| 3 | It protects cash from human forgetting: missed calls, forgotten promises, unresolved disputes | Hypothesis (A8) |
+| 4 | It saves the finance team's time | Hypothesis (A1, A2) |
+
+**Important caveat:** neither of our two main sources measures whether suppliers forget to follow up. Both describe other causes: long internal sign-off chains at large buyers, and late payment used deliberately as cash management by smaller ones (section 2). Our core mechanism is therefore a hypothesis (A8), and the validation plan tests it first.
+
+### The value metric (D32)
+
+The primary metric is **average days beyond terms**. **DSO** is the unit that converts days into cash in the ROI model (section 4) and a secondary KPI. DSO is moved by sales volume and by payment terms, so it is a noisy measure of collection effectiveness.
 
 ---
 
 ## 2. Problem Evidence (desk research)
 
-| Claim | Source | Evidence level and caveat |
+Sources checked on 31 October 2026 are marked ✓.
+
+| Claim | Source | Label and caveat |
 |---|---|---|
-| Average days beyond payment terms in Egypt: 42, vs 16 (Germany) and 17 (Italy) | FCIB Credit & Collections Survey, Aug 2023 | Indicative. Small sample of credit professionals |
-| Formal terms are often 30-60 days, but real payment cycles commonly stretch to 60-90 days or more | Allianz Trade, Egypt collection guide | Credible country report |
-| Smaller enterprises tend to pay selectively and prioritize vendors who follow up persistently | Allianz Trade | Supports the idea that structured follow-up gets paid first |
-| E-invoicing is mandatory for VAT-registered businesses, including B2B | Allianz Trade; Avalara; VAT IT | Multiple sources |
-| VAT registration threshold lowered to EGP 250,000 from January 2026 | Ohmyfin | Single source, verify with the Egyptian Tax Authority |
-| AR and collections is a staffed function in Cairo distribution and trading companies; Odoo experience is a hard requirement in one posting | Workable job posting (Oct 2026) | Anecdotal, one posting |
-| Post-dated cheques: sources conflict (one says not very common; an older article says some sectors depend on them) | Allianz Trade vs Chronikler | **Unresolved. Treat as a hypothesis to test** |
+| In a survey of credit professionals, the average days beyond terms is 42 for Egypt, 16 for Germany, and 17 for Italy | FCIB Credit & Collections Survey, Aug 2023 ✓ | **Indicative.** Three caveats: (1) the survey is three years old; (2) the percentages shown for Egypt suggest only a handful of respondents (our inference from the figures; the survey does not state it); (3) the respondents appear to be credit professionals selling into each country (an Egypt tip in the survey says a letter of credit is required to do business there; our inference), so the figure may describe how Egyptian customers pay such suppliers, not how Egyptian distributors' own customers pay them |
+| Formal terms are often 30 to 60 days, but real payment cycles commonly stretch to 60 to 90 days or more | Allianz Trade, Egypt collection guide ✓ | **Sourced.** The page carries no date |
+| Smaller enterprises may pay selectively and prioritize vendors who show sustained follow-up | Allianz Trade ✓ | **Sourced.** The wording is "may" |
+| Delays at large buyers are often caused by long internal sign-off chains; late payment by smaller buyers is sometimes a deliberate cash-flow tool | Allianz Trade ✓ | **Sourced.** These are competing explanations to "the supplier forgot" |
+| Once an invoice is overdue, structured follow-up (written reminders, escalation to senior finance or commercial people) is the recommended practice | Allianz Trade ✓ | **Sourced.** Supports the workflow we build |
+| E-invoicing is mandatory for VAT-registered businesses, including B2B | Allianz Trade ✓; Avalara; VAT IT (not rechecked) | **Sourced** (Allianz); the others are **To verify** |
+| VAT registration threshold lowered to EGP 250,000 from January 2026 | Ohmyfin | **To verify.** Single secondary source, not used in the pitch |
+| AR and collections is a staffed function in Cairo distribution and trading companies; Odoo experience is a hard requirement in one posting | One Workable job posting (Oct 2026), not rechecked | **Indicative, anecdotal** (one posting) |
+| Post-dated cheques: Allianz says they are not as common; an older article says some sectors depend on them | Allianz Trade ✓; Chronikler (not rechecked) | **Unresolved. Hypothesis to test** (assumption A7) |
 
-**What we do not have:** customer interviews, real receivables data, willingness-to-pay evidence, market size.
+**What we do not have:** customer interviews, real receivables data, willingness-to-pay evidence, market size, or any measurement of how often lateness comes from supplier-side follow-up.
 
-Statements found in earlier notes without a source in our research (for example that late collection is the leading cause of SME failure, or that credit sales are the universal norm in every distribution sector) are not used as evidence.
+**Statements we do not use as evidence:** that late collection is the leading cause of SME failure, and that credit sales are the universal norm in every distribution sector. We looked for the first in the Allianz Egypt page and it is not there.
 
 ---
 
-## 3. Customer Map
+## 3. Customers and Stakeholder Analysis
 
-**Ideal customer:** Egyptian B2B distributor with recurring credit sales, 50+ active credit customers, a finance or collection team, Excel or ERP exports, and documented (or documentable) payment terms.
+This section merges the personas and stakeholder map of the earlier evaluation notes (D25, D33). It is the source for the LMS Stakeholder Analysis. **Every need and pain point below is a Hypothesis until interviews happen.**
+
+**Ideal customer:** an Egyptian B2B distributor with recurring credit sales, 50+ active credit customers, a finance or collection team, Excel or ERP exports, and documented (or documentable) payment terms.
 
 **Target verticals:** auto parts; building materials and sanitaryware; food and beverage wholesale; electrical and industrial supplies; medical and pharmaceutical supplies.
-**Typical scale:** 50 to 500 or more active credit customers and hundreds to thousands of open invoices, managed in Excel or a mid-size ERP (Odoo appears in Cairo job postings; anecdotal), with a finance manager and at least one collector.
+**Typical scale:** 50 to 500 or more active credit customers and hundreds to thousands of open invoices, managed in Excel or a mid-size ERP, with a finance manager and at least one collector. (Odoo appears in one Cairo job posting; anecdotal.)
 
-| Role | Relation to the product | What they care about |
-|---|---|---|
-| Finance Manager / CFO / Owner (in smaller firms) | **Economic buyer and champion** | Cash visibility, lower overdue, team control |
-| Collection Officer | **Daily user** | Who to call, what to say, less spreadsheet work |
-| Sales Manager and reps | **Influencer and possible blocker** (they own the customer relationship) | Not damaging key accounts |
-| Owner | Beneficiary | Understandable summary, cash expectations |
+### Stakeholders
+
+| Stakeholder | Relation to the product | Goals | Pain points | Influence or risk |
+|---|---|---|---|---|
+| **Finance Manager / CFO** | Economic buyer and champion; the **Finance Manager** role | Lower days beyond terms; lower overdue share; cash visibility for the next 7 and 30 days; control over the team | Little control and visibility over collection; reports built by hand and possibly wrong | Decides to buy; will not adopt what they cannot verify |
+| **Owner** (also the buyer in smaller firms) | Beneficiary; the **Owner** role | An understandable summary; know which accounts threaten cash | Reports arrive late and lack explanation | Final say on budget |
+| **Collector** (collection officer) | Daily user; the **Collector** role | Know who to contact first; see history and the relevant policy fast; produce professional messages quickly | Information scattered across Excel, WhatsApp, and memory; long customer lists | Adoption depends on whether the tool saves them time |
+| **Sales Manager and reps** | Influencers, not product users in the MVP (a Sales role is roadmap) | Protect relationships with key customers | Sales and collection work separately; a collection call can damage a key account | Possible blocker; the relationship-aware recommendation exists for them |
+| **Data owner** (an accountant, ERP admin, or IT person) | Enabler | Export data without disruption | Messy exports; fear of changing the ERP | Can stall the first upload |
+| **The distributor's customers** (retailers, workshops) | Affected, not users | Keep supply and good terms | Collection pressure at bad moments | Over-frequent reminders harm the relationship, hence the reminder cap and human approval |
+| **Reviewers and auditors** | Consumers of the audit log | Evidence of who approved what | Untraceable decisions | The append-only audit log serves them |
+
+### How they relate
+
+```text
+Owner / Finance Manager (buyer, approves flagged items)
+        |
+        v
+Collector (daily user; drafts need approval)  <---->  Sales Manager and reps
+        |                                              (own the relationship;
+        v                                               consulted first on
+Distributor's customers (receive messages               strategic accounts)
+sent by a person, never by the system)
+```
 
 ---
 
@@ -71,7 +103,7 @@ Statements found in earlier notes without a source in our research (for example 
 **For the finance team:** a ranked daily queue with reasons, relevant policy, and a ready Arabic message draft.
 **For management:** explainable risk, expected cash with a range, and an audit trail.
 
-### ROI model (illustrative, assumptions are inputs, not claims)
+### ROI model (illustrative; assumptions are inputs, not claims)
 
 ```text
 Cash released (one-time) = Annual credit sales / 365 x Days of DSO reduction
@@ -79,7 +111,9 @@ Financing cost avoided   = Cash released x Company borrowing rate   (rate to be 
 Collector time saved     = Hours saved per week x Hourly cost x 52
 ```
 
-Cash released, in EGP millions (one-time working-capital release):
+**Assumption:** if invoices are paid about x days earlier on average, the average collection period falls by about x days. The model uses days of DSO reduction as its input for that reason.
+
+Cash released, in EGP millions (one-time working-capital release; computed and checked):
 
 | Annual credit sales | DSO -3 days | DSO -5 days | DSO -10 days |
 |---|---:|---:|---:|
@@ -93,29 +127,36 @@ These are scenarios to be replaced with real inputs from a pilot. We never prese
 
 ## 5. Competitive Landscape
 
-| Alternative | What it is | Strength | Possible gap (hypothesis, verify) |
-|---|---|---|---|
-| **Excel plus manual follow-up** (the real competitor) | Spreadsheets, calls, WhatsApp | Free, familiar | No prioritization, no explanation, history lives in people's heads |
-| **ERP aging reports** (Odoo setups appear common in Cairo job postings) | Reports from existing accounting data | Data already there | Reports, not decisions; no policy grounding or drafting |
-| **Global AR automation tools** (for example ezyCollect, CreditorWatch Collect) | Per their public pages: add-ons to accounting software such as Xero, MYOB, NetSuite; automated reminders, call lists, payment links | Mature workflows | Built around those ecosystems and email/SMS; Arabic, WhatsApp, and Egyptian ERP setups not their focus (verify) |
-| **Local competitors** | None identified in a quick search | n/a | A quick search is not proof; run a proper scan of Google, LinkedIn, ERP vendors, and app directories |
+We checked vendor pages and marketplace listings on 31 October 2026. Marketplace listings (Capterra, GetApp, Xero) are secondary sources.
 
-Other global AR tools named in our notes (Chaser, Upflow, Gaviti) were not reviewed by us. Any claim that they are email-first or lack Arabic support is **to verify**.
+| Alternative | What it is | Features relevant to us | Languages and markets seen | Label |
+|---|---|---|---|---|
+| **Excel plus manual follow-up** (the real competitor) | Spreadsheets, calls, WhatsApp | Free, familiar | n/a | n/a |
+| **ERP aging reports** | Reports from existing accounting data | Data already there | n/a | Hypothesis: reports, not decisions |
+| **ezyCollect** (Australian; now part of Sidetrade) | An add-on for accounting and ERP systems (its own pages list MYOB, Xero, NetSuite, Dynamics 365, Sage Intacct, Acumatica) | Automated invoice reminders and communications, payment options, credit risk monitoring, aging, audit trail | Australia, New Zealand, US phone lines; no Arabic mentioned in what we saw | **Sourced** (vendor pages); channels such as SMS are from a third-party page: To verify |
+| **CreditorWatch Collect** (formerly Debtor Daddy; Australian) | An AR workflow and payments platform integrated with Xero, MYOB, QuickBooks | **Risk-based prioritization of debtors, call queues, call-outcome tracking**, automated reminders, dashboards | Australia and New Zealand focus | **Sourced** (vendor help page, Xero listing) |
+| **Chaser** (UK) | An AR automation platform integrated with Xero, QuickBooks, NetSuite, Sage, Dynamics 365 | Reminders by email, SMS, and auto-call; **AI insights on which debtors to prioritize**; cash-flow forecasting | Marketplace listing shows English only; available in many countries | **Indicative** (marketplace listings) |
+| **Upflow** | An AR platform for B2B finance teams (Xero integration) | Reminders, workflows, analytics, payment features | Marketplace listings show English and French; UK and US on Xero | **Indicative** (marketplace listings) |
+| **Gaviti** | An enterprise AR and invoice-to-cash platform | **AI-driven prioritization from payment behavior**, dispute tracking, cash application, credit management, ERP integrations; aimed at medium and large companies | Not checked | **Sourced** (vendor page) for prioritization; the rest **Indicative** |
+| **Local competitors** | None identified in a quick search | n/a | n/a | **To verify.** A quick search is not proof; run a proper scan of Google, LinkedIn, ERP vendors, and app directories |
 
-**Positioning:** Tahseel is not a market leader and not a narrow niche. It is a specialized workflow, accounts receivable and credit control, that sits as an intelligence layer on top of the accounting or ERP data a company already has.
+**What this means (an honest implication):** prioritization, forecasting, call tracking, and dispute handling already exist in global tools. Our wedge is **not** "a prioritized queue". It is the combination of: Arabic and the Egyptian context; an Excel-first start without an ERP; **policy grounding with citations**; **explainable factor lists**; **human approval by default** (several tools stress automation, and sending messages automatically is a non-goal for us); relationship-aware routing for strategic accounts; and a memory of notes and promises. Whether the other tools offer policy citations or factor-level explanations is **To verify**.
 
-**ERP vendors could add reminder modules.** A reminder is not a decision: Tahseel adds prioritization, explainable risk, policy grounding, memory, and drafts. Honest caveat: in the MVP we ingest Excel only, and ERP adapters are roadmap.
+**Positioning:** Tahseel is not a market leader and not a narrow niche. It is a specialized workflow, accounts receivable and credit control, that sits as an intelligence layer on top of the data a company already has.
+
+**ERP vendors could add reminder modules.** A reminder is not a decision: Tahseel adds prioritization, explainable risk, policy grounding, memory, and drafts. Honest caveat: in the MVP we ingest Excel and CSV only, and ERP adapters are roadmap.
 
 ---
 
 ## 6. Differentiation Bets
 
-| Bet | What it is | Stage | Evidence status |
+| Bet | What it is | Tier | Evidence status |
 |---|---|---|---|
-| **Relationship-aware recommendations** | Sales rep note and customer tier are inputs; for strategic accounts the recommendation is "talk to the sales rep first" | **MVP** | Hypothesis from how B2B relationships work; validate with interviews |
-| **Instant Receivables Health Report** | On first upload, show aging, risk distribution, top 20 accounts to chase, and expected cash, before any setup | **MVP** (also the go-to-market wedge) | Hypothesis; costs almost nothing since the engine already computes it |
-| **Policy-aware recommendations with citations** | Recommendations follow the company's own credit policy | **MVP** (core) | Depends on customers having a documented policy (see assumption A3) |
-| **Arabic, tone-controlled drafts** | Formal, friendly, firm | **MVP** | Needs review by real collectors |
+| **Policy-aware recommendations with citations** | Recommendations follow the company's own credit policy and cite it | Core (RAG, C5); rules layer in Should (S5) | Depends on customers having a documented policy (A3). Competitor coverage: To verify |
+| **Relationship-aware recommendations** | Sales rep note and customer tier are inputs; for strategic accounts the recommendation is `TALK_TO_SALES_REP` first | Should (S2) | Hypothesis from how B2B relationships work; validate with interviews |
+| **Instant Receivables Health Report** | On first upload, show aging, risk distribution, top 20 accounts to chase, and expected cash, before any setup | Should (S3); also the go-to-market wedge | Hypothesis; costs almost nothing since the engine already computes it |
+| **Arabic, tone-controlled drafts** | Formal, friendly, firm tones; a tone default by customer tier | Core (C9) | Needs review by real collectors |
+| **Human approval by default** | Nothing is sent or changed without a person; every step is logged | Core (C10, C11) | A design choice; whether customers prefer it to automation is a Hypothesis |
 | **Cheque-aware collections** | Track cheque due date and bounce as a core payment instrument and risk signal | **Roadmap, validate first** | Sources conflict on how common post-dated cheques are |
 
 ---
@@ -126,20 +167,20 @@ Other global AR tools named in our notes (Chaser, Upflow, Gaviti) were not revie
 - **Offer:** a Receivables Health Check. The company sends an Excel export and receives an aging and risk report plus the top accounts to chase within 24 hours. Start free for the first few companies to earn data and trust.
 - **Services plus product:** onboarding, data cleanup, and policy documentation (many firms may have no written policy) can be paid services that fund the product.
 - **Channels to test:** accountants and bookkeepers who serve distributors; ERP implementation partners (for example Odoo partners); direct LinkedIn outreach to AR and finance roles (job postings show where they sit); distributor communities and trade groups.
-- **Pricing hypotheses (do not finalize before interviews):** setup fee plus monthly subscription by number of finance users or active customers; success-based pricing as a later experiment.
-- **Expansion path:** Excel import, then Odoo connector, then WhatsApp Business (draft to send, with approval), then cheque tracking, then credit-limit and working-capital analytics.
+- **Pricing hypotheses (do not finalize before interviews):** setup fee plus monthly subscription by number of finance users or active customers; success-based pricing as a later experiment. **A success fee needs a baseline:** measure the customer's days beyond terms before onboarding, and agree how a change is attributed to the product. Without that, it cannot be priced fairly (Hypothesis).
+- **Expansion path:** Excel import, then an Odoo connector, then WhatsApp Business (draft to send, with approval), then cheque tracking, then credit-limit and working-capital analytics. All roadmap; none promised.
 
 ---
 
 ## 8. Validation Plan
 
-### Phase 0 — During the capstone (desk only)
-- Keep the evidence table above updated with sources.
+### Phase 0: during the capstone (desk only)
+- Keep the evidence table above updated with sources. **Done on 31 Oct 2026:** FCIB and Allianz checked; first competitor pass done.
 - Scan job postings for AR roles to understand tools in use (Odoo, Excel, others) and responsibilities.
-- Read country credit reports and surveys; note what is verified vs assumed.
-- Do a proper competitor scan and fill the landscape table.
+- Do a proper local-competitor scan and fill the landscape table.
+- Recheck the remaining "To verify" items.
 
-### Phase 1 — First weeks after (10 conversations)
+### Phase 1: first weeks after (10 conversations)
 Reach AR and finance people through LinkedIn and personal networks. Ask:
 1. How many customers buy on credit, and how many invoices are open?
 2. How are overdue invoices tracked today, and who follows up?
@@ -149,9 +190,14 @@ Reach AR and finance people through LinkedIn and personal networks. Ask:
 6. Can you export invoices and payments to Excel?
 7. How important are cheques in your credit sales?
 8. What would stop you from using a tool like this?
+9. When an invoice becomes overdue, how many days usually pass before someone first contacts the customer?
+10. In your experience, what are the main reasons customers pay late (cash problems, approval chains, disputes, being forgotten)?
 
-### Phase 2 — Health Check pilots (2-3 companies, anonymized data)
-### Phase 3 — Pricing test
+### Phase 2: Health Check pilots (2 to 3 companies, anonymized data)
+Run the Health Check on anonymized exports. Record: the baseline average days beyond terms, the share of overdue invoices with no recorded contact within a set number of days, and the collector time spent per account. These are the numbers that test A1 and A8 and that a success-based price would need.
+
+### Phase 3: pricing test
+Put two or three pricing structures (subscription by finance users, subscription by active customers, optional success fee) to the same interviewees. Record the range each says is acceptable. Treat the result as a hypothesis, not a price list.
 
 ### Assumptions and kill criteria
 
@@ -164,6 +210,8 @@ Reach AR and finance people through LinkedIn and personal networks. Ask:
 | A5 | Collectors act on AI suggestions | Approval rate in pilots | Low approval or ignored suggestions |
 | A6 | Willingness to pay at a viable price | Pricing conversations | Consistently below cost to serve |
 | A7 | Cheques are central to credit sales | Interview question 7 | Cheques are rare, so cheque-aware features drop to later |
+| **A8** | **A meaningful share of lateness comes from the supplier's late or inconsistent follow-up, not only from the customer's cash constraints or approval chains** | Interview questions 9 and 10; the gap between due date and first contact in Health Check data | Most overdue invoices are contacted within days of falling due and the delay comes from customers. Then "shortens lateness by following up earlier" weakens, and the value rests on prioritization, time saved, and visibility |
+| **A9** | **No tool combines Arabic, an Excel-first start, and policy-grounded recommendations for Egyptian distributors** | A proper local scan and demos of the global tools | A local or regional tool with those features exists |
 
 ---
 
@@ -172,17 +220,18 @@ Reach AR and finance people through LinkedIn and personal networks. Ask:
 This supports Real-World Value (10%) and Presentation (15%).
 
 **Do**
-- Show the evidence table with levels and caveats. Honest labeling reads as maturity.
+- Show the evidence table with labels and caveats. Honest labeling reads as maturity.
 - Show the ROI formula with explicit assumptions.
-- Show the competitive table with "hypothesis" where unverified.
+- Show the competitive table, including that global tools already prioritize and forecast.
 - Show the validation roadmap as the next step.
 
 **Do not**
 - Claim pilots, customers, or interviews that did not happen.
 - Show a market-size number without a source and assumptions.
 - Present forecasts or ROI scenarios as measured results.
+- Present the FCIB 42-day figure as if it described Egyptian distributors' own customers.
 
-**Suggested business narrative (7 slides):** Problem and evidence, why now (e-invoicing, delays), solution, differentiation, ROI model, go-to-market and validation, roadmap.
+**Suggested business narrative (7 slides):** Problem and evidence, why now (e-invoicing, delays; a hypothesis for the MVP), solution, differentiation, ROI model, go-to-market and validation, roadmap.
 
 ---
 
@@ -191,22 +240,30 @@ This supports Real-World Value (10%) and Presentation (15%).
 | Risk | Mitigation |
 |---|---|
 | No real customer validation yet | Phase 1 interviews; Health Check offer; label all claims by evidence level |
+| **The core hypothesis may be wrong:** lateness may come mainly from customers' cash constraints or approval chains, not supplier forgetting | Test A8 first (Phase 1 and 2). The product still offers prioritization, time saved, and visibility |
+| **Global tools already offer prioritization, forecasting, and dispute handling** | Compete on Arabic, Excel-first, policy citations, explainability, and human approval; verify what they offer (A9) |
 | Customers have no written credit policy | Policy template or wizard; policy documentation as a paid service |
-| Sales and finance conflict over customer contact | Relationship-aware recommendations; involve Sales Manager as a persona |
+| Sales and finance conflict over customer contact | Relationship-aware recommendations; involve the Sales Manager as a stakeholder |
 | Low trust in AI recommendations | Explainability, citations, human approval, audit trail |
 | Data access and privacy concerns | Anonymized pilots; minimize personal data in prompts; verify obligations under Egypt's data protection law |
-| ERP integration cost | Start Excel-first; add Odoo connector only after demand is proven |
+| ERP integration cost | Start Excel-first; add an Odoo connector only after demand is proven |
 | Price sensitivity | Services-led entry; test pricing early |
 
 ---
 
 ## 11. Sources
 
+**Checked on 31 October 2026**
 - Allianz Trade, Egypt collection guide: https://www.allianz-trade.com/en_global/economic-research/collection-complexity/egypt.html
 - FCIB Credit & Collections Survey, Aug 2023: https://fcibglobal.com/wp-content/uploads/2024/03/CCSurvey-08-2023.pdf
+- ezyCollect vendor pages: https://ezycollect.io/?p=21250407 (MYOB Exo), https://lp.ezycollect.io/netsuite-accounts-receivables-automation/ (NetSuite), https://ezycollect.io/?p=21250387 (Dynamics 365), https://ezycollect.io/?p=21250445 (Xero)
+- CreditorWatch Collect help page: https://help.creditorwatch.com.au/en/articles/11650655-what-is-creditorwatch-collect ; Xero listing: https://apps.xero.com/id/app/debtor-daddy
+- Chaser marketplace listings (secondary): https://www.capterra.ae/reviews/157101/chaser , https://www.getapp.com.au/software/107821/chaser
+- Upflow marketplace listings (secondary): https://www.capterra.com.au/software/193097/upflow , https://apps.xero.com/uk/collection/accounts-receivable-software/app/upflow
+- Gaviti vendor page: https://gaviti.com/?p=6362 ; third-party summary: https://cbinsights.com/company/gaviti
+
+**Not rechecked (To verify)**
 - Ohmyfin, Egypt invoice requirements: https://ohmyfin.ai/ar/invoice/requirements/egypt
 - Avalara, Egyptian e-invoicing: https://www.avalara.com/us/en/vatlive/country-guides/africa-and-middle-east/egypt-vat/egyptian-e-invoicing.html
 - Workable job posting, Senior AR Accountant, Cairo: https://apply.workable.com/t63/jobs/view/CC0FA2E77B.md
 - Chronikler, cheque legislation in Egypt: https://chronikler.com/?p=11779
-- ezyCollect: https://www.casestudies.com/company/ezycollect
-- CreditorWatch Collect: https://www.g2.com/products/creditorwatch-collect/discuss
