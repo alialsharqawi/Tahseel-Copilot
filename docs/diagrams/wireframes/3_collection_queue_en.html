@@ -1,0 +1,63 @@
+<!doctype html><html lang="en" dir="ltr"><head><meta charset="utf-8">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:'Noto Sans Arabic','DejaVu Sans',Arial,sans-serif;font-size:14px;color:#222;background:#eceff1}
+.app{display:grid;grid-template-columns:210px 1fr;min-height:900px;width:1440px;background:#fafafa}
+.side{background:#263238;color:#cfd8dc;padding:16px 0}
+.logo{padding:0 18px 18px;font-weight:700;color:#fff;font-size:18px;border-bottom:1px solid #37474f;margin-bottom:10px}
+.logo small{display:block;font-weight:400;font-size:11px;color:#90a4ae}
+.nav a{display:block;padding:10px 18px;color:#cfd8dc;border-inline-start:3px solid transparent}
+.nav a.on{background:#37474f;color:#fff;border-inline-start-color:#4fc3f7}
+.main{padding:0 24px 24px}
+.top{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid #cfd8dc;margin-bottom:18px}
+.top h1{font-size:21px;margin:0}
+.chips{display:flex;gap:10px;align-items:center}
+.chip{border:1px solid #90a4ae;border-radius:14px;padding:3px 12px;font-size:12px;background:#fff;color:#37474f}
+.lang{display:inline-flex;border:1px solid #90a4ae;border-radius:6px;overflow:hidden;background:#fff}
+.lang span{padding:3px 10px;font-size:12px}.lang span.on{background:#37474f;color:#fff}
+.grid{display:grid;gap:14px}
+.g4{grid-template-columns:repeat(4,1fr)}.g3{grid-template-columns:repeat(3,1fr)}.g2{grid-template-columns:1fr 1fr}
+.card{background:#fff;border:1px solid #cfd8dc;border-radius:8px;padding:14px}
+.card h3{margin:0 0 10px;font-size:14px;color:#37474f}
+.kpi .v{font-size:25px;font-weight:700}.kpi .s{font-size:12px;color:#607d8b;margin-top:2px}
+table{width:100%;border-collapse:collapse}
+th,td{padding:8px 10px;border-bottom:1px solid #eceff1;text-align:start;font-size:13px}
+th{background:#f5f7f8;color:#546e7a;font-weight:600}
+.badge{display:inline-block;border-radius:4px;padding:1px 8px;font-size:12px;border:1.5px solid}
+.b-LOW{border-color:#2e7d32;color:#2e7d32;background:#e8f5e9}.b-MEDIUM{border-color:#f9a825;color:#8d6e00;background:#fff8e1}
+.b-HIGH{border-color:#ef6c00;color:#bf360c;background:#fff3e0}.b-CRITICAL{border-color:#c62828;color:#b71c1c;background:#ffebee}
+.tag{display:inline-block;border-radius:4px;padding:1px 7px;font-size:11px;background:#e3f2fd;color:#0d47a1;margin-inline-start:6px}
+.tag.warn{background:#fff3e0;color:#bf360c}.tag.gold{background:#fff8e1;color:#8d6e00}
+.btn{display:inline-block;border:1.5px solid #37474f;border-radius:6px;padding:7px 16px;background:#fff;font-weight:600}
+.btn.p{background:#1976d2;border-color:#1976d2;color:#fff}.btn.d{border-color:#c62828;color:#c62828}
+.muted{color:#78909c;font-size:12px}.sample{margin-top:18px;border-top:1px dashed #b0bec5;padding-top:8px;color:#78909c;font-size:11px}
+.bar{height:14px;background:#cfd8dc;border-radius:3px;display:inline-block;vertical-align:middle}
+.fx{display:flex;align-items:center;gap:8px;margin:7px 0}.fx .l{width:210px;font-size:13px}
+.ph{border:1.5px dashed #b0bec5;border-radius:6px;background:#f5f7f8;color:#90a4ae;display:flex;align-items:center;justify-content:center}
+.panel{background:#fffde7;border:2px solid #f9a825;border-radius:8px;padding:14px}
+.panel h3{margin:0 0 8px}.panel ul{margin:6px 0;padding-inline-start:20px}
+.draft{background:#fff;border:1px solid #b0bec5;border-radius:6px;padding:10px;line-height:1.9;direction:rtl;text-align:start;font-size:14px}
+.steps{display:flex;gap:8px;margin-bottom:14px}.step{flex:1;padding:8px;border-radius:6px;background:#eceff1;text-align:center;font-size:13px}.step.on{background:#1976d2;color:#fff}
+input,.fld{border:1px solid #b0bec5;border-radius:5px;padding:6px 9px;background:#fff;display:block;min-height:32px}
+.note{background:#e8eaf6;border-radius:6px;padding:8px 10px;margin:6px 0;font-size:13px}
+</style></head><body><div class="app">
+<div class="side"><div class="logo">Tahseel AI<small>Credit-control copilot</small></div><div class="nav"><a class="on">Collection Queue</a><a class="">Customers</a><a class="">Disputed invoices</a></div></div>
+<div class="main"><div class="top"><h1>Collection Queue</h1><div class="chips">
+<span class="chip">Role: Collector</span>
+<span class="lang"><span class="on">EN</span><span class="">عربي</span></span></div></div>
+
+<div class="grid" style="grid-template-columns:repeat(5,auto);gap:10px;justify-content:start;margin-bottom:12px">
+ <span class="fld">Risk: all ▾</span><span class="fld">Tier: all ▾</span>
+ <span class="fld">Suggested action: all ▾</span><span class="fld">Assigned to me ☑</span>
+ <span class="fld" style="min-width:220px">Search customer</span></div>
+<div class="card"><table><tr><th>#</th><th>Customer</th><th>Overdue</th><th>Oldest overdue (days)</th>
+ <th>Risk score</th><th>Priority</th><th>Suggested action (rules)</th><th></th></tr><tr><td>1</td><td><b>ABC Trading</b></td><td>EGP 310K</td><td>52</td><td><span class="badge b-HIGH">High · 70</span></td><td><b>100</b></td><td>Call<span class="tag warn">Manager review</span></td><td><span class="btn" style="padding:2px 10px">Open</span></td></tr><tr><td>2</td><td><b>Delta Spare Parts</b></td><td>EGP 190K</td><td>35</td><td><span class="badge b-MEDIUM">Medium · 58</span></td><td><b>38</b></td><td>WhatsApp draft<span class="tag warn">Manager review</span></td><td><span class="btn" style="padding:2px 10px">Open</span></td></tr><tr><td>3</td><td><b>Nile Building Supplies</b></td><td>EGP 150K</td><td>61</td><td><span class="badge b-HIGH">High · 66</span></td><td><b>23</b></td><td>Call<span class="tag warn">Manager review</span></td><td><span class="btn" style="padding:2px 10px">Open</span></td></tr><tr><td>4</td><td><b>Al-Amal Foods</b></td><td>EGP 85K</td><td>12</td><td><span class="badge b-MEDIUM">Medium · 41</span></td><td><b>12</b></td><td>Wait</td><td><span class="btn" style="padding:2px 10px">Open</span></td></tr><tr><td>5</td><td><b>Cairo Medical Supplies</b><span class="tag gold">Strategic</span></td><td>EGP 120K</td><td>20</td><td><span class="badge b-MEDIUM">Medium · 34</span></td><td><b>9</b></td><td>Talk to the sales rep first</td><td><span class="btn" style="padding:2px 10px">Open</span></td></tr></table></div>
+<div class="grid g2" style="margin-top:14px">
+ <div class="card"><h3>How to read this list</h3><div class="muted">
+  Priority = risk x overdue exposure x urgency, scaled so the top account is 100. Click a row to see every factor. The suggested action comes from rules; the agent can add a recommendation with reasons and citations on the customer page.</div></div>
+ <div class="card"><h3>Disputed invoices: 2</h3><div class="muted">
+  Disputed invoices are not ranked. Follow-up is paused and the manager is alerted.</div>
+  <p><span class="btn" style="padding:2px 10px">View list</span></p></div>
+</div>
+<div class="sample">Wireframe. Sample data for layout only; it is not a result.</div>
+</div></div></body></html>

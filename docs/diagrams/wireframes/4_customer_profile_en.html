@@ -1,0 +1,91 @@
+<!doctype html><html lang="en" dir="ltr"><head><meta charset="utf-8">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:'Noto Sans Arabic','DejaVu Sans',Arial,sans-serif;font-size:14px;color:#222;background:#eceff1}
+.app{display:grid;grid-template-columns:210px 1fr;min-height:900px;width:1440px;background:#fafafa}
+.side{background:#263238;color:#cfd8dc;padding:16px 0}
+.logo{padding:0 18px 18px;font-weight:700;color:#fff;font-size:18px;border-bottom:1px solid #37474f;margin-bottom:10px}
+.logo small{display:block;font-weight:400;font-size:11px;color:#90a4ae}
+.nav a{display:block;padding:10px 18px;color:#cfd8dc;border-inline-start:3px solid transparent}
+.nav a.on{background:#37474f;color:#fff;border-inline-start-color:#4fc3f7}
+.main{padding:0 24px 24px}
+.top{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid #cfd8dc;margin-bottom:18px}
+.top h1{font-size:21px;margin:0}
+.chips{display:flex;gap:10px;align-items:center}
+.chip{border:1px solid #90a4ae;border-radius:14px;padding:3px 12px;font-size:12px;background:#fff;color:#37474f}
+.lang{display:inline-flex;border:1px solid #90a4ae;border-radius:6px;overflow:hidden;background:#fff}
+.lang span{padding:3px 10px;font-size:12px}.lang span.on{background:#37474f;color:#fff}
+.grid{display:grid;gap:14px}
+.g4{grid-template-columns:repeat(4,1fr)}.g3{grid-template-columns:repeat(3,1fr)}.g2{grid-template-columns:1fr 1fr}
+.card{background:#fff;border:1px solid #cfd8dc;border-radius:8px;padding:14px}
+.card h3{margin:0 0 10px;font-size:14px;color:#37474f}
+.kpi .v{font-size:25px;font-weight:700}.kpi .s{font-size:12px;color:#607d8b;margin-top:2px}
+table{width:100%;border-collapse:collapse}
+th,td{padding:8px 10px;border-bottom:1px solid #eceff1;text-align:start;font-size:13px}
+th{background:#f5f7f8;color:#546e7a;font-weight:600}
+.badge{display:inline-block;border-radius:4px;padding:1px 8px;font-size:12px;border:1.5px solid}
+.b-LOW{border-color:#2e7d32;color:#2e7d32;background:#e8f5e9}.b-MEDIUM{border-color:#f9a825;color:#8d6e00;background:#fff8e1}
+.b-HIGH{border-color:#ef6c00;color:#bf360c;background:#fff3e0}.b-CRITICAL{border-color:#c62828;color:#b71c1c;background:#ffebee}
+.tag{display:inline-block;border-radius:4px;padding:1px 7px;font-size:11px;background:#e3f2fd;color:#0d47a1;margin-inline-start:6px}
+.tag.warn{background:#fff3e0;color:#bf360c}.tag.gold{background:#fff8e1;color:#8d6e00}
+.btn{display:inline-block;border:1.5px solid #37474f;border-radius:6px;padding:7px 16px;background:#fff;font-weight:600}
+.btn.p{background:#1976d2;border-color:#1976d2;color:#fff}.btn.d{border-color:#c62828;color:#c62828}
+.muted{color:#78909c;font-size:12px}.sample{margin-top:18px;border-top:1px dashed #b0bec5;padding-top:8px;color:#78909c;font-size:11px}
+.bar{height:14px;background:#cfd8dc;border-radius:3px;display:inline-block;vertical-align:middle}
+.fx{display:flex;align-items:center;gap:8px;margin:7px 0}.fx .l{width:210px;font-size:13px}
+.ph{border:1.5px dashed #b0bec5;border-radius:6px;background:#f5f7f8;color:#90a4ae;display:flex;align-items:center;justify-content:center}
+.panel{background:#fffde7;border:2px solid #f9a825;border-radius:8px;padding:14px}
+.panel h3{margin:0 0 8px}.panel ul{margin:6px 0;padding-inline-start:20px}
+.draft{background:#fff;border:1px solid #b0bec5;border-radius:6px;padding:10px;line-height:1.9;direction:rtl;text-align:start;font-size:14px}
+.steps{display:flex;gap:8px;margin-bottom:14px}.step{flex:1;padding:8px;border-radius:6px;background:#eceff1;text-align:center;font-size:13px}.step.on{background:#1976d2;color:#fff}
+input,.fld{border:1px solid #b0bec5;border-radius:5px;padding:6px 9px;background:#fff;display:block;min-height:32px}
+.note{background:#e8eaf6;border-radius:6px;padding:8px 10px;margin:6px 0;font-size:13px}
+</style></head><body><div class="app">
+<div class="side"><div class="logo">Tahseel AI<small>Credit-control copilot</small></div><div class="nav"><a class="">Dashboard</a><a class="">Collection Queue</a><a class="on">Customers</a><a class="">Disputed invoices</a><a class="">Import</a><a class="">Policies and rules</a><a class="">Settings</a><a class="">Audit log</a></div></div>
+<div class="main"><div class="top"><h1>Customer: ABC Trading</h1><div class="chips">
+<span class="chip">Role: Finance Manager</span>
+<span class="lang"><span class="on">EN</span><span class="">عربي</span></span></div></div>
+
+<div class="card" style="margin-bottom:14px;display:flex;justify-content:space-between;align-items:center">
+ <div><b style="font-size:18px">ABC Trading</b><span class="tag">Regular</span>
+  <div class="muted">Sales rep: Mona · Assigned collector: Ahmed · Preferred channel: WhatsApp</div></div>
+ <div style="text-align:end"><div class="muted">Risk score</div><span class="badge b-HIGH">High · 70</span></div></div>
+<div class="grid g4" style="margin-bottom:14px">
+ <div class="card kpi"><h3>Outstanding</h3><div class="v">EGP 420K</div></div>
+ <div class="card kpi"><h3>Overdue</h3><div class="v">EGP 310K</div><div class="s">8 invoices</div></div>
+ <div class="card kpi"><h3>Priority</h3><div class="v">100</div><div class="s">Urgency 2.0: promise broken in the last 7 days</div></div>
+ <div class="card kpi"><h3>Promises</h3><div class="v">1 / 3</div><div class="s">kept</div></div></div>
+<div class="grid" style="grid-template-columns:1.25fr 1fr;align-items:start">
+ <div class="grid">
+  <div class="card"><h3>Why this score (70)</h3><div class="fx"><div class="l">Oldest overdue invoice: 52 days</div><span class="bar" style="width:182px;background:#ef6c00"></span><b>+26</b><span class="muted">/ 30</span></div><div class="fx"><div class="l">Historical average delay: 32 days</div><span class="bar" style="width:126px;background:#ef6c00"></span><b>+18</b><span class="muted">/ 25</span></div><div class="fx"><div class="l">2 broken promises in 12 months</div><span class="bar" style="width:119px;background:#ef6c00"></span><b>+17</b><span class="muted">/ 25</span></div><div class="fx"><div class="l">Payments slowing (45 days, was 32)</div><span class="bar" style="width:63px;background:#ef6c00"></span><b>+9</b><span class="muted">/ 20</span></div><div class="muted">Points add up to the score. The overdue amount is shown beside the score, not inside it.</div></div>
+  <div class="card"><h3>Overdue invoices (4 of 8)</h3><table><tr><th>Invoice</th><th>Amount</th><th>Due</th><th>Days overdue</th></tr><tr><td>INV-1042</td><td>EGP 70K</td><td>2026-09-09</td><td>52</td></tr><tr><td>INV-1049</td><td>EGP 55K</td><td>2026-09-17</td><td>44</td></tr><tr><td>INV-1051</td><td>EGP 40K</td><td>2026-09-24</td><td>37</td></tr><tr><td>INV-1063</td><td>EGP 25K</td><td>2026-10-08</td><td>23</td></tr></table>
+   <div class="muted" style="margin-top:6px">Show all · Mark as disputed</div></div>
+  <div class="card"><h3>Notes and promises</h3>
+   <div class="note">Note by Ahmed, 12 Oct: customer says payment will follow the holiday; prefers WhatsApp.</div>
+   <div class="note">Promise EGP 80K by 24 Oct: broken</div>
+   <div style="border-top:1px dashed #b0bec5;margin-top:8px;padding-top:8px"><b>Record a call result</b>
+    <div class="grid g3" style="margin-top:6px"><span class="fld">Note / Call result ▾</span><span class="fld">Promise amount</span><span class="fld">Promise date</span></div>
+    <span class="fld" style="margin-top:6px;min-height:48px">What was said…</span>
+    <p style="margin:8px 0 0"><span class="btn">Save</span> <span class="muted">Saved as customer memory with author and time</span></p></div></div>
+ </div>
+ <div class="panel">
+  <h3>AI recommendation</h3>
+  <div><b style="font-size:16px">Call</b><span class="tag warn">Requires Finance Manager review</span></div>
+  <p style="margin:10px 0 2px"><b>Why?</b></p>
+  <ul><li>Oldest overdue invoice is 52 days overdue.</li><li>EGP 310K overdue.</li>
+   <li>Historically pays 32 days late.</li><li>2 of 3 promises were broken.</li></ul>
+  <p style="margin:10px 0 2px"><b>Policy</b></p>
+  <div class="note" style="background:#fff">Rule triggered: manager review above 30 days overdue.<br>
+   <span class="muted">Credit Policy §4.2 · passage retrieved to explain it</span></div>
+  <p style="margin:10px 0 2px"><b>Memory used</b></p>
+  <div class="muted">Note by Ahmed, 12 Oct · Promise of 24 Oct: broken</div>
+  <p style="margin:12px 0 4px"><b>Draft (Arabic)</b> <span class="muted">Tone:</span>
+   <span class="tag">Formal ▾</span><span class="muted"> Friendly · Firm</span></p>
+  <div class="draft">السلام عليكم ورحمة الله، السادة شركة ABC للتجارة المحترمين. نود تذكيركم بوجود فواتير مستحقة السداد بإجمالي 310,000 جنيه، وأقدمها منذ 52 يوماً. نرجو التكرم بإفادتنا بموعد السداد المناسب خلال هذا الأسبوع حتى نتمكن من ترتيب الأمر. ولكم جزيل الشكر.</div>
+  <div class="muted" style="margin:6px 0">✓ Draft check passed: no legal threats, no forbidden phrases.</div>
+  <div style="display:flex;gap:8px;margin-top:8px"><span class="btn p">Approve</span><span class="btn">Edit</span><span class="btn d">Reject</span></div>
+  <div class="muted" style="margin-top:8px">Tahseel never sends the message. A person sends it. As a Collector, Approve becomes “Send for manager review”.</div>
+  <div class="fld" style="margin-top:10px">Ask the agent about this customer…</div>
+ </div></div>
+<div class="sample">Wireframe. Sample data for layout only; it is not a result.</div>
+</div></div></body></html>

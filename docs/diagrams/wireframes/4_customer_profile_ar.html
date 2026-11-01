@@ -1,0 +1,91 @@
+<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:'Noto Sans Arabic','DejaVu Sans',Arial,sans-serif;font-size:14px;color:#222;background:#eceff1}
+.app{display:grid;grid-template-columns:210px 1fr;min-height:900px;width:1440px;background:#fafafa}
+.side{background:#263238;color:#cfd8dc;padding:16px 0}
+.logo{padding:0 18px 18px;font-weight:700;color:#fff;font-size:18px;border-bottom:1px solid #37474f;margin-bottom:10px}
+.logo small{display:block;font-weight:400;font-size:11px;color:#90a4ae}
+.nav a{display:block;padding:10px 18px;color:#cfd8dc;border-inline-start:3px solid transparent}
+.nav a.on{background:#37474f;color:#fff;border-inline-start-color:#4fc3f7}
+.main{padding:0 24px 24px}
+.top{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid #cfd8dc;margin-bottom:18px}
+.top h1{font-size:21px;margin:0}
+.chips{display:flex;gap:10px;align-items:center}
+.chip{border:1px solid #90a4ae;border-radius:14px;padding:3px 12px;font-size:12px;background:#fff;color:#37474f}
+.lang{display:inline-flex;border:1px solid #90a4ae;border-radius:6px;overflow:hidden;background:#fff}
+.lang span{padding:3px 10px;font-size:12px}.lang span.on{background:#37474f;color:#fff}
+.grid{display:grid;gap:14px}
+.g4{grid-template-columns:repeat(4,1fr)}.g3{grid-template-columns:repeat(3,1fr)}.g2{grid-template-columns:1fr 1fr}
+.card{background:#fff;border:1px solid #cfd8dc;border-radius:8px;padding:14px}
+.card h3{margin:0 0 10px;font-size:14px;color:#37474f}
+.kpi .v{font-size:25px;font-weight:700}.kpi .s{font-size:12px;color:#607d8b;margin-top:2px}
+table{width:100%;border-collapse:collapse}
+th,td{padding:8px 10px;border-bottom:1px solid #eceff1;text-align:start;font-size:13px}
+th{background:#f5f7f8;color:#546e7a;font-weight:600}
+.badge{display:inline-block;border-radius:4px;padding:1px 8px;font-size:12px;border:1.5px solid}
+.b-LOW{border-color:#2e7d32;color:#2e7d32;background:#e8f5e9}.b-MEDIUM{border-color:#f9a825;color:#8d6e00;background:#fff8e1}
+.b-HIGH{border-color:#ef6c00;color:#bf360c;background:#fff3e0}.b-CRITICAL{border-color:#c62828;color:#b71c1c;background:#ffebee}
+.tag{display:inline-block;border-radius:4px;padding:1px 7px;font-size:11px;background:#e3f2fd;color:#0d47a1;margin-inline-start:6px}
+.tag.warn{background:#fff3e0;color:#bf360c}.tag.gold{background:#fff8e1;color:#8d6e00}
+.btn{display:inline-block;border:1.5px solid #37474f;border-radius:6px;padding:7px 16px;background:#fff;font-weight:600}
+.btn.p{background:#1976d2;border-color:#1976d2;color:#fff}.btn.d{border-color:#c62828;color:#c62828}
+.muted{color:#78909c;font-size:12px}.sample{margin-top:18px;border-top:1px dashed #b0bec5;padding-top:8px;color:#78909c;font-size:11px}
+.bar{height:14px;background:#cfd8dc;border-radius:3px;display:inline-block;vertical-align:middle}
+.fx{display:flex;align-items:center;gap:8px;margin:7px 0}.fx .l{width:210px;font-size:13px}
+.ph{border:1.5px dashed #b0bec5;border-radius:6px;background:#f5f7f8;color:#90a4ae;display:flex;align-items:center;justify-content:center}
+.panel{background:#fffde7;border:2px solid #f9a825;border-radius:8px;padding:14px}
+.panel h3{margin:0 0 8px}.panel ul{margin:6px 0;padding-inline-start:20px}
+.draft{background:#fff;border:1px solid #b0bec5;border-radius:6px;padding:10px;line-height:1.9;direction:rtl;text-align:start;font-size:14px}
+.steps{display:flex;gap:8px;margin-bottom:14px}.step{flex:1;padding:8px;border-radius:6px;background:#eceff1;text-align:center;font-size:13px}.step.on{background:#1976d2;color:#fff}
+input,.fld{border:1px solid #b0bec5;border-radius:5px;padding:6px 9px;background:#fff;display:block;min-height:32px}
+.note{background:#e8eaf6;border-radius:6px;padding:8px 10px;margin:6px 0;font-size:13px}
+</style></head><body><div class="app">
+<div class="side"><div class="logo">Tahseel AI<small>مساعد التحصيل والائتمان</small></div><div class="nav"><a class="">لوحة المتابعة</a><a class="">قائمة التحصيل</a><a class="on">العملاء</a><a class="">الفواتير محل النزاع</a><a class="">استيراد البيانات</a><a class="">السياسات والقواعد</a><a class="">الإعدادات</a><a class="">سجل المراجعة</a></div></div>
+<div class="main"><div class="top"><h1>العميل: شركة ABC للتجارة</h1><div class="chips">
+<span class="chip">الدور: مدير مالي</span>
+<span class="lang"><span class="">EN</span><span class="on">عربي</span></span></div></div>
+
+<div class="card" style="margin-bottom:14px;display:flex;justify-content:space-between;align-items:center">
+ <div><b style="font-size:18px">شركة ABC للتجارة</b><span class="tag">عادي</span>
+  <div class="muted">مندوبة المبيعات: منى · المحصّل المسؤول: أحمد · القناة المفضلة: واتساب</div></div>
+ <div style="text-align:end"><div class="muted">درجة المخاطرة</div><span class="badge b-HIGH">مرتفع · 70</span></div></div>
+<div class="grid g4" style="margin-bottom:14px">
+ <div class="card kpi"><h3>الرصيد المستحق</h3><div class="v">420 ألف ج.م</div></div>
+ <div class="card kpi"><h3>المتأخر</h3><div class="v">310 ألف ج.م</div><div class="s">8 فواتير</div></div>
+ <div class="card kpi"><h3>الأولوية</h3><div class="v">100</div><div class="s">الاستعجال 2.0: وعد انكسر خلال آخر 7 أيام</div></div>
+ <div class="card kpi"><h3>الوعود</h3><div class="v">1 / 3</div><div class="s">تم الوفاء بها</div></div></div>
+<div class="grid" style="grid-template-columns:1.25fr 1fr;align-items:start">
+ <div class="grid">
+  <div class="card"><h3>سبب الدرجة (70)</h3><div class="fx"><div class="l">أقدم فاتورة متأخرة: 52 يوماً</div><span class="bar" style="width:182px;background:#ef6c00"></span><b>+26</b><span class="muted">/ 30</span></div><div class="fx"><div class="l">متوسط التأخير التاريخي: 32 يوماً</div><span class="bar" style="width:126px;background:#ef6c00"></span><b>+18</b><span class="muted">/ 25</span></div><div class="fx"><div class="l">وعدان مكسوران خلال 12 شهراً</div><span class="bar" style="width:119px;background:#ef6c00"></span><b>+17</b><span class="muted">/ 25</span></div><div class="fx"><div class="l">الدفع يتباطأ (45 يوماً بعد 32)</div><span class="bar" style="width:63px;background:#ef6c00"></span><b>+9</b><span class="muted">/ 20</span></div><div class="muted">النقاط تجمع إلى الدرجة. المبلغ المتأخر يظهر بجانب الدرجة وليس داخلها.</div></div>
+  <div class="card"><h3>الفواتير المتأخرة (4 من 8)</h3><table><tr><th>الفاتورة</th><th>المبلغ</th><th>الاستحقاق</th><th>أيام التأخير</th></tr><tr><td>INV-1042</td><td>70 ألف ج.م</td><td>2026-09-09</td><td>52</td></tr><tr><td>INV-1049</td><td>55 ألف ج.م</td><td>2026-09-17</td><td>44</td></tr><tr><td>INV-1051</td><td>40 ألف ج.م</td><td>2026-09-24</td><td>37</td></tr><tr><td>INV-1063</td><td>25 ألف ج.م</td><td>2026-10-08</td><td>23</td></tr></table>
+   <div class="muted" style="margin-top:6px">عرض الكل · تعليم كنزاع</div></div>
+  <div class="card"><h3>الملاحظات والوعود</h3>
+   <div class="note">ملاحظة من أحمد، 12 أكتوبر: العميل يفيد بأن السداد سيكون بعد الإجازة؛ يفضّل واتساب.</div>
+   <div class="note">وعد 80 ألف ج.م حتى 24 أكتوبر: مكسور</div>
+   <div style="border-top:1px dashed #b0bec5;margin-top:8px;padding-top:8px"><b>سجّل نتيجة مكالمة</b>
+    <div class="grid g3" style="margin-top:6px"><span class="fld">ملاحظة / نتيجة مكالمة ▾</span><span class="fld">مبلغ الوعد</span><span class="fld">تاريخ الوعد</span></div>
+    <span class="fld" style="margin-top:6px;min-height:48px">ماذا دار في المكالمة…</span>
+    <p style="margin:8px 0 0"><span class="btn">حفظ</span> <span class="muted">تُحفظ كذاكرة للعميل مع الكاتب والوقت</span></p></div></div>
+ </div>
+ <div class="panel">
+  <h3>توصية الذكاء الاصطناعي</h3>
+  <div><b style="font-size:16px">اتصال</b><span class="tag warn">تتطلب مراجعة المدير المالي</span></div>
+  <p style="margin:10px 0 2px"><b>لماذا؟</b></p>
+  <ul><li>أقدم فاتورة متأخرة منذ 52 يوماً.</li><li>310 ألف ج.م متأخرة.</li>
+   <li>يدفع عادةً بعد الموعد بـ 32 يوماً.</li><li>تم كسر وعدين من أصل 3.</li></ul>
+  <p style="margin:10px 0 2px"><b>السياسة</b></p>
+  <div class="note" style="background:#fff">قاعدة مفعّلة: مراجعة المدير بعد 30 يوم تأخير.<br>
+   <span class="muted">سياسة الائتمان §4.2 · تم استرجاع النص لشرحها</span></div>
+  <p style="margin:10px 0 2px"><b>الذاكرة المستخدمة</b></p>
+  <div class="muted">ملاحظة من أحمد، 12 أكتوبر · وعد 24 أكتوبر: مكسور</div>
+  <p style="margin:12px 0 4px"><b>المسودة (بالعربية)</b> <span class="muted">النبرة:</span>
+   <span class="tag">رسمية ▾</span><span class="muted"> ودّية · حازمة</span></p>
+  <div class="draft">السلام عليكم ورحمة الله، السادة شركة ABC للتجارة المحترمين. نود تذكيركم بوجود فواتير مستحقة السداد بإجمالي 310,000 جنيه، وأقدمها منذ 52 يوماً. نرجو التكرم بإفادتنا بموعد السداد المناسب خلال هذا الأسبوع حتى نتمكن من ترتيب الأمر. ولكم جزيل الشكر.</div>
+  <div class="muted" style="margin:6px 0">✓ اجتازت المسودة الفحص: لا تهديدات قانونية ولا عبارات ممنوعة.</div>
+  <div style="display:flex;gap:8px;margin-top:8px"><span class="btn p">اعتماد</span><span class="btn">تعديل</span><span class="btn d">رفض</span></div>
+  <div class="muted" style="margin-top:8px">تحصيل لا يرسل الرسالة أبداً؛ يرسلها شخص. للمحصّل يتحول زر الاعتماد إلى «إرسال لمراجعة المدير».</div>
+  <div class="fld" style="margin-top:10px">اسأل الوكيل عن هذا العميل…</div>
+ </div></div>
+<div class="sample">هيكل تخطيطي. بيانات تجريبية لتوضيح التصميم فقط وليست نتيجة.</div>
+</div></div></body></html>

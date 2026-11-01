@@ -1,0 +1,41 @@
+digraph F {
+  graph [rankdir=LR, fontname="DejaVu Sans", fontsize=12, nodesep=0.3, ranksep=0.6, pad=0.3];
+  node  [fontname="DejaVu Sans", fontsize=11, shape=box, style="rounded,filled", fillcolor="white", color="#555555", margin="0.14,0.08"];
+  edge  [fontname="DejaVu Sans", fontsize=9, color="#555555", arrowsize=0.7];
+
+  login [label="Sign in\n(language toggle on every page)", fillcolor="#ECEFF1"];
+  fm  [label="Owner or\nFinance Manager", shape=ellipse, fillcolor="#E3F2FD"];
+  col [label="Collector", shape=ellipse, fillcolor="#E8F5E9"];
+
+  subgraph cluster_mgr { label="Manager screens"; style="rounded,filled"; fillcolor="#E3F2FD"; color="#90CAF9";
+    dash [label="Executive dashboard\n+ Health Report"];
+    imp  [label="Import\nupload, map, validate, preview"];
+    pol  [label="Policies and rules"];
+    set  [label="Settings\n(weights, caps, tone defaults)"];
+    aud  [label="Audit log"];
+  }
+  subgraph cluster_shared { label="Shared screens (Collectors see assigned customers only)"; style="rounded,filled"; fillcolor="#FFF3E0"; color="#FFCC80";
+    queue [label="Collection Queue"];
+    prof  [label="Customer Profile"];
+    ai    [label="AI recommendation panel\nreasons, policy, memory used"];
+    draft [label="Arabic draft\ntone, rule-based check"];
+    dec   [label="Approve / Edit / Reject\n(flagged items need a manager)", fillcolor="#FFF9C4"];
+    task  [label="Task created\naudit entry written", fillcolor="#C8E6C9"];
+    rec   [label="Record note, call result,\npromise (customer memory)"];
+    disp  [label="Disputed invoices"];
+  }
+
+  login -> fm; login -> col;
+  fm -> dash; fm -> imp; fm -> pol; fm -> set; fm -> aud; fm -> queue;
+  col -> queue;
+  imp -> dash [label="Health Report"];
+  dash -> queue [label="top accounts"];
+  queue -> prof [label="open a customer"];
+  prof -> ai; ai -> draft; draft -> dec; dec -> task;
+  prof -> rec [label="after a call"];
+  rec -> ai [label="used next time", style=dashed];
+  prof -> disp [label="mark disputed"];
+  disp -> queue [label="out of ranking", style=dashed];
+  pol -> ai [label="rules and passages", style=dashed];
+  set -> queue [label="weights, caps", style=dashed];
+}
