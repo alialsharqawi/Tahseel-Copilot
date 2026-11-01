@@ -1,0 +1,38 @@
+sequenceDiagram
+    autonumber
+    actor C as Collector
+    participant UI as Web UI
+    participant API as FastAPI
+    participant O as Orchestrator
+    participant T as Tools
+    participant L as LLMClient (OpenRouter)
+    participant DB as PostgreSQL + pgvector
+    actor M as Finance Manager
+
+    C->>UI: Ask "What should we do with ABC Trading?"
+    UI->>API: POST /agent/run
+    API->>API: Check role, tenant, assigned customer
+    API->>O: run(customer, question, conversation)
+    loop until the answer is ready
+        O->>L: messages + tool schema
+        L-->>O: tool call
+        O->>T: execute (tenant-scoped, logged)
+        T->>DB: read numbers, rules, passages, memory
+        T-->>O: tool result (numbers come from code)
+    end
+    O->>L: tool results
+    L-->>O: answer with reasons and citations
+    O->>DB: save recommendation (pending), agent run
+    O-->>API: recommendation
+    API->>DB: audit entry
+    API-->>UI: recommendation panel
+    C->>UI: Generate a draft (choose a tone)
+    UI->>API: POST /customers/{id}/drafts
+    API->>T: draft + rule-based check
+    T-->>API: Arabic draft, check result
+    M->>UI: Edit one sentence, approve
+    UI->>API: POST /collection/recommendations/{id}/approve
+    API->>API: Check that this role may approve (flagged items need a manager)
+    API->>DB: mark approved or edited, create the task, save the draft version, audit entry
+    Note over API,DB: Task creation is rejected for any recommendation that is not approved
+    API-->>UI: done (nothing was sent externally)

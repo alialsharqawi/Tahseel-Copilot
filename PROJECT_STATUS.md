@@ -7,7 +7,7 @@
 
 - Idea, scope, tiers, and non-goals defined (`docs/foundation/Tahseel_AI_Final_Concept.md`)
 - 36 decisions recorded with reasons (`docs/governance/Tahseel_AI_Decision_Log.md`, D1 to D36)
-- Detailed specification with scoring formulas, a 21-table data model, API, and acceptance criteria (`docs/technical/Tahseel_AI_PRD.md`, version 1.1)
+- Detailed specification with scoring formulas, a 19-table data model, API, and acceptance criteria (`docs/technical/Tahseel_AI_PRD.md`, version 1.1)
 - Technical strength case, memory design, evaluation plan, and security (`docs/technical/Tahseel_AI_Technical_Strength.md`)
 - Business case with evidence labels, verified sources, competitor check, stakeholder analysis, ROI model, and validation plan (`docs/business/Tahseel_AI_Business_Strength.md`)
 - Multi-sector design (`docs/architecture/Tahseel_AI_Adaptability_Strategy.md`)

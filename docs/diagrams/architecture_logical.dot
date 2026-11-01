@@ -1,0 +1,51 @@
+digraph G {
+  graph [rankdir=TB, fontname="DejaVu Sans", fontsize=12, nodesep=0.35, ranksep=0.55, pad=0.3, compound=true];
+  node  [fontname="DejaVu Sans", fontsize=11, shape=box, style="rounded,filled", fillcolor="white", color="#555555", margin="0.16,0.08"];
+  edge  [fontname="DejaVu Sans", fontsize=9, color="#555555", arrowsize=0.7];
+
+  subgraph cluster_client { label="Client"; style="rounded,filled"; fillcolor="#E3F2FD"; color="#90CAF9";
+    ui [label="Next.js / React (TypeScript)\nExecutive dashboard  |  Collection Queue  |  Customer Profile + AI panel\nArabic (RTL) and English, language toggle"]; }
+
+  subgraph cluster_api { label="FastAPI (the only door to data)"; style="rounded,filled"; fillcolor="#E8EAF6"; color="#9FA8DA";
+    api [label="Authentication  |  Role checks (Owner, Finance Manager, Collector)\nTenant scoping  |  Validation  |  Audit hooks"];
+    gate [label="Human approval gateway\nexecution endpoints reject anything not approved", fillcolor="#FFF9C4"]; }
+
+  subgraph cluster_det { label="Deterministic side (no LLM)"; style="rounded,filled"; fillcolor="#E8F5E9"; color="#A5D6A7";
+    eng [label="Receivables engine\noverdue, aging, risk, priority, forecast\npolicy-rule evaluation, suggested action, KPIs"];
+    imp [label="Import and jobs\nCSV / Excel adapter, mapping, validation,\nHealth Report (background tasks)"]; }
+
+  subgraph cluster_ai { label="Agent side"; style="rounded,filled"; fillcolor="#FFF3E0"; color="#FFCC80";
+    orch [label="Agent orchestrator\nplain tool-calling loop; every tool call logged"];
+    tools [label="Tool groups\nReceivables | Risk and Priority | Policy (rules + RAG) | Forecast\nHistory and Memory (read only) | Drafting | Tasks (gated)", shape=box];
+    rag [label="Policy RAG\nparse, chunk, embed, tenant-filtered vector search, cite"];
+    draft [label="Draft generator\nArabic, tone options, rule-based draft check"];
+    llm [label="LLMClient\nper-task models, timeouts, retries,\nfallback, token and cost logging"]; }
+
+  subgraph cluster_ext { label="External"; style="rounded,filled"; fillcolor="#F3E5F5"; color="#CE93D8";
+    or [label="OpenRouter\n(third-party models)"];
+    emb [label="Multilingual embedding model\n(local)"]; }
+
+  subgraph cluster_data { label="Data"; style="rounded,filled"; fillcolor="#ECEFF1"; color="#B0BEC5";
+    db [label="PostgreSQL + pgvector\nbusiness tables, customer memory, conversation memory, policy rules,\ntenant settings, document chunks and embeddings", shape=cylinder, fillcolor="white"];
+    audit [label="audit_logs (append-only)\nagent_runs", shape=cylinder, fillcolor="white"]; }
+
+  ui -> api [label="HTTPS"];
+  api -> eng [label="queries,\nqueue"];
+  api -> imp [label="upload"];
+  api -> orch [label="ask the agent"];
+  orch -> tools;
+  tools -> eng [label="numbers, rules"];
+  tools -> rag [label="policy passages"];
+  tools -> draft [label="drafts"];
+  orch -> llm;
+  draft -> llm;
+  llm -> or [label="API"];
+  rag -> emb [label="embed"];
+  eng -> db; imp -> db; rag -> db; tools -> db [label="read memory", style=dashed];
+  orch -> api [label="recommendation\n(pending)", style=dashed, constraint=false];
+  api -> gate [label="approve / edit / reject"];
+  gate -> db [label="task, draft version"];
+  api -> audit [label="every action"];
+  gate -> audit;
+  orch -> audit [label="runs, tool calls", style=dashed];
+}

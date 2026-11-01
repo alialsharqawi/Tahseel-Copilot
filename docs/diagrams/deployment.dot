@@ -1,0 +1,31 @@
+digraph D {
+  graph [rankdir=LR, fontname="DejaVu Sans", fontsize=12, nodesep=0.4, ranksep=0.8, pad=0.3, compound=true];
+  node  [fontname="DejaVu Sans", fontsize=11, shape=box, style="rounded,filled", fillcolor="white", color="#555555", margin="0.16,0.09"];
+  edge  [fontname="DejaVu Sans", fontsize=9, color="#555555", arrowsize=0.7];
+
+  user [label="Browser\n(Arabic or English)", fillcolor="#E3F2FD"];
+  dev  [label="Developers\nGitHub repository", fillcolor="#E3F2FD"];
+
+  subgraph cluster_ci { label="CI (GitHub Actions)"; style="rounded,filled"; fillcolor="#FFFDE7"; color="#FFF59D";
+    ci [label="lint, tests (pytest),\nbuild images"]; }
+
+  subgraph cluster_host { label="Host: Docker Compose (Delivery tier)"; style="rounded,filled"; fillcolor="#ECEFF1"; color="#B0BEC5";
+    proxy [label="Reverse proxy\nHTTPS, automatic TLS"];
+    fe    [label="frontend\nNext.js"];
+    be    [label="backend\nFastAPI + background tasks\nlocal embedding model"];
+    db    [label="db\nPostgreSQL + pgvector\n(volume, backups noted in README)", shape=cylinder, fillcolor="#FFFFFF"];
+    env   [label="Environment variables\n(secrets are not in the repository)", shape=note, fillcolor="#FFF3E0"];
+  }
+
+  or [label="OpenRouter\n(third-party models)\nsynthetic data only in the demo", fillcolor="#F3E5F5"];
+
+  user -> proxy [label="HTTPS"];
+  proxy -> fe;
+  proxy -> be [label="/api/v1"];
+  fe -> be [style=dashed, label="API calls"];
+  be -> db;
+  be -> or [label="LLMClient\n(timeouts, retries, fallback)"];
+  env -> be [style=dotted, arrowhead=none];
+  dev -> ci [label="push, pull request"];
+  ci -> proxy [label="deploy after the core slice works", style=dashed, lhead=cluster_host];
+}
