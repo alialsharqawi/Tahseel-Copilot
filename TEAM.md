@@ -16,19 +16,23 @@ Names below are the display names from the team group chat. Replace them with fu
 
 **Team Leader (submits on the LMS):** [to confirm]
 
+Open items about the team (leader, roles, GitHub usernames) are also tracked in `PROJECT_STATUS.md`.
+
 ## Why roles must be agreed before the first commit
 
 Team Collaboration is 10% of the grade, and it is judged from the repository history. Each member needs a clear area of ownership and commits under their own GitHub account.
 
-A role split to discuss (a proposal, not agreed):
+A role split to discuss (a proposal, not agreed). The last column suggests which documents each area looks after:
 
-| Area | Covers |
-|---|---|
-| Architecture and agent | Orchestration, tool calling, integration |
-| Backend and data | FastAPI, database, import, risk, priority, forecast, synthetic data |
-| RAG and memory | Document ingestion, retrieval, citations, memory, evaluation |
-| Frontend | Dashboard, queue, customer profile, Arabic and English UI |
-| Documentation and presentation | LMS documents, slides, demo video |
+| Area | Covers | Documents it looks after |
+|---|---|---|
+| Architecture and agent | Orchestration, tool calling, integration | `Technical_Strength`, `Adaptability_Strategy` |
+| Backend and data | FastAPI, database, import, risk, priority, forecast, synthetic data | The data model and API in the `PRD` |
+| RAG and memory | Document ingestion, retrieval, citations, memory, evaluation | The memory and evaluation parts of `Technical_Strength` |
+| Frontend | Dashboard, queue, customer profile, Arabic and English UI | UI/UX design and wireframes |
+| Documentation and presentation | LMS documents, slides, demo video | `Final_Pitch`, `Business_Strength`, the LMS documentation |
+
+The roles in the software (Owner, Finance Manager, Collector) are product roles for the customer's staff. They are not team roles.
 
 ## Working agreements (proposed)
 

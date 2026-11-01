@@ -8,47 +8,41 @@ DEPI graduation project (LMS assignment: "DEPI GradProject"). Team of five.
 
 ## In plain language
 
-Egyptian distributors sell to other businesses on credit. Their finance teams track unpaid invoices in Excel, ERP exports, and WhatsApp, and decide who to call each day mostly by feel.
+Egyptian distributors sell to other businesses on credit. Their finance teams track unpaid invoices in Excel, ERP exports, and WhatsApp, with little support in deciding who to call each day.
 
-Tahseel reads the receivables data, scores each customer's risk and explains the score, finds the relevant clause in the company's own credit policy, remembers past notes and promises, recommends the next action, and drafts an Arabic message. A human approves everything. Nothing is sent automatically.
+Tahseel reads the receivables data, scores each customer's risk and explains the score, finds the relevant rule and clause in the company's own credit policy, remembers past notes and promises, recommends the next action, and drafts an Arabic message. A human approves everything. Nothing is sent automatically.
 
 ---
 
 ## Status
 
-Foundation phase is done: idea, scope, decisions, business case, pitch. **No code yet.**
-Six extra documents were added later and are being reconciled with the Decision Log. See `PROJECT_STATUS.md` and `docs/governance/Tahseel_AI_Reconciliation_Notes.md`.
+Documentation is consolidated (31 October 2026). **No code yet.** The current status, next steps, and open items are in `PROJECT_STATUS.md`.
 
 ---
 
 ## Where each file lives
 
 ```text
-Tahseel-Copilot/
+tahseel-ai/
 ├── README.md, CLAUDE.md, LMS_Requirements.md, TEAM.md, PROJECT_STATUS.md, GLOSSARY.md
 ├── docs/
 │   ├── foundation/
-│   │   └── Tahseel_AI_Final_Concept.md          exact MVP scope, demo flow, architecture, data model
+│   │   └── Tahseel_AI_Final_Concept.md          scope, tiers, demo flow, architecture, roadmap
 │   ├── governance/
 │   │   ├── Tahseel_AI_Decision_Log.md           every decision: chosen, not chosen, why
-│   │   ├── Tahseel_AI_Reconciliation_Notes.md   conflicts between added documents and the log
-│   │   ├── Tahseel_AI_Core_Challenges_And_Trust.md     trust, security, learning, disputes, field collection (Arabic)
-│   │   ├── Tahseel_AI_Institutional_Grill_Session.md   hard investor, credit, and security questions with answers (Arabic)
-│   │   └── Tahseel_AI_Validation_Critique.md           "is lateness just normal?" and the honest value framing (Arabic)
+│   │   └── Tahseel_AI_Consistency_Ledger.md     findings from the consolidation review and their status
 │   ├── technical/
-│   │   ├── Tahseel_AI_Technical_Strength.md     trust design, memory, evaluation plan
-│   │   └── Tahseel_AI_PRD.md                    original PRD, wider than the MVP
+│   │   ├── Tahseel_AI_PRD.md                    detailed specification: formulas, schema, API, acceptance criteria
+│   │   └── Tahseel_AI_Technical_Strength.md     trust design, memory, evaluation plan, security
 │   ├── architecture/
-│   │   └── Tahseel_AI_Adaptability_Strategy.md  serving many sectors: canonical schema, adapters, tenant config (Arabic, file is cut off)
+│   │   └── Tahseel_AI_Adaptability_Strategy.md  serving many sectors: canonical schema, adapters, configuration
 │   ├── business/
-│   │   ├── Tahseel_AI_Business_Strength.md      evidence, ROI model, competitors, validation plan
-│   │   ├── Tahseel_AI_Idea_Evaluation.md        target customer and stakeholder map (Arabic)
-│   │   └── Tahseel_AI_Market_Validation.md      market evidence and positioning (Arabic, to merge into Business_Strength)
+│   │   └── Tahseel_AI_Business_Strength.md      evidence, stakeholders, competitors, ROI, validation plan
 │   ├── presentation/
-│   │   ├── Tahseel_AI_Final_Pitch.md            pitch, slide skeleton, demo script, Q&A
-│   │   └── Tahseel_AI_Pitch.md                  original pitch
+│   │   └── Tahseel_AI_Final_Pitch.md            pitch, slide skeleton, demo script, Q&A
 │   ├── lms/                                     what gets submitted
-│   └── diagrams/                                ERD, architecture, wireframes
+│   ├── diagrams/                                ERD, architecture, wireframes
+│   └── archive/                                 superseded raw material, kept for history; not requirements
 └── _private/                                    git-ignored: screenshots and personal references
 ```
 
@@ -61,40 +55,42 @@ Tahseel-Copilot/
 | Order | File | Why read it |
 |---:|---|---|
 | 1 | `README.md` (this file) | The big picture and the 12 key facts below |
-| 2 | `LMS_Requirements.md` | What we must submit, the deadline, and how we are graded |
-| 3 | `docs/foundation/Tahseel_AI_Final_Concept.md` | Exact scope: what we build, what we do not, the demo flow, architecture |
+| 2 | `LMS_Requirements.md` | What we must submit and how we are graded |
+| 3 | `docs/foundation/Tahseel_AI_Final_Concept.md` | Exact scope: what we build, in which tier, what we do not, the demo flow |
 | 4 | `docs/governance/Tahseel_AI_Decision_Log.md` | Every major choice: what we chose, what we rejected, and why |
-| 5 | `docs/governance/Tahseel_AI_Reconciliation_Notes.md` | Where the later documents disagree with the log, and the proposed fixes |
-| 6 | `docs/technical/Tahseel_AI_Technical_Strength.md` | How the technical design earns trust; memory design; evaluation plan |
-| 7 | `docs/business/Tahseel_AI_Business_Strength.md` | Evidence for the problem, value model, competitors, validation plan |
-| 8 | `docs/presentation/Tahseel_AI_Final_Pitch.md` | The pitch, slide skeleton, demo script, likely questions and answers |
-| 9 | `docs/technical/Tahseel_AI_PRD.md` and `docs/presentation/Tahseel_AI_Pitch.md` | The original product definition: full data model, API, risk weights, RAG pipeline. The Final Concept narrows it |
+| 5 | `docs/technical/Tahseel_AI_Technical_Strength.md` | How the design earns trust; memory design; evaluation plan; security |
+| 6 | `docs/business/Tahseel_AI_Business_Strength.md` | Evidence for the problem, stakeholders, competitors, value model, validation plan |
+| 7 | `docs/technical/Tahseel_AI_PRD.md` | The detailed specification: risk and priority formulas, data model, API, acceptance criteria |
+| 8 | `docs/architecture/Tahseel_AI_Adaptability_Strategy.md` | How one platform serves different sectors through configuration |
+| 9 | `docs/presentation/Tahseel_AI_Final_Pitch.md` | The pitch, slide skeleton, demo script, likely questions and answers |
 | Anytime | `GLOSSARY.md`, `TEAM.md`, `PROJECT_STATUS.md` | Terms, people, and current status |
+
+When two documents disagree, the higher one in the hierarchy wins: Decision Log, then Final Concept, then PRD, then the strength documents, then the pitch (Decision Log, D35).
 
 ---
 
 ## The 12 things everyone on the team must know
 
 1. **Problem:** collection decisions are made from spreadsheets and memory. We turn receivables data into a ranked daily action list.
-2. **Users:** the Collection Officer uses it daily, the Finance Manager approves and oversees, the Owner sees the summary.
-3. **Numbers come from tested code, never from the LLM.** The LLM explains, retrieves policy, drafts messages, and answers questions by calling tools.
-4. **The daily queue is a pipeline. The agent is for investigation** and open questions.
+2. **Users:** the Collector uses it daily, the Finance Manager approves and oversees, the Owner sees the summary.
+3. **Numbers come from tested code, never from the LLM.** The LLM explains, drafts messages, and answers questions by calling tools.
+4. **The Collection Queue is a pipeline. The agent is for investigation** and open questions.
 5. **Risk is a transparent weighted-rules score, not machine learning.** Every score lists its reasons.
-6. **RAG is cited.** If no relevant policy exists, the system says so. It never invents policy.
-7. **Memory stores only human-confirmed events** (notes, promises, decisions), not AI guesses.
+6. **Policy is two layers:** structured rules evaluated by code, and cited document passages for explanation. If no relevant policy exists, the system says so.
+7. **Customer memory stores only human-authored or rule-derived events** (notes, promises, decisions). Conversation memory is short-term context and never a source of facts.
 8. **A human approves before anything consequential happens,** enforced at the API level.
 9. **We use synthetic data and never claim real customers, pilots, or interviews.** Every business claim carries an evidence label.
 10. **Stack:** Next.js, FastAPI, PostgreSQL with pgvector, OpenRouter for LLM access, Docker.
 11. **The UI is fully Arabic (RTL) and fully English,** with a language toggle.
 12. **We aim for production quality** (HTTPS, CI, logging, tests), but only after the core demo flow works.
 
-One framing to keep in mind: **Tahseel does not prevent lateness. It shortens it and reduces forgetting.**
+One framing to keep in mind: **Tahseel does not prevent lateness. It is designed to shorten it and reduce forgetting** (a hypothesis we will test).
 
 ---
 
-## Not doing (non-goals)
+## Not doing (non-goals for the capstone)
 
-Payments or wallets, automatic credit blocking, automatic WhatsApp or email sending, legal advice, a trained ML risk model, ERP or CRM integrations, cheque tracking (deferred until validated).
+Payments or wallets, automatic credit blocking, automatic WhatsApp or email sending, legal advice, a trained ML risk model, ERP or CRM integrations (only the CSV/Excel adapter is built), credit-limit recommendations. Cheque tracking and other later ideas are on the roadmap in `Final_Concept`, section 12.
 
 ---
 
@@ -105,8 +101,13 @@ Payments or wallets, automatic credit blocking, automatic WhatsApp or email send
 - **Update `PROJECT_STATUS.md`** when something is finished, blocked, or newly decided.
 - **Everyone commits under their own GitHub account.** Team collaboration is graded on the repository history.
 - **If a document contradicts the Decision Log, flag it** and resolve it in the log rather than leaving both.
+- **Each topic has one owner file;** other files link to it instead of repeating it (D35).
 
 ---
+
+## Quick start
+
+Not runnable yet: there is no code. This section will hold the setup and run instructions when the code starts.
 
 ## Planned code layout (once coding starts)
 
