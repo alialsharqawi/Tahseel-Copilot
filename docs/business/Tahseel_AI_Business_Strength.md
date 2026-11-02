@@ -1,7 +1,7 @@
 # Tahseel AI — Business Strength
 
 **Purpose:** Why the business case is credible, what is evidenced vs assumed, and how we validate it next.
-**Status:** Desk research only. Last updated 31 October 2026. No customer interviews, no real data, no pilots yet. Every claim carries an evidence label.
+**Status:** Desk research only. Last updated 2 November 2026. No customer interviews, no real data, no pilots yet. Every claim carries an evidence label.
 **Evidence labels** (defined in `GLOSSARY.md`): **Sourced** (source cited, caveats stated), **Indicative** (sourced, but small or dated), **Hypothesis** (to be tested), **Assumption** (an input we chose), **To verify** (source not checked).
 **Companions:** `Tahseel_AI_Decision_Log.md`, `Tahseel_AI_Final_Concept.md`, `Tahseel_AI_Technical_Strength.md`, `Tahseel_AI_PRD.md`.
 
@@ -127,20 +127,22 @@ These are scenarios to be replaced with real inputs from a pilot. We never prese
 
 ## 5. Competitive Landscape
 
-We checked vendor pages and marketplace listings on 31 October 2026. Marketplace listings (Capterra, GetApp, Xero) are secondary sources.
+We checked vendor pages, official documentation, and marketplace listings on 31 October and 2 November 2026. Marketplace listings (Capterra, GetApp, Xero) are secondary sources. A fuller comparison is in the Literature Review part of the LMS documentation (`docs/lms/parts/02_Literature_Review.md`).
 
 | Alternative | What it is | Features relevant to us | Languages and markets seen | Label |
 |---|---|---|---|---|
 | **Excel plus manual follow-up** (the real competitor) | Spreadsheets, calls, WhatsApp | Free, familiar | n/a | n/a |
-| **ERP aging reports** | Reports from existing accounting data | Data already there | n/a | Hypothesis: reports, not decisions |
+| **ERP built-in follow-ups** (Odoo; Daftra in Egypt) | Reminders and follow-up reports inside the accounting system | Odoo: follow-up levels triggered by days overdue, with email, SMS, letter, or a manual task; a responsible person per customer. Daftra: automatic reminders by email or SMS, installments, Egyptian e-invoicing | Odoo has an Egyptian localization (partner page); Daftra offers Arabic and English. Prioritization and policy-grounded advice not seen | **Sourced** (Odoo documentation); Daftra and the Egypt details **Indicative** |
 | **ezyCollect** (Australian; now part of Sidetrade) | An add-on for accounting and ERP systems (its own pages list MYOB, Xero, NetSuite, Dynamics 365, Sage Intacct, Acumatica) | Automated invoice reminders and communications, payment options, credit risk monitoring, aging, audit trail | Australia, New Zealand, US phone lines; no Arabic mentioned in what we saw | **Sourced** (vendor pages); channels such as SMS are from a third-party page: To verify |
 | **CreditorWatch Collect** (formerly Debtor Daddy; Australian) | An AR workflow and payments platform integrated with Xero, MYOB, QuickBooks | **Risk-based prioritization of debtors, call queues, call-outcome tracking**, automated reminders, dashboards | Australia and New Zealand focus | **Sourced** (vendor help page, Xero listing) |
 | **Chaser** (UK) | An AR automation platform integrated with Xero, QuickBooks, NetSuite, Sage, Dynamics 365 | Reminders by email, SMS, and auto-call; **AI insights on which debtors to prioritize**; cash-flow forecasting | Marketplace listing shows English only; available in many countries | **Indicative** (marketplace listings) |
 | **Upflow** | An AR platform for B2B finance teams (Xero integration) | Reminders, workflows, analytics, payment features | Marketplace listings show English and French; UK and US on Xero | **Indicative** (marketplace listings) |
 | **Gaviti** | An enterprise AR and invoice-to-cash platform | **AI-driven prioritization from payment behavior**, dispute tracking, cash application, credit management, ERP integrations; aimed at medium and large companies | Not checked | **Sourced** (vendor page) for prioritization; the rest **Indicative** |
+| **HighRadius** | An enterprise order-to-cash platform | **AI-prioritized worklist** from 20+ variables and 12 months of payment history, with a suggested action and assignment by collector capacity; delinquency prediction 30 days ahead; automated dunning; 50+ ERP integrations; it says implementation and return arrive within 3 to 6 months. Outcome figures and timings on its pages are vendor claims | Not checked | **Sourced** (vendor pages) |
+| **Sidetrade (Aimie)** | An enterprise order-to-cash platform with an autonomous AI collections agent | The agent places first-contact and follow-up calls and leaves voicemails on its own; a report says it was deployed for a hospitality group's finance teams in the Middle East, Africa, and Asia-Pacific; its ezyCollect unit launched a version for small businesses | Regional enterprise deployment reported | **Sourced** (press release); the deployment is **Indicative** (one report) |
 | **Local competitors** | None identified in a quick search | n/a | n/a | **To verify.** A quick search is not proof; run a proper scan of Google, LinkedIn, ERP vendors, and app directories |
 
-**What this means (an honest implication):** prioritization, forecasting, call tracking, and dispute handling already exist in global tools. Our wedge is **not** "a prioritized queue". It is the combination of: Arabic and the Egyptian context; an Excel-first start without an ERP; **policy grounding with citations**; **explainable factor lists**; **human approval by default** (several tools stress automation, and sending messages automatically is a non-goal for us); relationship-aware routing for strategic accounts; and a memory of notes and promises. Whether the other tools offer policy citations or factor-level explanations is **To verify**.
+**What this means (an honest implication):** prioritization, forecasting, call tracking, and dispute handling already exist in global tools, and the largest vendors now sell agents that contact customers on their own. We deliberately choose the opposite default: a person approves every message. Our wedge is **not** "a prioritized queue". It is the combination of: Arabic and the Egyptian context; an Excel-first start without an ERP; **policy grounding with citations**; **explainable factor lists**; **human approval by default** (several tools stress automation, and sending messages automatically is a non-goal for us); relationship-aware routing for strategic accounts; and a memory of notes and promises. Whether the other tools offer policy citations or factor-level explanations is **To verify**.
 
 **Positioning:** Tahseel is not a market leader and not a narrow niche. It is a specialized workflow, accounts receivable and credit control, that sits as an intelligence layer on top of the data a company already has.
 
@@ -261,6 +263,9 @@ This supports Real-World Value (10%) and Presentation (15%).
 - Chaser marketplace listings (secondary): https://www.capterra.ae/reviews/157101/chaser , https://www.getapp.com.au/software/107821/chaser
 - Upflow marketplace listings (secondary): https://www.capterra.com.au/software/193097/upflow , https://apps.xero.com/uk/collection/accounts-receivable-software/app/upflow
 - Gaviti vendor page: https://gaviti.com/?p=6362 ; third-party summary: https://cbinsights.com/company/gaviti
+- HighRadius: https://www.highradius.com/products/collections-management-software/ , https://www.highradius.com/?p=195740
+- Sidetrade press release: https://www.streetinsider.com/Globe+Newswire/Sidetrade+introduces+first-ever+AI+Cash+Collection+Agent%2C+autonomous+and+interactive/24833370.html ; MarketScreener: https://www.marketscreener.com/news/sidetrade-deploys-autonomous-ai-agent-for-accor-s-finance-function-ce7e51dcdf8ef724
+- Odoo follow-up documentation: https://github.com/odoo/documentation/pull/4497/files ; Daftra: https://daftra.com/en/sales
 
 **Not rechecked (To verify)**
 - Ohmyfin, Egypt invoice requirements: https://ohmyfin.ai/ar/invoice/requirements/egypt
