@@ -1,0 +1,30 @@
+digraph S {
+  graph [rankdir=LR, fontname="DejaVu Sans", fontsize=12, nodesep=0.35, ranksep=1.0, pad=0.3, compound=true];
+  node  [fontname="DejaVu Sans", fontsize=11, shape=box, style="rounded,filled", fillcolor="white", color="#555555", margin="0.14,0.08"];
+  edge  [fontname="DejaVu Sans", fontsize=9, color="#555555", arrowsize=0.7];
+
+  T [label="Tahseel AI", shape=ellipse, fillcolor="#FFF9C4", fontsize=14, style=filled, width=1.6];
+
+  subgraph cluster_users { label="Users"; style="rounded,filled"; fillcolor="#E8F5E9"; color="#A5D6A7";
+    col [label="Collector\n(daily user)"]; fm [label="Finance Manager / CFO\n(economic buyer, approver)"]; own [label="Owner\n(summary, users and roles)"]; }
+  subgraph cluster_inf { label="Influencers"; style="rounded,filled"; fillcolor="#FFF3E0"; color="#FFCC80";
+    sales [label="Sales Manager and reps\n(own the relationship)"]; }
+  subgraph cluster_en { label="Enablers"; style="rounded,filled"; fillcolor="#E3F2FD"; color="#90CAF9";
+    data [label="Data owner\n(accountant, ERP admin, IT)"]; }
+  subgraph cluster_aff { label="Affected, not users"; style="rounded,filled"; fillcolor="#F3E5F5"; color="#CE93D8";
+    cust [label="The distributor's customers\n(retailers, workshops)"]; }
+  subgraph cluster_ov { label="Oversight"; style="rounded,filled"; fillcolor="#ECEFF1"; color="#B0BEC5";
+    aud [label="Reviewers and auditors"]; }
+  subgraph cluster_cap { label="Capstone context"; style="rounded,filled"; fillcolor="#FFEBEE"; color="#EF9A9A";
+    ev [label="Technical Instructor\nand evaluators"]; team [label="Project team (five)"]; }
+
+  col -> T [label="follows the queue,\nrecords calls"];
+  fm -> T [label="approves flagged items,\nsets rules"];
+  own -> T [label="reads the summary"];
+  sales -> T [label="consulted first on\nstrategic accounts", style=dashed];
+  data -> T [label="exports the data"];
+  T -> cust [label="a person sends the message;\nreminder cap applies", style=dashed];
+  T -> aud [label="append-only\naudit log"];
+  ev -> T [label="grade against\nthe rubric", style=dotted];
+  team -> T [label="builds and documents", style=dotted];
+}
