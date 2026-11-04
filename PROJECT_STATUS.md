@@ -23,16 +23,14 @@
 1. Bring the team in: share `docs/team/ONBOARDING.md`, then each person fills their row in `docs/team/skills.csv` and sends it as a pull request. Fix names, roles, and the Team Leader in `TEAM.md`
 2. Set up GitHub (task T-001): the repository `tahseel-ai`, branch protection on `main`, the team as collaborators, the project board, and the labels (`bash .github/labels.sh`)
 3. Share the work: `python tools/team_tools.py suggest`, review and adjust `assignments.csv`, then create the issues in waves (`docs/team/TASK_ASSIGNMENT.md`)
-4. Finish the LMS documentation: the Project Planning part (T-090) from the backlog and the assignments, then assemble the PDF (T-091)
+4. Finish the LMS documentation: the Project Planning part (T-090) from the backlog and the assignments, then assemble the PDF (T-091) replacing `Tahseel_Project_Documentation_v1.pdf` in the root directory so the submitted LMS documentation link automatically reflects the final document
 5. Build in the order of the backlog: Core tasks first, then Should, then Delivery. The cut order is in the Decision Log, section E
-6. Slides, demo video, and the evaluation results, with real numbers from the demo and the evaluation
+6. Slides, demo video, and the evaluation results, with real numbers from the demo and the evaluation (updating the live Canva presentation link submitted on the LMS)
 
 ## Open items
 
 | Item | Detail |
 |---|---|
-| Announced dates | `LMS_Requirements.md` lists the dates as announced. Confirm with the Technical Instructor whether the first stage (19 Oct) was submitted and whether any extension exists |
-| Team Leader | Who submits on the LMS |
 | Team roles, skills, and GitHub usernames | `TEAM.md` and `docs/team/skills.csv` |
 | Project Documentation Guidelines | We do not have a copy. We work from an assumed structure (`LMS_Requirements.md`, section 3). Ask the instructor for it if possible |
 | OpenRouter models | Choose after testing tool calling, structured output, and Arabic quality (D12) |

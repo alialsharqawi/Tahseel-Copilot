@@ -18,12 +18,16 @@ Final graduation-project teams are approved, according to the division in the Go
 2. **Literature Review:** research similar projects or solutions; identify their strengths and weaknesses; compare them with our project to show the differences and what we can learn; document the sources used.
 3. **Requirements Gathering:** identify the beneficiaries and stakeholders and their needs; the functions and features the project will provide; quality requirements such as performance, security, and ease of use, matching the nature and track of the project.
 
-### Delivery method
-- Combine the required parts of the Project Documentation into **one PDF** and upload it to the team's GitHub repository.
-- After the upload, each Team Leader will find an assignment named "Graduation Project" under their name on the LMS platform. An explanatory file with the access steps is attached to the notice.
+### Delivery method & Submission Status
+- Combine the required parts of the Project Documentation into **one PDF** and upload it to the team's GitHub repository root (`Tahseel_Project_Documentation_v1.pdf`).
+- **Submission Status:** The Team Leader (Ali Al-Sharqawi) **already submitted** all required links on the LMS portal on time. Because formal grading is deferred to the final capstone evaluation, the submitted links act as dynamic live references:
+  1. **Documentation link:** Direct URL to `Tahseel_Project_Documentation_v1.pdf` in the repository root. *(The PDF remains permanently located at the root directory so the submitted link never breaks; once Stage 3 is complete, the newly compiled documentation replaces this file in-place).*
+  2. **GitHub link:** The team repository URL (`https://github.com/alialsharqawi/Tahseel-Copilot`).
+  3. **Presentation link:** Live Canva presentation link (submitted as a placeholder deck, to be populated with final slides and benchmark numbers in Stage 7).
 
-### Date in this notice
-- **Monday 19 October 2026**, stated as final and not extendable. This date has passed.
+### Dates and Milestones
+- **Initial Submission Deadline:** Successfully satisfied via dynamic submission links.
+- **Final Evaluation / Grading:** Conducted at the graduation project defense based on the active repository, live documentation PDF, and presentation deck.
 
 ### Other
 - The notice refers to a **Project Documentation Guidelines** file sent earlier to the groups (full details, deadlines, and the track-specific rules). We do not have a copy.

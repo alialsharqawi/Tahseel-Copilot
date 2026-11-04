@@ -14,7 +14,7 @@ Names below are the display names from the team group chat. Replace them with fu
 | 4 | Zynap | [to add] | [to agree] | Replace with full name |
 | 5 | Alaa | [to add] | [to agree] | Name not captured yet |
 
-**Team Leader (submits on the LMS):** [to confirm]
+**Team Leader (submits on the LMS):** Ali Al-Sharqawi (Confirmed; submitted the 3 dynamic LMS project links on time)
 
 Open items about the team (leader, roles, GitHub usernames) are also tracked in `PROJECT_STATUS.md`.
 
