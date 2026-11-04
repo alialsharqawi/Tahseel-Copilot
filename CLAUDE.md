@@ -9,7 +9,7 @@ This file is read automatically by Claude Code. For other tools, rename or copy 
 3. `docs/governance/Tahseel_AI_Decision_Log.md` (every decision and why)
 4. `docs/foundation/Tahseel_AI_Final_Concept.md` (exact scope and tiers)
 
-Then, as needed: `docs/technical/Tahseel_AI_PRD.md` (formulas, schema, API, acceptance criteria), `docs/technical/Tahseel_AI_Technical_Strength.md`, `docs/business/Tahseel_AI_Business_Strength.md`, `docs/architecture/Tahseel_AI_Adaptability_Strategy.md`, `LMS_Requirements.md`, `docs/presentation/Tahseel_AI_Final_Pitch.md`, `GLOSSARY.md`, `TEAM.md`.
+Then, as needed: `docs/technical/Tahseel_AI_PRD.md` (formulas, schema, API, acceptance criteria), `docs/technical/Tahseel_AI_Technical_Strength.md`, `docs/business/Tahseel_AI_Business_Strength.md`, `docs/architecture/Tahseel_AI_Adaptability_Strategy.md`, `LMS_Requirements.md`, `docs/presentation/Tahseel_AI_Final_Pitch.md`, `GLOSSARY.md`, `TEAM.md`, `CONTRIBUTING.md`, and `docs/team/AI_WORKING_GUIDE.md` (how contributors work and use AI).
 
 **Which document wins.** When two documents disagree, the higher one wins and the lower one gets fixed: the Decision Log, then Final Concept (scope), then the PRD (details for in-scope items), then the strength documents, then the pitch (Decision Log, D35). If you find a contradiction, say so to the user and resolve it in the log; do not pick silently.
 
@@ -47,6 +47,7 @@ Tahseel AI is an agentic credit-control copilot for Egyptian B2B distributors. I
 ## Working with the team
 
 - Reply in the language the user writes in. Keep files, code, and comments in English.
+- Prepare changes, but leave committing, pushing, and merging to the person, who commits under their own account. Never push to `main`, merge, or change repository settings (D38).
 - Prefer honest discussion and pushback over agreement. When asked to decide, give a recommendation with reasons and record it in the Decision Log, tagged with its origin as the log does.
 - Each topic has one owner file (D35). Link to it instead of repeating its content.
 - At the end of each work session, update `PROJECT_STATUS.md` and add any new decisions to the Decision Log using the same format (chosen, not chosen, why). List the files that changed.

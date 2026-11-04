@@ -2,7 +2,7 @@
 
 **Purpose:** A record of every major fork we faced, what we chose, what we did not choose, and why. It can be turned directly into the "Design Decisions" section of the documentation.
 
-**Status:** Last updated 31 October 2026 (consolidation round: D28 to D36). When a decision was changed later, its entry carries an "Amended by" line. A decision is only changed by editing or amending it here (see D35).
+**Status:** Last updated 2 November 2026 (consolidation round: D28 to D36; team workflow: D37 and D38). When a decision was changed later, its entry carries an "Amended by" line. A decision is only changed by editing or amending it here (see D35).
 
 **Final goals every decision serves**
 1. **Highest possible score on the capstone rubric:** System Architecture 20%, UI & Dashboard 15%, RAG & Memory 15%, Code Quality 15%, Presentation 15%, Real-World Value 10%, Team Collaboration 10%.
@@ -10,7 +10,7 @@
 
 **Origin tags:** `[Ali]` decided by Ali or taken from the PRD. `[Proposed]` proposed by Claude and accepted in discussion. `[Delegated]` Ali asked Claude to decide; Ali can override.
 
-**Companions:** `Tahseel_AI_Final_Concept.md` (scope), `Tahseel_AI_PRD.md` (detailed specification), `Tahseel_AI_Technical_Strength.md`, `Tahseel_AI_Business_Strength.md`, `Tahseel_AI_Final_Pitch.md`. Which document owns which topic is defined in D35.
+**Companions:** `Tahseel_AI_Final_Concept.md` (scope), `Tahseel_AI_PRD.md` (detailed specification), `Tahseel_AI_Technical_Strength.md`, `Tahseel_AI_Business_Strength.md`, `Tahseel_AI_Final_Pitch.md`, and `CONTRIBUTING.md` (how we work). Which document owns which topic is defined in D35.
 
 ---
 
@@ -354,6 +354,8 @@ The roadmap is kept in one place: `Tahseel_AI_Final_Concept.md`, section 12.
 | Pitch, Q&A, demo script | `Final_Pitch` |
 | People and roles | `TEAM` |
 | Rules for AI assistants | `CLAUDE.md` |
+| How we work: rules, review, commits | `CONTRIBUTING.md` |
+| Task steps, assignment system, skills, backlog, AI use by contributors | `docs/team/` (`HOW_TO_WORK_ON_A_TASK.md`, `TASK_ASSIGNMENT.md`, `SKILLS_MATRIX.md`, `backlog.csv`, `AI_WORKING_GUIDE.md`) |
 | Overview and links | `README` |
 
 - **Not chosen:** Several documents restating the same facts.
@@ -363,3 +365,28 @@ The roadmap is kept in one place: `Tahseel_AI_Final_Concept.md`, section 12.
 - **Chosen:** The recommended actions are CALL, WHATSAPP (a draft for a human to send), EMAIL (a draft for a human to send), WAIT, ESCALATE_TO_MANAGER, and TALK_TO_SALES_REP (for strategic accounts, before any contact). `REVIEW_CREDIT_TERMS` is removed from the MVP because credit decisions are out of scope. The Collection Queue shows a **suggested action** computed by rules (no LLM). The agent panel shows a **recommendation** with reasons and citations. When the two differ, the UI shows both and says why.
 - **Not chosen:** One unlabeled action field with two possible authors.
 - **Why:** Users should always know whether an action came from a rule or from the agent.
+
+---
+
+## H. Team Workflow Decisions (2 November 2026)
+
+**Context:** The team is growing from one person doing the documentation to five people building. These decisions set how work is shared and checked. Both entries are tagged `[Delegated]`; Ali can override either.
+
+### D37. Team workflow and skills-based assignment `[Delegated]`
+- **Chosen:**
+  - Work is organized as GitHub issues taken from a backlog (`docs/team/backlog.csv`) on a project board with the columns Backlog, Ready, In progress, In review, and Done. One task is one issue, one branch, and one pull request.
+  - The maintainer assigns tasks using a skills matrix (`docs/team/skills.csv`) and a suggestion tool (`tools/team_tools.py`). The tool suggests; a person decides and records any override. It balances skill fit, growth, load, shared knowledge, and dependency order.
+  - Every task has an assignee and a different reviewer. A person has at most two active tasks. Tasks in security, tenancy, authentication, the approval gate, or financial formulas get a reviewer who can do that skill alone. Learning tasks are allowed with a stronger reviewer, and a task that needs two different skills is paired or split.
+  - `main` is protected. A merge needs one approval and a passing check. Merges use a merge commit or a rebase, **not a squash**.
+- **Not chosen:** assigning by availability only; letting everyone pick freely (skills and load end up unbalanced); a tool that assigns automatically (it cannot know who is away or who wants to grow); squash merges (they hide the individual commits that are the evidence for Team Collaboration).
+- **Why:** The rubric grades Team Collaboration from the repository history, and the product's quality depends on the right person doing each part. The process is light enough to follow and it makes work and reviews visible.
+
+### D38. AI use policy for contributors `[Delegated]`
+- **Chosen:**
+  - AI tools are allowed for any task. The author is responsible for what they submit and must be able to explain it.
+  - An AI tool never receives secrets, real customer data, or personal data. If an AI answer and a project document disagree, the document wins (D35).
+  - Work in sensitive areas (authentication, tenant isolation, the approval gate, audit permissions, prompt injection) gets a second careful review.
+  - Every pull request states how AI was used: the tool, what it was used for, and what the author verified.
+  - An AI agent does not push to `main`, merge, or change repository settings. A person makes each commit, under their own account.
+- **Not chosen:** banning AI (it would not be followed and would remove a real benefit); unrestricted use without disclosure (the reviewer cannot tell where to look harder).
+- **Why:** AI makes people faster and makes confident mistakes. The product's central promise is that numbers and policy statements can be checked, so the team's own process has to be checkable too.

@@ -24,7 +24,7 @@ Documentation is consolidated (31 October 2026). **No code yet.** The current st
 
 ```text
 tahseel-ai/
-├── README.md, CLAUDE.md, LMS_Requirements.md, TEAM.md, PROJECT_STATUS.md, GLOSSARY.md
+├── README.md, CONTRIBUTING.md, CLAUDE.md, LMS_Requirements.md, TEAM.md, PROJECT_STATUS.md, GLOSSARY.md
 ├── docs/
 │   ├── foundation/
 │   │   └── Tahseel_AI_Final_Concept.md          scope, tiers, demo flow, architecture, roadmap
@@ -40,9 +40,12 @@ tahseel-ai/
 │   │   └── Tahseel_AI_Business_Strength.md      evidence, stakeholders, competitors, ROI, validation plan
 │   ├── presentation/
 │   │   └── Tahseel_AI_Final_Pitch.md            pitch, slide skeleton, demo script, Q&A
-│   ├── lms/                                     what gets submitted
+│   ├── team/                                    backlog, skills matrix, task assignment, onboarding, AI guide
+│   ├── lms/parts/                               the parts of the documentation submitted to the LMS
 │   ├── diagrams/                                ERD, architecture, wireframes
 │   └── archive/                                 superseded raw material, kept for history; not requirements
+├── .github/                                     task form, pull request template, label script
+├── tools/                                       team_tools.py: skills-based assignment and issue creation
 └── _private/                                    git-ignored: screenshots and personal references
 ```
 
@@ -64,6 +67,7 @@ tahseel-ai/
 | 8 | `docs/architecture/Tahseel_AI_Adaptability_Strategy.md` | How one platform serves different sectors through configuration |
 | 9 | `docs/presentation/Tahseel_AI_Final_Pitch.md` | The pitch, slide skeleton, demo script, likely questions and answers |
 | Anytime | `GLOSSARY.md`, `TEAM.md`, `PROJECT_STATUS.md` | Terms, people, and current status |
+| New to the team | `docs/team/ONBOARDING.md`, then `CONTRIBUTING.md` | How to get started and how we work |
 
 When two documents disagree, the higher one in the hierarchy wins: Decision Log, then Final Concept, then PRD, then the strength documents, then the pitch (Decision Log, D35).
 
@@ -102,6 +106,7 @@ Payments or wallets, automatic credit blocking, automatic WhatsApp or email send
 - **Everyone commits under their own GitHub account.** Team collaboration is graded on the repository history.
 - **If a document contradicts the Decision Log, flag it** and resolve it in the log rather than leaving both.
 - **Each topic has one owner file;** other files link to it instead of repeating it (D35).
+- **Work through issues and pull requests,** with a reviewer, as described in `CONTRIBUTING.md` (D37).
 
 ---
 

@@ -22,7 +22,7 @@ Open items about the team (leader, roles, GitHub usernames) are also tracked in 
 
 Team Collaboration is 10% of the grade, and it is judged from the repository history. Each member needs a clear area of ownership and commits under their own GitHub account.
 
-A role split to discuss (a proposal, not agreed). The last column suggests which documents each area looks after:
+Tasks are shared by **skills**, not by a fixed split (see `docs/team/TASK_ASSIGNMENT.md`; each person fills their row in `docs/team/skills.csv`). The split below is only a starting point for discussion (a proposal, not agreed). The last column suggests which documents each area looks after:
 
 | Area | Covers | Documents it looks after |
 |---|---|---|
