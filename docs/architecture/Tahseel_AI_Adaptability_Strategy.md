@@ -12,7 +12,7 @@ Sector differences should be **configuration, not code**. An auto-parts distribu
 
 The platform is not tied to a product category. It handles one commercial pattern: **credit sales that need tracking and human governance.**
 
-**What we claim:** the design makes sector differences a matter of configuration. **What we do not claim:** that it has been validated across real sectors. The MVP is demonstrated on one synthetic dataset, and optionally on two seeded tenant profiles (see section 4).
+**What we claim:** the design makes sector differences a matter of configuration. **What we do not claim:** that it has been validated across real sectors. The MVP demo will be run on one synthetic dataset, and optionally on two seeded tenant profiles, to show the same behavior in two configurations (see section 4).
 
 ---
 
