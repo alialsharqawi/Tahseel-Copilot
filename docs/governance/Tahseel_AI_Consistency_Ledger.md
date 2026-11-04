@@ -1,7 +1,7 @@
 # Tahseel AI — Consistency Ledger
 
 **Purpose:** The findings of the full review of the repository (31 October 2026) and what happened to each one.
-**Status:** Last updated 4 November 2026 (post-LMS design parts 02-06, team framework, and repository governance). Decisions that resolve findings are in `Tahseel_AI_Decision_Log.md`, section G (D28 to D36) and section H (D37 to D38).
+**Status:** Last updated 4 November 2026 (post-LMS design parts 02-06, team framework, and repository governance; review round 2 added below). Decisions that resolve findings are in `Tahseel_AI_Decision_Log.md`, section G (D28 to D36) and section H (D37 to D38); the D26 repository-name amendment is in D26 itself.
 
 **How to read it.** Every finding has a number. Numbers 53 and 76 were never used, so the ledger has 96 findings.
 
@@ -122,3 +122,36 @@
 | 96 | Line items are not modeled (invoice-level only) | Adaptability_Strategy | Recorded as a design choice | Done |
 | 97 | The queue ranks overdue accounts only; a PRD sentence implied pre-due invoices | PRD | Sentence reworded | Done |
 | 98 | README and CLAUDE name files that the archive script moves | README, CLAUDE | Legacy raw files archived to `docs/archive/`; canonical references in README and CLAUDE updated | Done |
+
+---
+
+## Review round 2 (4 November 2026)
+
+**Context:** A second full review, run with the Decision Log as the audit baseline after the team framework landed. It audited every live file, the diagrams and wireframes, and the only executable code (`tools/team_tools.py`, executed and tested). The workstreams from the first round (business/competition claims in #77 to #85 and #90 to #96) were re-verified where flagged below. Ali approved all fixes; they were applied the same day.
+
+**Correction to this ledger:** rows #78, #83, and #84 above were marked Done in round 1, but the fixes had not survived into `Final_Pitch.md`. They are now actually applied (round-2 rows R1 to R4).
+
+| # | Finding | Files | Resolution | Status |
+|---:|---|---|---|---|
+| R1 | Pitch: "We built and tested on synthetic data" with no code (D27) | Final_Pitch | Rewritten as the plan: "build and test on synthetic data..." | Done |
+| R2 | Pitch: "Every number comes from tested code", slide "We tested it, honestly", Q&A "We used synthetic data"; ablation result asserted before measurement (D27) | Final_Pitch | Conditional wording; "[measured result]" placeholder; slide reworded "How we will test it, honestly"; header status line added | Done |
+| R3 | Repository name: D26 chose `tahseel-ai`, reality is `alialsharqawi/Tahseel-Copilot` and the LMS link is immutable | Decision_Log D26, LMS_Requirements, README, PROJECT_STATUS, HOW_TO_WORK_ON_A_TASK | D26 amended: `Tahseel-Copilot` is the official repository name, product name stays Tahseel AI; all references aligned | Done |
+| R4 | Demo script had 11 steps and missed the record-call-outcome step; canonical flow has 12 | Final_Pitch | Rebuilt as 12 steps matching Final_Concept section 4 exactly, including recording the note and promise (customer memory); slide 5 updated | Done |
+| R5 | Ledger #84 additions (adaptability, bilingual UI, engineering practice Q&A) absent from the pitch | Final_Pitch | Three Q&A rows added, sourced from D22, D14, D37/D38 | Done |
+| R6 | Pitch competitor Q&A understated global tools, contradicting #94 positioning | Final_Pitch | Aligned with Business_Strength: global tools already prioritize/forecast/track; the edge is citations, factor lists, Arabic context, Excel-first, approval; "To verify" kept | Done |
+| R7 | ERD missed the `embedding` columns that D16 ruled onto `customer_notes` and `document_chunks` | erd.dot, erd.svg, erd.png | Columns added ("embedding vector"); SVG edited and PNG re-rendered from it | Done |
+| R8 | The rule-based draft check (a cuttable Should item) sat inside Core task T-048, against the cut order (section E, item 3) | backlog.csv, BACKLOG.md | Moved to T-051 (Should) with its dependency and tip; BACKLOG.md regenerated | Done |
+| R9 | D27 wording: "smaller buyers tend to pay" twice, "Tahseel shortens lateness" as fact twice, present-tense "is demonstrated"/"show" for unbuilt demos, FCIB caveat missing the selling-into-Egypt point | Final_Pitch, Adaptability_Strategy, lms part 04 | Hedge wording applied ("may pay selectively", "designed to... hypothesis", "will be run", "are designed to show"); FCIB caveat completed | Done |
+| R10 | LICENSE said "Digital Egypt FinTech Initiative (DEFI)"; the program is DEPI | LICENSE | Both occurrences corrected to Digital Egypt Pioneers Initiative (DEPI) | Done |
+| R11 | SECURITY.md: "enterprise-grade" (D27), roles "Debt Collection Agents/System Admins" (contradicts D15), "DSI" typo, action list missing D36 strings | SECURITY.md | Concrete controls replace the grade claim; roles are Owner/Finance Manager/Collector; DSO; full D36 vocabulary; "strictly" removed from draft behavior | Done |
+| R12 | .gitignore ignored only `_private/`, while CLAUDE rule 8 claims ".env is ignored" | .gitignore | Added `.env`, `.env.*`, `!.env.example`, `__pycache__/`, `.venv/`, `venv/`, `.pytest_cache/`, `.mypy_cache/`, `node_modules/`, `.next/`, `dist/` | Done |
+| R13 | `team_tools.py`: duplicate backlog IDs silently overwrite | team_tools.py | `load_backlog` raises "duplicate task ID" with the ID | Done |
+| R14 | `team_tools.py`: unknown dependency crashed in `cmd_check` with KeyError; the intended message was unreachable | team_tools.py | Errors print first; waves computed only when dependencies are known; cycle check preserved | Done |
+| R15 | `team_tools.py`: missing `skills.csv` gave a raw FileNotFoundError in `suggest` | team_tools.py | Friendly SystemExit naming the folder and the next step | Done |
+| R16 | `team_tools.py`: area "AI" rendered as "Ai" in generated docs; the hint path broke under `--team-dir` | team_tools.py | `AREA_NAMES` map ("ai" -> "AI"); messages no longer hardcode the relative path | Done |
+| R17 | PR template checklist lacked the one-approval rule (D37) | pull_request_template.md | "Reviewed by the reviewer (one approval required to merge, D37)" added | Done |
+| R18 | The pitch's role was clarified by Ali: it is the **demo-voice presentation script** — narrating the completed product on stage as the destination to build toward, not a status report | Decision_Log (new section I), Final_Pitch | D39 records the convention and its five safety rails (header framing note, bracketed results only, tense converts when work exists, D27 bans outside the demo narrative, applies to slides and the recorded demo script); pitch header rewritten to carry the framing; checklist item added | Done |
+
+**From round 1, now verified as truly applied:** #78, #83, #84 (via R1 to R5).
+
+**Newly noted in round 2, awaiting team decision (Info severity, not blockers):** FR-23 and FR-24 are referenced by backlog tasks but not defined in the PRD (add a FR table or drop the refs); the D23 agent *flag-suspected-dispute* capability has no specification home; `customers.contact_person` has no API write path; `agent_runs.run_type` and `status` lack value sets; the job posting (see #93) still needs a recheck; the Arabic wireframes render `+26` score points on the wrong bidi side; 06_UI_UX could label each screen Core or Should; GLOSSARY lacks the six D36 actions and "approval gate".
