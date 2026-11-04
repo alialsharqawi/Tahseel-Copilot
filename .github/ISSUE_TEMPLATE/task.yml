@@ -1,0 +1,91 @@
+name: Task
+description: A unit of work from the backlog (docs/team/BACKLOG.md)
+title: "[T-000] "
+labels: ["type:task"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form for a task from `docs/team/BACKLOG.md`. Issues created by `tools/team_tools.py` use the same sections.
+        Rules: `CONTRIBUTING.md`. Steps: `docs/team/HOW_TO_WORK_ON_A_TASK.md`. AI: `docs/team/AI_WORKING_GUIDE.md`.
+  - type: input
+    id: task_id
+    attributes:
+      label: Task ID
+      placeholder: "T-013"
+    validations:
+      required: true
+  - type: textarea
+    id: goal
+    attributes:
+      label: Goal
+      description: What this task achieves, in one or two sentences.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: How we will know it is done. Each point must be checkable. Reference the requirement (FR-xx) or test (AC-xxx) where there is one.
+    validations:
+      required: true
+  - type: textarea
+    id: read_first
+    attributes:
+      label: Read first
+      description: The documents and sections the assignee must read before starting.
+    validations:
+      required: true
+  - type: dropdown
+    id: tier
+    attributes:
+      label: Tier
+      options:
+        - Core
+        - Should
+        - Delivery
+    validations:
+      required: true
+  - type: dropdown
+    id: size
+    attributes:
+      label: Size
+      description: S about half a day, M one to two days, L three to five days. Split an L task if you can.
+      options:
+        - S
+        - M
+        - L
+    validations:
+      required: true
+  - type: input
+    id: skills
+    attributes:
+      label: Skills needed
+      description: Skill codes from docs/team/SKILLS_MATRIX.md, primary first.
+      placeholder: "PY, QA"
+  - type: input
+    id: depends_on
+    attributes:
+      label: Depends on
+      description: Task IDs that must be done first.
+      placeholder: "T-010, T-013"
+  - type: input
+    id: reviewer
+    attributes:
+      label: Reviewer
+      description: A different person from the assignee, able to judge the main skill.
+  - type: textarea
+    id: ai_notes
+    attributes:
+      label: Notes on using AI for this task
+      description: Where AI helps, and what the assignee must check by hand.
+  - type: checkboxes
+    id: dod
+    attributes:
+      label: Definition of done
+      options:
+        - label: Acceptance criteria met and tested
+        - label: Tests pass and the CI check is green
+        - label: Docs updated (and the Decision Log, if a decision changed)
+        - label: No secrets, no real customer data
+        - label: Pull request reviewed and merged; PROJECT_STATUS.md updated if the status changed
