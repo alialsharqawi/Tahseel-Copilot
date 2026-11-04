@@ -2,7 +2,7 @@
 
 Tahseel AI operates as an agentic credit-control and invoice management copilot handling sensitive business-to-business (B2B) financial workflows, ERP data integration pipelines, and deterministic debt-collection risk logic. 
 
-We take the security of our application, API interfaces, mathematical engines, and prospective client data with enterprise-grade rigor.
+We take the security of our application, API interfaces, mathematical engines, and prospective client data seriously, through concrete controls: three-role access (D15), tenant isolation on every record, a human approval gate enforced at the API, and an append-only audit log (Decision Log D3, D21, D30).
 
 ---
 
@@ -40,10 +40,10 @@ To help us investigate and triage effectively, please include:
 
 ### Critical High-Priority Areas
 We treat the following vulnerability types with the highest severity:
-- **Authentication & RBAC Bypass:** Privilege escalation between Debt Collection Agents, Finance Managers, and System Admins.
+- **Authentication & RBAC Bypass:** Privilege escalation between Collectors, Finance Managers, and Owners.
 - **Tenant Isolation Breach:** Any data leak or cross-talk between multi-tenant distributor instances.
 - **Agent Governance & Injection:** Prompt injection attacks attempting to bypass the deterministic action gate or manipulate collection thresholds.
-- **Deterministic Math Engine Tampering:** Flaws in Aging, DSI, or Risk Score calculations.
+- **Deterministic Math Engine Tampering:** Flaws in Aging, DSO (days beyond terms), or Risk Score calculations.
 - **Credential / Secret Leaks:** Any exposure of database connection strings, ERP integration secrets, or LLM API keys.
 
 ---
@@ -59,7 +59,7 @@ We treat the following vulnerability types with the highest severity:
 
 ## 5. Security Principles for Contributors
 
-All contributors and team members must adhere to project security guidelines (per `CLAUDE.md` and Decision Log `D38`):
+All contributors and team members must adhere to project security guidelines (per `CLAUDE.md`, rules 1 to 10, and Decision Log `D38` for AI data rules):
 - **Never commit secrets:** No API keys, database credentials, ERP test tokens, or `.env` files.
-- **Synthetic data only:** Never test against or commit actual customer, debt, or financial records; use synthetic mocks strictly.
-- **Deterministic action gates:** Collection actions (CALL, WHATSAPP, EMAIL, WAIT, ESCALATE) must strictly respect human-in-the-loop audit gates before execution.
+- **Synthetic data only:** Never test against or commit actual customer, debt, or financial records; use synthetic data only.
+- **Deterministic action gates:** Collection actions (CALL, WHATSAPP, EMAIL, WAIT, ESCALATE_TO_MANAGER, TALK_TO_SALES_REP — Decision Log D36) must respect the human-in-the-loop gate: a human approves before any consequential action, and every step is logged.
