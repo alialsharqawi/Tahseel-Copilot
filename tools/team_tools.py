@@ -23,6 +23,11 @@ SIZE_HOURS = {"S": 4, "M": 12, "L": 32}  # rough effort, used only to balance lo
 TIER_RANK = {"Core": 0, "Should": 1, "Delivery": 2}
 META_COLUMNS = {"member", "github", "hours_per_week", "wants_to_learn"}
 LEVELS = {0: "none", 1: "learning", 2: "can do alone", 3: "can review and teach"}
+AREA_NAMES = {"ai": "AI"}  # proper names for the generated headings
+
+
+def area_heading(a):
+    return AREA_NAMES.get(a, a.capitalize())
 
 
 # ------------------------------------------------------------------ loading
@@ -35,6 +40,8 @@ def load_backlog(team_dir):
     rows = read_csv(team_dir / "backlog.csv")
     tasks = {}
     for r in rows:
+        if r["id"] in tasks:
+            raise SystemExit(f"backlog.csv: duplicate task ID {r['id']}")
         r["primary"] = [s for s in r["skills_primary"].split(";") if s]
         r["secondary"] = [s for s in r["skills_secondary"].split(";") if s]
         r["deps"] = [s for s in r["depends_on"].split(";") if s]
@@ -103,12 +110,15 @@ def cmd_check(args):
             errors.append(f"{tid}: size must be S, M, or L")
         if t["tier"] not in TIER_RANK:
             errors.append(f"{tid}: tier must be Core, Should, or Delivery")
-        for d in t["deps"]:
-            if d not in tasks:
-                errors.append(f"{tid}: depends on unknown task {d}")
         if not t["primary"]:
             errors.append(f"{tid}: needs at least one primary skill")
-    compute_waves(tasks)
+    unknown_deps = {d for t in tasks.values() for d in t["deps"] if d not in tasks}
+    if unknown_deps:
+        errors.extend(f"{tid}: depends on unknown task {d}"
+                      for tid, t in tasks.items() for d in t["deps"] if d in unknown_deps)
+        errors.append("waves not computed: fix the unknown dependencies above")
+    else:
+        compute_waves(tasks)  # also raises on a dependency cycle
     msg = f"backlog.csv: {len(tasks)} tasks"
     if (team / "skills.csv").exists():
         members, skill_cols = load_skills(team)
@@ -147,7 +157,7 @@ def cmd_backlog(args):
     out.append(f"**{len(tasks)} tasks:** {counts['Core']} Core, {counts['Should']} Should, {counts['Delivery']} Delivery.")
     out.append("")
     for a in areas:
-        out += [f"## {a.capitalize()}", "", "| ID | Task | Tier | Skills | Size | Wave | Depends on |", "|---|---|---|---|---|---|---|"]
+        out += [f"## {area_heading(a)}", "", "| ID | Task | Tier | Skills | Size | Wave | Depends on |", "|---|---|---|---|---|---|---|"]
         for t in tasks.values():
             if t["area"] != a:
                 continue
@@ -176,9 +186,13 @@ def min_primary(member, task):
 def cmd_suggest(args):
     team = Path(args.team_dir)
     tasks = load_backlog(team)
+    if not (team / "skills.csv").exists():
+        raise SystemExit(f"skills.csv not found in {team}. Everyone fills in their row first "
+                         "(see docs/team/SKILLS_MATRIX.md); then run this command again.")
     members, skill_cols = load_skills(team)
     if not any(m["filled"] for m in members):
-        raise SystemExit("skills.csv has no skill levels yet. Everyone fills in their row first (see docs/team/SKILLS_MATRIX.md).")
+        raise SystemExit("skills.csv has no skill levels yet. Everyone fills in their row first "
+                         "(put a level from 0 to 3 under every skill column in skills.csv).")
     waves = compute_waves(tasks)
     weeks = args.weeks
     load = {m["name"]: 0.0 for m in members}

@@ -305,7 +305,10 @@
 <text text-anchor="start" x="555" y="-364" font-family="DejaVu Sans" font-size="9.00" fill="#777777">FK</text>
 <polygon fill="white" stroke="transparent" points="503,-340 503,-357 598,-357 598,-340 503,-340"/>
 <text text-anchor="start" x="506" y="-346" font-family="DejaVu Sans" font-size="10.00">source</text>
-<polygon fill="none" stroke="#555555" points="501.5,-339 501.5,-443 598.5,-443 598.5,-339 501.5,-339"/>
+<polygon fill="white" stroke="transparent" points="503,-323 503,-340 598,-340 598,-323 503,-323"/>
+<text text-anchor="start" x="506" y="-329" font-family="DejaVu Sans" font-size="10.00">embedding </text>
+<text text-anchor="start" x="566" y="-329" font-family="DejaVu Sans" font-size="9.00" fill="#777777">vector</text>
+<polygon fill="none" stroke="#555555" points="501.5,-322 501.5,-443 598.5,-443 598.5,-322 501.5,-322"/>
 </g>
 <!-- customers&#45;&gt;customer_notes -->
 <g id="edge7" class="edge">
@@ -380,7 +383,10 @@
 <polygon fill="white" stroke="transparent" points="497,-130 497,-147 603,-147 603,-130 497,-130"/>
 <text text-anchor="start" x="500" y="-137" font-family="DejaVu Sans" font-size="10.00">customer_id </text>
 <text text-anchor="start" x="564" y="-137" font-family="DejaVu Sans" font-size="9.00" fill="#777777">FK?</text>
-<polygon fill="none" stroke="#555555" points="496,-129 496,-199 604,-199 604,-129 496,-129"/>
+<polygon fill="white" stroke="transparent" points="497,-113 497,-130 603,-130 603,-113 497,-113"/>
+<text text-anchor="start" x="500" y="-119" font-family="DejaVu Sans" font-size="10.00">embedding </text>
+<text text-anchor="start" x="562" y="-119" font-family="DejaVu Sans" font-size="9.00" fill="#777777">vector</text>
+<polygon fill="none" stroke="#555555" points="496,-112 496,-199 604,-199 604,-112 496,-112"/>
 </g>
 <!-- customers&#45;&gt;document_chunks -->
 <g id="edge18" class="edge">

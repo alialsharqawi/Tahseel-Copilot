@@ -48,7 +48,7 @@ Generated from `backlog.csv` by `python tools/team_tools.py backlog`. Edit the C
 | T-031 | LLM-assisted column mapping from headers and masked sample rows | Core | LLM, PY | M | 7 | T-030, T-040 |
 | T-032 | Receivables Health Report endpoint | Should | PY, API | M | 7 | T-014 |
 
-## Ai
+## AI
 
 | ID | Task | Tier | Skills | Size | Wave | Depends on |
 |---|---|---|---|---|---|---|
@@ -60,10 +60,10 @@ Generated from `backlog.csv` by `python tools/team_tools.py backlog`. Edit the C
 | T-045 | Customer memory API: notes, call results, promises, promise status rule | Core | API, DB (also PY) | M | 5 | T-010 |
 | T-046 | Note embeddings and the recall tool | Core | VEC, PY | M | 6 | T-045, T-041 |
 | T-047 | Conversation memory: threads, last N turns, labeled summary | Core | LLM, API (also DB) | M | 7 | T-043 |
-| T-048 | Draft generator: Arabic, tones, tier defaults, rule-based draft check | Core | LLM, AR (also PY) | L | 6 | T-040 |
+| T-048 | Draft generator: Arabic, tones, tier defaults | Core | LLM, AR (also PY) | L | 6 | T-040 |
 | T-049 | Recommendations and the approval gate | Core | API, SEC (also PY) | L | 7 | T-043, T-011 |
 | T-050 | Tasks and the append-only audit log | Core | DB, API (also SEC) | M | 8 | T-049 |
-| T-051 | Guardrails: dispute status and the reminder cap | Should | API, PY (also QA) | M | 8 | T-049 |
+| T-051 | Guardrails: dispute status, the reminder cap, and the rule-based draft check | Should | API, PY (also QA) | M | 8 | T-048, T-049 |
 | T-052 | Relationship-aware recommendation for strategic accounts | Should | PY | S | 8 | T-015 |
 
 ## Frontend

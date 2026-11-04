@@ -2,7 +2,7 @@
 
 **Purpose:** A record of every major fork we faced, what we chose, what we did not choose, and why. It can be turned directly into the "Design Decisions" section of the documentation.
 
-**Status:** Last updated 4 November 2026 (consolidation round: D28 to D36; team workflow: D37 and D38). When a decision was changed later, its entry carries an "Amended by" line. A decision is only changed by editing or amending it here (see D35).
+**Status:** Last updated 4 November 2026 (consolidation round: D28 to D36; team workflow: D37 and D38; review round 2: D26 amended for the real repository name; section I: D39 presentation voice). When a decision was changed later, its entry carries an "Amended by" line. A decision is only changed by editing or amending it here (see D35).
 
 **Final goals every decision serves**
 1. **Highest possible score on the capstone rubric:** System Architecture 20%, UI & Dashboard 15%, RAG & Memory 15%, Code Quality 15%, Presentation 15%, Real-World Value 10%, Team Collaboration 10%.
@@ -241,10 +241,11 @@ Deadlines, the Team Leader, placeholders to fill, and other to-do items are trac
 - **Not chosen:** Keeping several overlapping business documents.
 - **Why:** Overlapping files drift apart, and a reviewer would find contradictions.
 
-### D26. Project name `[Delegated]`
-- **Chosen:** **Tahseel AI** as the official name for the LMS sheet, slides, and documents. The GitHub repository is named `tahseel-ai`; the local folder name does not matter.
-- **Not chosen:** Tahseel Copilot (it describes the product type, not the name).
+### D26. Project name `[Delegated]` (amended 4 November 2026)
+- **Chosen:** **Tahseel AI** as the official name for the LMS sheet, slides, and documents. The product is never called "Tahseel Copilot" in settings, slides, or documents. The local folder name does not matter.
+- **Not chosen:** Tahseel Copilot as a product name (it describes the product type, not the name).
 - **Why:** Every document already uses Tahseel AI. One name everywhere.
+- **Amended 4 November 2026 (review round 2):** the actual GitHub repository is **`alialsharqawi/Tahseel-Copilot`**, not `tahseel-ai` as originally chosen here. The LMS submission takes exactly one repository link and it was already submitted, so the link cannot change. Reality therefore wins: **`Tahseel-Copilot` is the official repository name.** The product name stays **Tahseel AI**; the repository name does not rename the product.
 
 ### D27. Wording rules for claims `[Delegated]`
 These rules apply to every document, slide, and AI answer.
@@ -390,3 +391,18 @@ The roadmap is kept in one place: `Tahseel_AI_Final_Concept.md`, section 12.
   - An AI agent does not push to `main`, merge, or change repository settings. A person makes each commit, under their own account.
 - **Not chosen:** banning AI (it would not be followed and would remove a real benefit); unrestricted use without disclosure (the reviewer cannot tell where to look harder).
 - **Why:** AI makes people faster and makes confident mistakes. The product's central promise is that numbers and policy statements can be checked, so the team's own process has to be checkable too.
+
+---
+
+## I. Presentation Voice (4 November 2026)
+
+### D39. `Final_Pitch` is a demo-voice presentation script `[Ali]` (amends the application of D27 to this file)
+- **Chosen:** `Final_Pitch.md` is written as **the script of the final presentation**: the story we will tell standing on stage, presenting the completed product, and imagining success before writing a line of code so we have a clear destination to build toward ("اعتبار ما سيكون" — crediting what will be). Its present- and past-tense statements ("the queue ranks…", "we built and tested") describe the **on-stage demo scene**, not the current build status.
+- **Not chosen:** rewriting the whole pitch into conditional "will/might" language throughout (weaker on stage and harder to rehearse); leaving the stage voice unmarked (a DEPI grader reading the raw repository could mistake it for a status claim).
+- **Why:** Rhetorically, the pitch must speak from the finished world; the honesty charter (D27) must still protect a grader who reads the repository today. Framing the file as a script satisfies both.
+- **Safety rails that make this legitimate:**
+  1. The pitch header carries the framing note: this is the demo-voice script and the target, not a status report; build status lives in `PROJECT_STATUS.md` ("no code yet").
+  2. Measured results stay bracketed placeholders ("[measured result]") until they exist; numbers are inserted from the demo run, never invented.
+  3. The plan-voice lines ("every number **will** come from code") convert to confident past tense **only when the work exists** (the pitch's final checklist has the item).
+  4. D27's other bans (competitor feature claims, security absolutes, self-assigned scores, "transfers liability", pricing as fact) apply to this file as before — the demo voice exempts only the tense of the demo narrative itself.
+  5. The same convention governs the future slide deck and the recorded demo script. All other repository documents (concepts, PRD, business case, LMS parts) remain in normal status-accurate English under D27 and D24.

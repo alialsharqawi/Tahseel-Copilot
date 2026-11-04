@@ -115,7 +115,7 @@ The deployment is part of the Delivery tier: it is scheduled after the core slic
 
 ## 11. Limits of what we claim
 
-- The numbers in the demo come from synthetic data. They show that the pipeline is correct, not that predictions are accurate on real distributors.
+- The numbers in the demo come from synthetic data. They are designed to show that the pipeline is correct, not that predictions are accurate on real distributors.
 - No performance targets are claimed or measured yet.
 - Numeric hallucination is reduced by construction and measured in the ablation; it is not eliminated.
 - Cross-sector adaptability is a design property. It has not been validated on real sectors.

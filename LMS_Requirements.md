@@ -10,7 +10,7 @@ Final graduation-project teams are approved, according to the division in the Go
 
 ### First: complete the project data
 - Choose a **Project Name**. (Chosen: Tahseel AI, Decision Log D26.)
-- Create a **GitHub repository** for the project. Each team must have **exactly one** GitHub link. (Name: `tahseel-ai`, D26.)
+- Create a **GitHub repository** for the project. Each team must have **exactly one** GitHub link. (Name: `Tahseel-Copilot`, D26 as amended 4 Nov 2026.)
 - Record the project name and GitHub link in the designated columns of the projects sheet on Google Drive.
 
 ### Second: Project Documentation requirements (the first three parts)
@@ -93,6 +93,6 @@ References are by file and section name, not by number.
 | System Architecture | `Final_Concept` (architecture), `Technical_Strength` (pipeline vs agent, ADRs, security), `Adaptability_Strategy` | Needs a drawn diagram |
 | Database Design | `PRD` (data model, field level) and `Final_Concept` (data model) | Needs an ERD |
 | UI/UX Design | `Final_Concept` (demo flow), `Decision_Log` (D14) | Needs wireframes in Arabic and English |
-| GitHub (source code) | none | No code yet; repository `tahseel-ai` to create or confirm |
+| GitHub (source code) | none | No code yet; the repository is `Tahseel-Copilot` (D26 as amended) |
 | Presentation PDF and demo video | `Final_Pitch` | Skeleton ready; needs real numbers and screenshots |
-| Project name and repository link | `Decision_Log` (D26) | Tahseel AI, `tahseel-ai`; the team confirms |
+| Project name and repository link | `Decision_Log` (D26) | Tahseel AI, `Tahseel-Copilot` (D26 amended 4 Nov 2026) |

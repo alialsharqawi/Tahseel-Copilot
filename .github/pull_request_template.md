@@ -23,6 +23,7 @@ Closes #
 ## Checklist
 - [ ] Acceptance criteria met
 - [ ] Tests exist and pass; CI is green
+- [ ] Reviewed by the reviewer (one approval required to merge, Decision Log D37)
 - [ ] No secrets and no real customer data
 - [ ] Numbers come from code, not from the AI model (CONTRIBUTING.md, rule 1)
 - [ ] No hard-coded interface text; layout works in Arabic (right to left) and English

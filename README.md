@@ -23,7 +23,7 @@ Documentation baseline, system architecture, database design, bilingual wirefram
 ## Where each file lives
 
 ```text
-tahseel-ai/
+Tahseel-Copilot/
 ├── README.md, LICENSE, CONTRIBUTING.md, CLAUDE.md, LMS_Requirements.md, TEAM.md, PROJECT_STATUS.md, GLOSSARY.md
 ├── docs/
 │   ├── foundation/
