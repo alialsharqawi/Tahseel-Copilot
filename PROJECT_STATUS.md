@@ -1,7 +1,7 @@
 # Project Status
 
-**Last updated:** 2 November 2026
-**Phase:** Documentation and design are done except two LMS items. The team system is ready. Next: bring the team in, share the tasks, and start building.
+**Last updated:** 4 November 2026
+**Phase:** Documentation baseline, system architecture, database design, bilingual wireframes, team framework, and repository legal/security standards are complete. Next: team onboarding kickoff, skills matrix completion, Project Planning (T-090), and Sprint 1 (Core Engine).
 
 ## Done
 
@@ -12,10 +12,11 @@
 - Business case with evidence labels, verified sources, competitors, stakeholder analysis, ROI model, and validation plan (`docs/business/Tahseel_AI_Business_Strength.md`)
 - Multi-sector design (`docs/architecture/Tahseel_AI_Adaptability_Strategy.md`)
 - Final pitch, slide skeleton, 12-step demo script, and Q&A (`docs/presentation/Tahseel_AI_Final_Pitch.md`)
-- A full review of every file against the others (`docs/governance/Tahseel_AI_Consistency_Ledger.md`)
-- Five of the six parts of the LMS documentation, in `docs/lms/parts/`: Literature Review, Requirements and Stakeholders, System Architecture, Database Design, UI/UX Design
+- Full review and audit of repository consistency (`docs/governance/Tahseel_AI_Consistency_Ledger.md`: 81 Done, 2 Deferred, 2 Open)
+- Five of the six parts of the LMS documentation in `docs/lms/parts/`: Literature Review, Requirements and Stakeholders, System Architecture, Database Design, UI/UX Design
 - Diagrams in `docs/diagrams/`: the ERD, the architecture, the request flow, the deployment, the navigation flow, the stakeholder map, and ten wireframes in English and Arabic
 - The team system: `CONTRIBUTING.md`, the guides and the 50-task backlog in `docs/team/`, the GitHub forms and labels in `.github/`, and `tools/team_tools.py`
+- Legal and security infrastructure: proprietary academic license (`LICENSE`) and vulnerability policy (`.github/SECURITY.md`)
 
 ## Next
 
@@ -56,10 +57,8 @@
 - The project will continue after the capstone as a product and a service, and the business side is graded too.
 - The cut order if time runs short is in the Decision Log, section E.
 
-## Files changed in the last session (2 November 2026)
+## Files changed in the last session (4 November 2026)
 
-Decisions added: D37 (team workflow and skills-based assignment) and D38 (AI use policy for contributors).
-
-Added: `CONTRIBUTING.md`; in `docs/team/`: `README.md`, `ONBOARDING.md`, `HOW_TO_WORK_ON_A_TASK.md`, `AI_WORKING_GUIDE.md`, `SKILLS_MATRIX.md`, `TASK_ASSIGNMENT.md`, `skills.csv`, `backlog.csv`, `BACKLOG.md`; `tools/team_tools.py`, `tools/README.md`, `tools/examples/skills.example.csv`; in `.github/`: the task form, the pull request template, and `labels.sh`; the LMS parts 02 to 06 and the diagrams listed above.
-
-Updated: `docs/governance/Tahseel_AI_Decision_Log.md`, `docs/business/Tahseel_AI_Business_Strength.md`, `README.md`, `CLAUDE.md`, `TEAM.md`, `PROJECT_STATUS.md`.
+- Added repository legal and security infrastructure: `LICENSE` (sole proprietary academic evaluation license) and `.github/SECURITY.md` (enterprise vulnerability disclosure SLA and contact).
+- Audited and updated `docs/governance/Tahseel_AI_Consistency_Ledger.md`: closed findings #2, #42, #52, and #98 as Done (81 total Done, 2 Deferred, 2 Open).
+- Synchronized reading orders, companion file trees, and project phases across `README.md`, `CLAUDE.md`, `docs/governance/Tahseel_AI_Decision_Log.md`, and `PROJECT_STATUS.md`.

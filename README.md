@@ -16,7 +16,7 @@ Tahseel reads the receivables data, scores each customer's risk and explains the
 
 ## Status
 
-Documentation is consolidated (31 October 2026). **No code yet.** The current status, next steps, and open items are in `PROJECT_STATUS.md`.
+Documentation baseline, system architecture, database design, bilingual wireframes, team framework, and repository legal/security standards are completed (November 2026). **No implementation code yet.** Current status, next steps, and open items are tracked in `PROJECT_STATUS.md`.
 
 ---
 
@@ -24,7 +24,7 @@ Documentation is consolidated (31 October 2026). **No code yet.** The current st
 
 ```text
 tahseel-ai/
-├── README.md, CONTRIBUTING.md, CLAUDE.md, LMS_Requirements.md, TEAM.md, PROJECT_STATUS.md, GLOSSARY.md
+├── README.md, LICENSE, CONTRIBUTING.md, CLAUDE.md, LMS_Requirements.md, TEAM.md, PROJECT_STATUS.md, GLOSSARY.md
 ├── docs/
 │   ├── foundation/
 │   │   └── Tahseel_AI_Final_Concept.md          scope, tiers, demo flow, architecture, roadmap
@@ -41,10 +41,10 @@ tahseel-ai/
 │   ├── presentation/
 │   │   └── Tahseel_AI_Final_Pitch.md            pitch, slide skeleton, demo script, Q&A
 │   ├── team/                                    backlog, skills matrix, task assignment, onboarding, AI guide
-│   ├── lms/parts/                               the parts of the documentation submitted to the LMS
-│   ├── diagrams/                                ERD, architecture, wireframes
+│   ├── lms/parts/                               the parts of the documentation submitted to the LMS (02 to 06)
+│   ├── diagrams/                                ERD, architecture, wireframes (dot, mmd, png, svg)
 │   └── archive/                                 superseded raw material, kept for history; not requirements
-├── .github/                                     task form, pull request template, label script
+├── .github/                                     task form, pull request template, label script, SECURITY.md
 ├── tools/                                       team_tools.py: skills-based assignment and issue creation
 └── _private/                                    git-ignored: screenshots and personal references
 ```

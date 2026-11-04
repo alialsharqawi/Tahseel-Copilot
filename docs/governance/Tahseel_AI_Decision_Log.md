@@ -2,7 +2,7 @@
 
 **Purpose:** A record of every major fork we faced, what we chose, what we did not choose, and why. It can be turned directly into the "Design Decisions" section of the documentation.
 
-**Status:** Last updated 2 November 2026 (consolidation round: D28 to D36; team workflow: D37 and D38). When a decision was changed later, its entry carries an "Amended by" line. A decision is only changed by editing or amending it here (see D35).
+**Status:** Last updated 4 November 2026 (consolidation round: D28 to D36; team workflow: D37 and D38). When a decision was changed later, its entry carries an "Amended by" line. A decision is only changed by editing or amending it here (see D35).
 
 **Final goals every decision serves**
 1. **Highest possible score on the capstone rubric:** System Architecture 20%, UI & Dashboard 15%, RAG & Memory 15%, Code Quality 15%, Presentation 15%, Real-World Value 10%, Team Collaboration 10%.
@@ -10,7 +10,7 @@
 
 **Origin tags:** `[Ali]` decided by Ali or taken from the PRD. `[Proposed]` proposed by Claude and accepted in discussion. `[Delegated]` Ali asked Claude to decide; Ali can override.
 
-**Companions:** `Tahseel_AI_Final_Concept.md` (scope), `Tahseel_AI_PRD.md` (detailed specification), `Tahseel_AI_Technical_Strength.md`, `Tahseel_AI_Business_Strength.md`, `Tahseel_AI_Final_Pitch.md`, and `CONTRIBUTING.md` (how we work). Which document owns which topic is defined in D35.
+**Companions:** `Tahseel_AI_Final_Concept.md` (scope), `Tahseel_AI_PRD.md` (detailed specification), `Tahseel_AI_Technical_Strength.md`, `Tahseel_AI_Business_Strength.md`, `Tahseel_AI_Final_Pitch.md`, `CONTRIBUTING.md` (how we work), `docs/team/` (team system and backlog), and `docs/lms/parts/` (submitted project documentation chapters). Which document owns which topic is defined in D35.
 
 ---
 

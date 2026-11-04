@@ -1,38 +1,34 @@
 # Tahseel AI — Consistency Ledger
 
 **Purpose:** The findings of the full review of the repository (31 October 2026) and what happened to each one.
-**Status:** Last updated 31 October 2026. Decisions that resolve findings are in `Tahseel_AI_Decision_Log.md`, section G (D28 to D36).
+**Status:** Last updated 4 November 2026 (post-LMS design parts 02-06, team framework, and repository governance). Decisions that resolve findings are in `Tahseel_AI_Decision_Log.md`, section G (D28 to D36) and section H (D37 to D38).
 
 **How to read it.** Every finding has a number. Numbers 53 and 76 were never used, so the ledger has 96 findings.
 
 | Status | Meaning | Count |
 |---|---|---:|
-| Done | Applied in the consolidated files | 77 |
+| Done | Applied in the consolidated files, LMS documentation parts, and team framework | 81 |
 | Archived | Content folded into the canonical files; the file moves to `docs/archive/` when `archive_docs.sh` is run | 7 |
-| Deferred | Waits for the LMS documentation phase or for information from the team | 5 |
+| Deferred | Waits for team skills/capacity inputs (`skills.csv`) or final LMS PDF assembly | 2 |
 | Closed | Needs no action | 4 |
-| Open | Still to do | 3 |
+| Open | Still to verify (assumptions/market claims tracked in task T-094) | 2 |
 
 ## Still open or deferred
 
 | # | Finding | Why it waits |
 |---|---|---|
-| 2 | LMS wants Database Design and UI/UX Design; no dedicated files; `diagrams` and `lms` folders empty | Tracked as the next work in PROJECT_STATUS (ERD, diagram, wireframes) |
-| 3 | TEAM has only placeholders; Team Collaboration is judged from commit history | Structure updated; needs names, usernames, roles, leader from the team |
-| 34 | Origin tags (`[Ali]`, `[Delegated]`) in the version submitted to the LMS | Keep in the log; strip from the LMS copy |
-| 42 | Stakeholder map needed for the LMS Stakeholder Analysis | Content preserved in Business_Strength section 3 (D33); the LMS document is produced later |
-| 52 | Stakeholder map must become an LMS document (D33) | Same follow-up as #42 |
-| 93 | Claims still unchecked: VAT threshold, job posting, cheque sources, a local-competitor scan | Labeled To verify; listed in PROJECT_STATUS |
-| 95 | Whether global tools offer policy citations or factor-level explanations is not verified | Assumption A9; listed as To verify |
-| 98 | README and CLAUDE name files that the archive script moves | Replace the files first, then run `archive_docs.sh` |
+| 3 | TEAM has only placeholders; Team Collaboration is judged from commit history | Framework ready in `docs/team/`; awaits team members filling capacity and ratings in `skills.csv` |
+| 34 | Origin tags (`[Ali]`, `[Delegated]`) in the version submitted to the LMS | Keep in the log; strip from the compiled LMS PDF copy |
+| 93 | Claims still unchecked: VAT threshold, job posting, cheque sources, a local-competitor scan | Labeled To verify; tracked as backlog task T-094 |
+| 95 | Whether global tools offer policy citations or factor-level explanations is not verified | Assumption A9; listed as To verify; tracked in task T-094 |
 
 ## All findings
 
 | # | Finding | Files | Resolution | Status |
 |---:|---|---|---|---|
 | 1 | README status stale ("No code yet", "six extra documents") | README | Rewritten; status points to PROJECT_STATUS | Done |
-| 2 | LMS wants Database Design and UI/UX Design; no dedicated files; `diagrams` and `lms` folders empty | LMS_Requirements, README | Tracked as the next work in PROJECT_STATUS (ERD, diagram, wireframes) | Deferred |
-| 3 | TEAM has only placeholders; Team Collaboration is judged from commit history | TEAM | Structure updated; needs names, usernames, roles, leader from the team | Deferred |
+| 2 | LMS wants Database Design and UI/UX Design; no dedicated files; `diagrams` and `lms` folders empty | LMS_Requirements, README | Implemented in `docs/lms/parts/` (04_System_Architecture, 05_Database_Design, 06_UI_UX_Design) with 10 bilingual wireframes and diagrams in `docs/diagrams/` | Done |
+| 3 | TEAM has only placeholders; Team Collaboration is judged from commit history | TEAM, docs/team | Framework ready in `docs/team/`; awaits member PRs for `skills.csv` | Deferred |
 | 4 | Documentation language policy unclear (Arabic files vs English rule) | CLAUDE, README, Log | D24 clarified: every document is in English | Done |
 | 5 | "Memory" mixed conversation turns with human-confirmed events | Glossary, CLAUDE | D28: two kinds of memory with a scoped write rule | Done |
 | 6 | Glossary missing roles and project terms | Glossary | About 20 terms added or corrected | Done |
@@ -71,7 +67,7 @@
 | 39 | Roadmap scattered over several files | Final_Concept, Log | One roadmap in Final_Concept section 12 | Done |
 | 40 | Glossary lacked Days Beyond Terms, Hypothesis, Evidence label | Glossary | Added | Done |
 | 41 | Success-based pricing had no baseline | Business_Strength | Baseline requirement added | Done |
-| 42 | Stakeholder map needed for the LMS Stakeholder Analysis | Idea_Evaluation, Business_Strength | Content preserved in Business_Strength section 3 (D33); the LMS document is produced later | Deferred |
+| 42 | Stakeholder map needed for the LMS Stakeholder Analysis | Idea_Evaluation, Business_Strength, docs/lms | Implemented in `docs/lms/parts/03_Requirements_and_Stakeholders.md` and `docs/diagrams/stakeholder_map.*` | Done |
 | 43 | Idea_Evaluation: rejected wording; ETA and WhatsApp claims | Idea_Evaluation | Useful content merged; moved to the archive | Archived |
 | 44 | Market_Validation: "Independent" label, unsourced claims, competitors as facts | Market_Validation | Tone list moved to Final_Concept and PRD; moved to the archive | Archived |
 | 45 | Odoo "postings" vs "one posting" | Business_Strength | Corrected to one posting, anecdotal | Done |
@@ -81,7 +77,7 @@
 | 49 | Evidence labels undefined | Glossary, Business_Strength | Five labels defined and applied | Done |
 | 50 | ROI arithmetic and KPI | Business_Strength | Arithmetic checked (correct); KPI per D32 | Done |
 | 51 | Roadmap held credit-limit analytics while the concept file listed it as out of scope | Business_Strength, Final_Concept | Out of scope for the capstone; roadmap, validate first | Done |
-| 52 | Stakeholder map must become an LMS document (D33) | Business_Strength | Same follow-up as #42 | Deferred |
+| 52 | Stakeholder map must become an LMS document (D33) | Business_Strength, docs/lms | Implemented in `docs/lms/parts/03_Requirements_and_Stakeholders.md` | Done |
 | 54 | Tone list existed only in Market_Validation | Final_Concept, PRD, Adaptability | Formal, friendly, firm added | Done |
 | 55 | FCIB and Allianz figures unchecked | Business_Strength | Both opened on 31 Oct; figures confirmed with caveats | Done |
 | 56 | PRD scoring ambiguities | PRD | Sections 11 and 12 rewritten (D34) | Done |
@@ -125,4 +121,4 @@
 | 95 | Whether global tools offer policy citations or factor-level explanations is not verified | Business_Strength | Assumption A9; listed as To verify | Open |
 | 96 | Line items are not modeled (invoice-level only) | Adaptability_Strategy | Recorded as a design choice | Done |
 | 97 | The queue ranks overdue accounts only; a PRD sentence implied pre-due invoices | PRD | Sentence reworded | Done |
-| 98 | README and CLAUDE name files that the archive script moves | README, CLAUDE | Replace the files first, then run `archive_docs.sh` | Open |
+| 98 | README and CLAUDE name files that the archive script moves | README, CLAUDE | Legacy raw files archived to `docs/archive/`; canonical references in README and CLAUDE updated | Done |
