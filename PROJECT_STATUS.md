@@ -21,7 +21,7 @@
 ## Next
 
 1. Bring the team in: share `docs/team/ONBOARDING.md`, then each person fills their row in `docs/team/skills.csv` and sends it as a pull request. Fix names, roles, and the Team Leader in `TEAM.md`
-2. Set up GitHub (task T-001): the repository `tahseel-ai`, branch protection on `main`, the team as collaborators, the project board, and the labels (`bash .github/labels.sh`)
+2. Set up GitHub (task T-001): the repository `Tahseel-Copilot` (D26 as amended), branch protection on `main`, the team as collaborators, the project board, and the labels (`bash .github/labels.sh`)
 3. Share the work: `python tools/team_tools.py suggest`, review and adjust `assignments.csv`, then create the issues in waves (`docs/team/TASK_ASSIGNMENT.md`)
 4. Finish the LMS documentation: the Project Planning part (T-090) from the backlog and the assignments, then assemble the PDF (T-091) replacing `Tahseel_Project_Documentation_v1.pdf` in the root directory so the submitted LMS documentation link automatically reflects the final document
 5. Build in the order of the backlog: Core tasks first, then Should, then Delivery. The cut order is in the Decision Log, section E
@@ -60,3 +60,17 @@
 - Added repository legal and security infrastructure: `LICENSE` (sole proprietary academic evaluation license) and `.github/SECURITY.md` (enterprise vulnerability disclosure SLA and contact).
 - Audited and updated `docs/governance/Tahseel_AI_Consistency_Ledger.md`: closed findings #2, #42, #52, and #98 as Done (81 total Done, 2 Deferred, 2 Open).
 - Synchronized reading orders, companion file trees, and project phases across `README.md`, `CLAUDE.md`, `docs/governance/Tahseel_AI_Decision_Log.md`, and `PROJECT_STATUS.md`.
+
+## Review round 2 applied (4 November 2026, same day)
+
+A second full review (Decision-Log-as-baseline) found 21 actionable defects; all approved fixes were applied:
+
+- **D26 amended:** the official repository name is `Tahseel-Copilot` (the submitted LMS link is immutable); all references aligned (`LMS_Requirements.md`, `README.md`, this file, `docs/team/HOW_TO_WORK_ON_A_TASK.md`).
+- **D39 added (Ali):** `Final_Pitch.md` is officially a demo-voice presentation script — the story of the completed product on stage, drafted before the build as the destination to build toward. Safety rails: framing note in the header, bracketed results only, plan-voice lines convert to past tense when the work exists, and D27 still applies outside the demo narrative.
+- **`Final_Pitch.md`:** removed past-tense build/test claims (D27), rebuilt the demo script as the canonical 12 steps (including recording the call outcome), added the adaptability / bilingual UI / engineering-practice Q&A rows, aligned the competitor answer with the Business Strength positioning, added a Status header line, applied hedge wording throughout.
+- **`LICENSE`** corrected to Digital Egypt Pioneers Initiative (DEPI); **`SECURITY.md`** aligned with D15 roles, the D36 action vocabulary, and D27 wording.
+- **ERD** (`erd.dot`, `erd.svg`, re-rendered `erd.png`) now shows the `embedding` column on `customer_notes` and `document_chunks` (D16).
+- **`backlog.csv`:** the rule-based draft check moved from Core T-048 to Should T-051 per the cut order; `BACKLOG.md` regenerated.
+- **`tools/team_tools.py`:** duplicate-ID detection, clean dependency-error output, graceful missing/empty `skills.csv`, "AI" heading fix, no hardcoded paths — verified by running all subcommands and failure cases.
+- **`.gitignore`:** `.env` (per CLAUDE rule 8), Python, and Node exclusions added before code starts. **PR template:** reviewer-approval line added (D37).
+- Full round-2 record: `docs/governance/Tahseel_AI_Consistency_Ledger.md`, section "Review round 2" (R1 to R17, all Done).
