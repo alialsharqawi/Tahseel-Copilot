@@ -40,10 +40,10 @@ Before coding, write a short plan in a comment on the issue: the steps, the file
 ```bash
 git switch main
 git pull
-git switch -c feat/short-description     # for example feat/risk-engine
+git switch -c feat/T-014-risk-engine     # type/T-id-short-description (D37)
 ```
 
-Use `feat`, `fix`, `docs`, `test`, `refactor`, `chore`, or `ci` as the type.
+Use `feat`, `fix`, `docs`, `test`, `refactor`, `chore`, or `ci` as the type, then the task ID from the issue title, then the short slug (D37).
 
 ### 4. Work in small steps
 
@@ -90,7 +90,7 @@ If you are stuck, `git rebase --abort` returns you to where you started. Ask for
 ### 8. Open a pull request
 
 ```bash
-git push -u origin feat/short-description
+git push -u origin feat/T-014-risk-engine
 ```
 
 Then open the pull request on GitHub and fill in the template. A good pull request:

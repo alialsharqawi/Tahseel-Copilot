@@ -31,7 +31,7 @@ These come from the project's decisions. Breaking them breaks the product's prom
 ## 3. Branches
 
 - `main` always works. Nobody pushes directly to it; changes arrive through pull requests.
-- Name your branch `type/short-description`, using the same types as commits: `feat/risk-engine`, `fix/overdue-edge-case`, `docs/literature-review`, `test/tenant-isolation`.
+- Name your branch `type/T-id-short-description`, using the same types as commits, then the task ID from the issue title, then the short slug: `feat/T-014-risk-engine`, `fix/T-013-overdue-edge-case`, `docs/T-094-competitor-scan`, `test/T-012-tenant-isolation` (D37, amended 5 November 2026; the branch can be traced to its task).
 - Start every branch from an up-to-date `main`.
 - Do not rewrite the history of a branch other people are using (no force-push on shared branches).
 
