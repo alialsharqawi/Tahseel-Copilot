@@ -74,3 +74,14 @@ A second full review (Decision-Log-as-baseline) found 21 actionable defects; all
 - **`tools/team_tools.py`:** duplicate-ID detection, clean dependency-error output, graceful missing/empty `skills.csv`, "AI" heading fix, no hardcoded paths — verified by running all subcommands and failure cases.
 - **`.gitignore`:** `.env` (per CLAUDE rule 8), Python, and Node exclusions added before code starts. **PR template:** reviewer-approval line added (D37).
 - Full round-2 record: `docs/governance/Tahseel_AI_Consistency_Ledger.md`, section "Review round 2" (R1 to R17, all Done).
+
+## Follow-ups and bookkeeping (5 November 2026)
+
+These came from a second AI critique (run against a stale `main`) and were re-verified against the current repository before applying — anything already fixed was left alone, and nothing in the governance history was rewritten:
+
+- **D37 amended (approved by Ali):** branch names follow `type/T-id-short-description` (`feat/T-014-risk-engine`, `docs/T-094-competitor-scan`, …) — recorded in the Decision Log, with the same wording adopted in `CONTRIBUTING.md` and `docs/team/HOW_TO_WORK_ON_A_TASK.md`.
+- **LMS PDF build tool adopted:** `tools/build_docs_pdf.py` — builds one PDF from `docs/lms/parts/`, overwrites the root `Tahseel_Project_Documentation_v1.pdf` in place (the LMS link is immutable), and needs `pip install markdown` plus weasyprint or a browser (a trial build was verified end to end).
+- **`tools/README.md`** documents the PDF build tool's modes and limitations (`--check`, trial `--output`, backup in `_private/pdf_backups/`, landscape pages for wireframes and wide diagrams).
+- **Backlog made real:** T-001 rewritten after the repository was created (protection itself, collaborators, and board columns rather than creation), and T-091 now points to the build tool instead of a "script in the repository history". `BACKLOG.md` regenerated; the reachability check passes ("50 tasks … OK").
+- **Clone URL placeholder `<organization-or-owner>`** replaced with the real owner `alialsharqawi` in `docs/team/HOW_TO_WORK_ON_A_TASK.md`.
+- Historical runs of the old code name stay in the Decision Log amendment and Consistency Ledger on purpose; no blind global replaces were applied.
