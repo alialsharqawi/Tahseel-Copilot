@@ -85,3 +85,9 @@ These came from a second AI critique (run against a stale `main`) and were re-ve
 - **Backlog made real:** T-001 rewritten after the repository was created (protection itself, collaborators, and board columns rather than creation), and T-091 now points to the build tool instead of a "script in the repository history". `BACKLOG.md` regenerated; the reachability check passes ("50 tasks … OK").
 - **Clone URL placeholder `<organization-or-owner>`** replaced with the real owner `alialsharqawi` in `docs/team/HOW_TO_WORK_ON_A_TASK.md`.
 - Historical runs of the old code name stay in the Decision Log amendment and Consistency Ledger on purpose; no blind global replaces were applied.
+
+## T-090 written and T-091 executed (5 November 2026, same day)
+
+- **T-090 (Part 01, Project Planning and Management):** written as `docs/lms/parts/01_Project_Planning_and_Management.md` (PR #10, merged `21fe732f`): idea and goals, tiered scope with the cut order as the schedule-protection rule, skills-based team structure (member roles left open for the onboarding kickoff, nothing invented), a 6-phase plan mapping the backlog's 10 dependency waves (~115 person-days, recomputed from the CSV), a risk register with evidence labels, and success metrics split between capstone targets and post-capstone plans.
+- **T-091 (documentation PDF):** rebuilt `Tahseel_Project_Documentation_v1.pdf` in the repository root from all six parts with `python tools/build_docs_pdf.py` (the previous PDF backed up under `_private/pdf_backups/`). The LMS link keeps pointing at the same root file.
+- **Governance note:** the Team Leader delegated merges for these two PRs in the working session; the authorization is recorded as a comment on each PR, and both merges used merge commits (no squash, D37).
