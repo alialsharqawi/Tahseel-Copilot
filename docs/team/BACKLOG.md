@@ -14,7 +14,7 @@ Generated from `backlog.csv` by `python tools/team_tools.py backlog`. Edit the C
 
 | ID | Task | Tier | Skills | Size | Wave | Depends on |
 |---|---|---|---|---|---|---|
-| T-001 | Create the GitHub repository, protect main, add the team, load labels and issue templates | Core | GIT (also DOC) | S | 1 | - |
+| T-001 | Protect main, add the team as collaborators, create the project board, and load the labels | Core | GIT (also DOC) | S | 1 | - |
 | T-002 | Create the repository skeleton: folders, .gitignore, .env.example, pre-commit hooks | Core | GIT (also DEVOPS) | S | 2 | T-001 |
 | T-003 | Docker Compose basics: database with pgvector, backend, frontend, health check | Core | DEVOPS (also DB) | M | 3 | T-002 |
 | T-004 | Continuous integration: lint and tests on every pull request | Core | DEVOPS (also QA) | S | 3 | T-002 |

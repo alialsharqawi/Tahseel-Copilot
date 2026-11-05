@@ -10,7 +10,7 @@ git config --global user.name  "Your Name"
 git config --global user.email "the-email-registered-on-your-github-account"
 
 # 2. Get the repository
-git clone https://github.com/<organization-or-owner>/Tahseel-Copilot.git
+git clone https://github.com/alialsharqawi/Tahseel-Copilot.git
 cd Tahseel-Copilot
 
 # 3. Check that it works

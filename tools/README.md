@@ -19,6 +19,19 @@ Options for `suggest`: `--weeks N` (planning horizon, default 4) and `--growth` 
 Options for `issues`: `--wave N` (tasks up to wave N), `--tier Core|Should|Delivery`, `--only T-013,T-014`, and `--run`.
 Use `--team-dir <folder>` to point the tool at another folder with the two CSV files.
 
+## build_docs_pdf.py: the LMS documentation PDF
+
+Builds one PDF from the Markdown parts in `docs/lms/parts/` and **overwrites `Tahseel_Project_Documentation_v1.pdf` in the repository root.** The LMS submission links to that file, so never rename or move it.
+
+```bash
+pip install markdown                      # plus ONE of: pip install weasyprint, or a Chrome / Chromium / Brave browser
+python tools/build_docs_pdf.py --check                  # list the parts and check the images; build nothing
+python tools/build_docs_pdf.py --output /tmp/try.pdf    # a trial build that does not touch the real PDF
+python tools/build_docs_pdf.py                          # overwrite the root PDF (the old one is backed up to _private/pdf_backups)
+```
+
+The cover, the contents, and the pages come from the parts, in order. Wide diagrams and the wireframes get landscape pages. Always open the result and check it before you commit it.
+
 ### What `suggest` does
 
 It processes tasks in order (Core first, then by dependency wave, larger first). For each task it scores every member:
