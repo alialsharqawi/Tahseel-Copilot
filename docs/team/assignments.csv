@@ -1,0 +1,54 @@
+id,title,wave,tier,size,assignee,reviewer,fit,flags,decision_note
+T-001,"Protect main, add the team as collaborators, create the project board, and load the labels",1,Core,S,Zainab Hazem,Ali Al-Sharqawi,0.33,stretch: the assignee is still learning a primary skill; pair with the reviewer,
+T-022,"Sample policy documents (about 20), including conflicting and missing cases",1,Core,M,Zainab Hazem,Fatma Eissa,0.53,stretch: the assignee is still learning a primary skill; pair with the reviewer,Applied to existing GitHub issue #6; owner and reviewer synced to this plan.
+T-090,LMS part: Project Planning and Management,1,Core,M,Ali Al-Sharqawi,Fatma Eissa,1.0,,
+T-092,Presentation slides (PDF) from the pitch skeleton,1,Core,L,Alaa,Fatma Eissa,0.5,stretch: the assignee is still learning a primary skill; pair with the reviewer,Applied to existing GitHub issue #8; owner and reviewer synced to this plan.
+T-095,December team assignment tooling and records,1,Core,L,Ali Al-Sharqawi,Fatma Eissa,1.0,,Assigned to Ali Al-Sharqawi by the team lead; Fatma Eissa reviews the Python and documentation changes.
+T-094,Local-competitor scan (assumption A9),1,Should,M,Fatma Eissa,Ali Al-Sharqawi,0.67,,Applied to existing GitHub issue #9; owner and reviewer synced to this plan.
+T-097,AI coding-agent guide for team contributors,1,Should,M,Ali Al-Sharqawi,Fatma Eissa,1.0,,Assigned to Ali Al-Sharqawi by the team lead; Fatma Eissa reviews the guide and source links.
+T-002,"Create the repository skeleton: folders, .gitignore, .env.example, pre-commit hooks",2,Core,S,Zainab Hazem,Ali Al-Sharqawi,0.22,stretch: the assignee is still learning a primary skill; pair with the reviewer,
+T-091,Assemble the documentation PDF,2,Core,M,Ali Al-Sharqawi,Fatma Eissa,1.0,,Reassigned permanently to Ali Al-Sharqawi by the team lead; owner and reviewer synced to GitHub issue #17.
+T-096,WhatsApp team brief for the execution plan,2,Should,L,Ali Al-Sharqawi,Fatma Eissa,1.0,,Assigned to Ali Al-Sharqawi by the team lead; Fatma Eissa reviews the brief and verifies its assignment figures.
+T-003,"Docker Compose basics: database with pgvector, backend, frontend, health check",3,Core,M,Fatma Eissa,Ali Al-Sharqawi,0.33,stretch: the assignee is still learning a primary skill; pair with the reviewer,
+T-004,Continuous integration: lint and tests on every pull request,3,Core,S,Fatma Eissa,Ali Al-Sharqawi,0.22,stretch: the assignee is still learning a primary skill; pair with the reviewer,
+T-060,"Frontend skeleton: Next.js, TypeScript, EN/AR dictionaries, RTL, navigation by role",3,Core,L,Fatma Eissa,Ali Al-Sharqawi,0.33,stretch: the assignee is still learning a primary skill; pair with the reviewer; paired with Ali Al-Sharqawi on FE/UX; Ali reviews and can do it alone,Paired to give the Core frontend task a strong reviewer (D42).
+T-010,Data model and migrations for the 19 tables,4,Core,L,Zainab Hazem,Ali Al-Sharqawi,0.4,stretch: the assignee is still learning a primary skill; pair with the reviewer,
+T-067,Review all Arabic interface text,4,Core,M,Zainab Hazem,Ali Al-Sharqawi,0.83,,
+T-080,HTTPS deployment and reverse proxy,4,Delivery,L,Fatma Eissa,Ali Al-Sharqawi,0.17,NO MATCH: the assignee has no knowledge of SEC; pair with someone who does,
+T-081,README Quick Start and setup documentation,4,Delivery,S,Alaa,Ali Al-Sharqawi,0.33,stretch: the assignee is still learning a primary skill; pair with the reviewer,
+T-011,"Authentication, users, and the three roles",5,Core,M,Fatma Eissa,Ali Al-Sharqawi,0.27,NO MATCH: the assignee has no knowledge of SEC; pair with someone who does,
+T-012,Tenant-scoped data layer and the cross-tenant test,5,Core,M,Mariam,Ali Al-Sharqawi,0.2,NO MATCH: the assignee has no knowledge of SEC; pair with someone who does,
+T-013,"Receivables engine: outstanding, overdue, aging, KPIs, with unit tests",5,Core,L,Mariam,Ali Al-Sharqawi,0.53,stretch: the assignee is still learning a primary skill; pair with the reviewer,
+T-020,Synthetic data generator with realistic patterns,5,Core,L,Alaa,Fatma Eissa,0.53,,
+T-040,"LLMClient: OpenRouter, timeouts, retries, fallback, cost logging",5,Core,M,Ali Al-Sharqawi,Fatma Eissa,1.0,,
+T-041,"Policy ingestion: parse, chunk, embed, store with the tenant filter",5,Core,L,Fatma Eissa,Ali Al-Sharqawi,0.6,,
+T-045,"Customer memory API: notes, call results, promises, promise status rule",5,Core,M,Fatma Eissa,Ali Al-Sharqawi,0.4,stretch: the assignee is still learning a primary skill; pair with the reviewer,
+T-016,Tenant settings and policy rules services with seeded defaults,5,Should,M,Zainab Hazem,Ali Al-Sharqawi,0.4,stretch: the assignee is still learning a primary skill; pair with the reviewer,
+T-014,"Risk score engine: factors, caps, rounding, tenant settings",6,Core,L,Mariam,Ali Al-Sharqawi,0.5,stretch: the assignee is still learning a primary skill; pair with the reviewer,
+T-021,"Seed script: tenants, users, settings, rules, sample policies",6,Core,M,Zainab Hazem,Alaa,0.6,,
+T-030,"Import API: parse CSV and Excel, mapping, validation, preview",6,Core,L,Fatma Eissa,Ali Al-Sharqawi,0.53,stretch: the assignee is still learning a primary skill; pair with the reviewer,
+T-042,"retrieve_policy tool: rules, passages, citations, honest refusal",6,Core,L,Ali Al-Sharqawi,Fatma Eissa,1.0,,
+T-043,"Agent orchestrator: tool-calling loop, tool registry, logging, number post-check",6,Core,L,Mariam,Fatma Eissa,0.47,stretch: the assignee is still learning a primary skill; pair with the reviewer,
+T-046,Note embeddings and the recall tool,6,Core,M,Fatma Eissa,Ali Al-Sharqawi,0.67,,
+T-048,"Draft generator: Arabic, tones, tier defaults",6,Core,L,Fatma Eissa,Ali Al-Sharqawi,0.67,,
+T-062,Executive dashboard,6,Core,L,Mariam,Ali Al-Sharqawi,0.53,stretch: the assignee is still learning a primary skill; pair with the reviewer; paired with Ali Al-Sharqawi on FE/UX; Ali reviews and can do it alone,Paired to give the Core dashboard task a strong reviewer (D42).
+T-064,"Customer Profile screen with the note, call result, and promise form",6,Core,L,Mariam,Ali Al-Sharqawi,0.5,stretch: the assignee is still learning a primary skill; pair with the reviewer,
+T-017,"Cash forecast with range and confidence, plus the backtest harness",6,Should,L,Alaa,Mariam,0.53,,
+T-066,"Settings, policy rules, and documents screens",6,Should,M,Ali Al-Sharqawi,Mariam,1.0,,
+T-015,"Priority, urgency, and the suggested-action rules",7,Core,M,Mariam,Ali Al-Sharqawi,0.5,stretch: the assignee is still learning a primary skill; pair with the reviewer,
+T-031,LLM-assisted column mapping from headers and masked sample rows,7,Core,M,Fatma Eissa,Ali Al-Sharqawi,0.67,,
+T-044,"Agent tools: receivables, risk, priority, history, KPIs, forecast",7,Core,M,Fatma Eissa,Ali Al-Sharqawi,0.6,,
+T-047,"Conversation memory: threads, last N turns, labeled summary",7,Core,M,Fatma Eissa,Ali Al-Sharqawi,0.47,stretch: the assignee is still learning a primary skill; pair with the reviewer,
+T-049,Recommendations and the approval gate,7,Core,L,Mariam,Ali Al-Sharqawi,0.27,NO MATCH: the assignee has no knowledge of SEC; pair with someone who does,
+T-061,Import screen,7,Core,M,Mariam,Ali Al-Sharqawi,0.56,,
+T-070,Evaluation harness and the basic eval sets,7,Core,L,Alaa,Fatma Eissa,0.4,stretch: the assignee is still learning a primary skill; pair with the reviewer,
+T-032,Receivables Health Report endpoint,7,Should,M,Fatma Eissa,Ali Al-Sharqawi,0.5,stretch: the assignee is still learning a primary skill; pair with the reviewer,
+T-050,Tasks and the append-only audit log,8,Core,M,Mariam,Ali Al-Sharqawi,0.27,stretch: the assignee is still learning a primary skill; pair with the reviewer,
+T-063,Collection Queue screen,8,Core,M,Mariam,Ali Al-Sharqawi,0.56,,
+T-065,AI recommendation panel with all states,8,Core,L,Mariam,Ali Al-Sharqawi,0.5,stretch: the assignee is still learning a primary skill; pair with the reviewer,
+T-071,Ablation: LLM with the raw file versus the tool-grounded system,8,Core,M,Zainab Hazem,Fatma Eissa,0.47,stretch: the assignee is still learning a primary skill; pair with the reviewer,
+T-072,"Safety tests: injection, cross-tenant, no send without approval",8,Core,M,Mariam,Ali Al-Sharqawi,0.17,NO MATCH: the assignee has no knowledge of SEC; pair with someone who does,
+T-051,"Guardrails: dispute status, the reminder cap, and the rule-based draft check",8,Should,M,Ali Al-Sharqawi,Mariam,1.0,no strong reviewer: ask someone outside the team or pair on the review; needs a strong independent reviewer before approval if built,
+T-052,Relationship-aware recommendation for strategic accounts,8,Should,S,Zainab Hazem,Alaa,0.67,,
+T-073,End-to-end demo rehearsal and bug list,9,Core,M,Mariam,Ali Al-Sharqawi,0.33,stretch: the assignee is still learning a primary skill; pair with the reviewer; paired with Ali Al-Sharqawi on QA/PRES; Ali reviews and can do it alone,Paired to give the end-to-end rehearsal a strong reviewer (D42).
+T-093,Demo video,10,Core,M,Alaa,Zainab Hazem,0.44,,

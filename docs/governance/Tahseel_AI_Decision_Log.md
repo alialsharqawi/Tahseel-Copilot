@@ -2,7 +2,7 @@
 
 **Purpose:** A record of every major fork we faced, what we chose, what we did not choose, and why. It can be turned directly into the "Design Decisions" section of the documentation.
 
-**Status:** Last updated 4 November 2026 (consolidation round: D28 to D36; team workflow: D37 and D38; review round 2: D26 amended for the real repository name; section I: D39 presentation voice). When a decision was changed later, its entry carries an "Amended by" line. A decision is only changed by editing or amending it here (see D35).
+**Status:** Last updated 21 November 2026 (consolidation round: D28 to D36; team workflow: D37 and D38; review round 2: D26 amended for the real repository name; section I: D39 presentation voice; section J: D40 hard deadline, D41 skill-weighted full participation, and D42 team-lead review-load exception). When a decision was changed later, its entry carries an "Amended by" line. A decision is only changed by editing or amending it here (see D35).
 
 **Final goals every decision serves**
 1. **Highest possible score on the capstone rubric:** System Architecture 20%, UI & Dashboard 15%, RAG & Memory 15%, Code Quality 15%, Presentation 15%, Real-World Value 10%, Team Collaboration 10%.
@@ -380,6 +380,7 @@ The roadmap is kept in one place: `Tahseel_AI_Final_Concept.md`, section 12.
   - Every task has an assignee and a different reviewer. A person has at most two active tasks. Tasks in security, tenancy, authentication, the approval gate, or financial formulas get a reviewer who can do that skill alone. Learning tasks are allowed with a stronger reviewer, and a task that needs two different skills is paired or split.
   - `main` is protected. A merge needs one approval and a passing check. Merges use a merge commit or a rebase, **not a squash**.
   - **Amended 5 November 2026:** branch names follow `type/T-id-short-description` — the commit types, then the task ID from the issue title, then the short task slug: `feat/T-014-risk-engine`, `fix/T-013-overdue-edge-case`, `docs/T-094-competitor-scan`, `test/T-012-tenant-isolation`. Reason: a branch is traceable to its task without opening anything. The two guides were updated with this wording in the same change.
+  - **Amended 21 November 2026 by D41:** the weekly-hours capacity model is removed. The tool balances task count and relative complexity across every member, not hours. The two-task focus rule and the reviewer rule stay.
 - **Not chosen:** assigning by availability only; letting everyone pick freely (skills and load end up unbalanced); a tool that assigns automatically (it cannot know who is away or who wants to grow); squash merges (they hide the individual commits that are the evidence for Team Collaboration).
 - **Why:** The rubric grades Team Collaboration from the repository history, and the product's quality depends on the right person doing each part. The process is light enough to follow and it makes work and reviews visible.
 
@@ -407,3 +408,33 @@ The roadmap is kept in one place: `Tahseel_AI_Final_Concept.md`, section 12.
   3. The plan-voice lines ("every number **will** come from code") convert to confident past tense **only when the work exists** (the pitch's final checklist has the item).
   4. D27's other bans (competitor feature claims, security absolutes, self-assigned scores, "transfers liability", pricing as fact) apply to this file as before — the demo voice exempts only the tense of the demo narrative itself.
   5. The same convention governs the future slide deck and the recorded demo script. All other repository documents (concepts, PRD, business case, LMS parts) remain in normal status-accurate English under D27 and D24.
+
+---
+
+## J. Delivery Reset (21 November 2026)
+
+**Context:** The final defense is **15 December 2026**, not January. The team works flexibly and with AI assistance, so the old weekly-hours capacity model and the manual person-day estimates no longer describe the plan. Both entries are tagged `[Ali]`; Ali set the deadline and asked for the reset.
+
+### D40. Hard deadline: 15 December 2026 `[Ali]`
+- **Chosen:** The final defense is **Tuesday, 15 December 2026**. The plan is sequenced backwards from that date in four short phases: setup and data foundation, the AI slice, integration and guardrails, then evaluation and delivery. Every phase ends with a demoable gate, and the cut order (section E) applies at every gate.
+- **Not chosen:** Assuming a January date or keeping the old multi-month phase plan. Both would hide the real critical path until it is too late.
+- **Why:** The date is fixed by the program, not by the team. A plan that fits the real calendar is more honest and more useful than a longer plan that cannot be executed.
+- **Consequences:** The plan no longer uses person-day or weekly-hour estimates. Scope protection comes from the cut order and from finishing the Core vertical slice first. A gate that slips triggers a cut decision, recorded in this log, rather than a silent schedule extension.
+
+### D41. Skill-weighted full participation; no hourly capacity `[Ali]` (amends D37)
+- **Chosen:**
+  - Remove `hours_per_week` from `skills.csv` and every document. No weekly-hours, capacity, or "over capacity" calculation remains.
+  - The assignment tool balances **task count and relative complexity** (S = 1, M = 2, L = 3) across every member. Size is a complexity label, not a time estimate.
+  - Every member gets a meaningful share of the plan and works across at least two dependency waves. Skill levels decide **which** tasks fit a person, not **whether** that person participates.
+  - Reviewers are balanced. Sensitive tasks (security, tenancy, authentication, the approval gate, financial formulas) keep a reviewer at level 2 or more. When the only strong reviewer is also the natural assignee, the task is **paired**: another member does it and the strong member reviews, so the work is not blocked and a second person learns.
+  - The two-task focus rule, the one-task-one-PR rule, and the different-reviewer rule stay (D37).
+- **Not chosen:** The weekly-hours capacity model; assigning only by availability; letting one person own the critical path; removing the reviewer requirement to make the numbers look balanced.
+- **Why:** Hours are flexible and AI-assisted development makes manual hour estimates unreliable. The old model produced a false bottleneck (one person "over capacity" while others waited) and discouraged full participation. Skill-weighted full participation spreads knowledge, reduces the bus factor, and matches the fixed 15 December date.
+- **Limit:** The tool cannot create a skill that does not exist. Where only one member can review a skill (for example `SEC`), the report flags it and the plan pairs a second member. Growing a second reviewer is part of the work, not an assumption.
+
+### D42. Team lead accepts a higher review load `[Ali]` (amends D41)
+- **Chosen:** Ali accepts a higher-than-even review share as team leader. For the current assignment plan, review fit takes priority over equal review counts; after pairing three Core tasks with members who have basic skills, Ali reviews 34 of 50 tasks. The count remains visible in the assignment report.
+- **Pairings:** T-060 is assigned to Fatma, T-062 and T-073 to Mariam, with Ali reviewing each. T-051 remains a Should task assigned to Ali and is still flagged for a strong independent reviewer if it is built.
+- **Not chosen:** Forcing equal review counts when that would put a reviewer on a task outside their skill fit, or hiding the review-load imbalance.
+- **Why:** Ali explicitly accepts the extra review work to provide stronger guidance while the team starts the Core slice.
+- **Limit:** This exception does not waive the different-reviewer rule or make Ali a strong independent reviewer of tasks assigned to himself. T-051 remains a visible risk to resolve through pairing or an additional qualified reviewer if it is not cut.

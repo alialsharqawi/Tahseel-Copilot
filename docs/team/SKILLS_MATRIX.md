@@ -47,15 +47,14 @@ Open `docs/team/skills.csv` and fill in your row:
 |---|---|
 | `member` | Your name (already there; correct it if needed) |
 | `github` | Your GitHub username, without the @. Needed to assign you issues |
-| `hours_per_week` | Hours you can honestly give to this project each week, for example `8`. Include study and other commitments in your thinking |
 | `wants_to_learn` | Skill codes you want to practice, separated by `;`, for example `FE;QA`. Maximum three |
 | Skill columns | A number from 0 to 3 for each skill |
 
 Example row:
 
 ```text
-member,github,hours_per_week,wants_to_learn,GIT,PY,API,DB,LLM,VEC,EVAL,FE,UX,DATA,QA,SEC,DEVOPS,DOC,BIZ,PRES,AR
-Sara Ali,saraali,8,VEC;EVAL,2,2,1,1,2,0,0,0,0,2,1,0,0,2,1,1,3
+member,github,wants_to_learn,GIT,PY,API,DB,LLM,VEC,EVAL,FE,UX,DATA,QA,SEC,DEVOPS,DOC,BIZ,PRES,AR
+Sara Ali,saraali,VEC;EVAL,2,2,1,1,2,0,0,0,0,2,1,0,0,2,1,1,3
 ```
 
 Send the change as a pull request (`docs(team): add my skills`). The maintainer reviews it.
@@ -65,7 +64,7 @@ Send the change as a pull request (`docs(team): add my skills`). The maintainer 
 - The tool compares each task's required skills with your levels to suggest who should take it.
 - If you list a skill under `wants_to_learn` and you are at level 1, you may get a task in it with a stronger reviewer.
 - Skills that only one person has at level 2 or more are flagged, so we can pair someone with that person.
-- Your hours set how many tasks you are suggested.
+- **Every member takes a meaningful share of the plan.** Skill levels decide which tasks fit you, not whether you participate. The tool balances task count and relative complexity across the team, and spreads work across waves (D41).
 
 ## 5. Keeping it up to date
 

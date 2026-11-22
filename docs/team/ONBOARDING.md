@@ -38,21 +38,20 @@ The screens are in `docs/diagrams/wireframes/` (English and Arabic).
 
 **Done (documentation and design)**
 - The idea, the scope, and the tiers: Core, Should, Delivery (`docs/foundation/Tahseel_AI_Final_Concept.md`).
-- **38 decisions** with reasons (`docs/governance/Tahseel_AI_Decision_Log.md`).
+- **42 decisions** with reasons (`docs/governance/Tahseel_AI_Decision_Log.md`).
 - The detailed specification: formulas, 19 database tables, API, acceptance criteria (`docs/technical/Tahseel_AI_PRD.md`).
 - The technical trust design, the business case with evidence labels, and the multi-sector design.
 - The pitch, the 12-step demo script, and the slide skeleton.
 - A full review of all files against each other, with every finding tracked (`docs/governance/Tahseel_AI_Consistency_Ledger.md`).
-- Five of the six parts of the LMS documentation: Literature Review, Requirements and Stakeholders, System Architecture, Database Design, UI/UX Design (`docs/lms/parts/`), with the diagrams in `docs/diagrams/`.
-- This team system: backlog, skills matrix, task assignment, and these guides.
+- All six parts of the LMS documentation, including Project Planning and Management (`docs/lms/parts/`), with the diagrams in `docs/diagrams/`.
+- This team system: backlog, skills matrix, task assignment, and these guides. The skills matrix is filled and the assignments are generated.
 
 **Not done yet**
 - **No code.** The whole product is still to build.
-- The LMS part "Project Planning and Management", and assembling the documentation PDF.
 - The slides, the demo video, and the evaluation results.
 - Any contact with real distributors. Everything about users is still a hypothesis.
 
-**The plan is bigger than our time.** The backlog (`docs/team/BACKLOG.md`) is 50 tasks. If time runs short we cut in a fixed order (Decision Log, section E): the Core tier is never cut.
+**The date is fixed: Tuesday, 15 December 2026.** The backlog (`docs/team/BACKLOG.md`) is 53 tasks. The plan is sequenced backwards from the defense, and every phase ends with a demoable gate. If a gate slips we cut in a fixed order (Decision Log, section E); the Core tier is never cut.
 
 ## 4. How we work together
 
@@ -86,7 +85,7 @@ Read in this order. Times are rough.
 | 1 | `README.md` | The big picture and the 12 key facts | 5 min |
 | 2 | `docs/foundation/Tahseel_AI_Final_Concept.md` | Exactly what we build, in which tier, and the demo flow | 20 min |
 | 3 | `GLOSSARY.md` | The terms (skim now, return when a word is unclear) | 5 min |
-| 4 | `docs/governance/Tahseel_AI_Decision_Log.md` | Why things are the way they are. Read D1 to D17 and D28 to D38 first | 20 min |
+| 4 | `docs/governance/Tahseel_AI_Decision_Log.md` | Why things are the way they are. Read D1 to D17 and D28 to D42 first | 20 min |
 | 5 | `CONTRIBUTING.md` | The rules | 10 min |
 | 6 | Your area (table below) | What you need for your tasks | 30 min |
 
@@ -106,7 +105,7 @@ Read in this order. Times are rough.
 | When | What |
 |---|---|
 | Day 1 | Read sections 1 to 3 here and the first four files in the reading path. Do the setup checklist |
-| Day 1 or 2 | Fill in your skills row and send the pull request. Tell the maintainer your real hours per week |
+| Day 1 or 2 | Fill in your skills row and send the pull request |
 | Day 2 | Read your area. Write down your questions |
 | Day 2 or 3 | You get your first task. Read it, ask questions in the issue, then follow `HOW_TO_WORK_ON_A_TASK.md` |
 | End of the week | Your first pull request is in review. Add yourself to the contribution log in `TEAM.md` |

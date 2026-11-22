@@ -4,11 +4,13 @@ Generated from `backlog.csv` by `python tools/team_tools.py backlog`. Edit the C
 
 **Tiers** (Decision Log, D29): Core is never cut; Should is built after the core slice, in the cut order; Delivery is scheduled after the core slice works.
 
-**Size** is a rough effort guess used only to balance the load: S about half a day, M one to two days, L three to five days.
+**Size** is a relative complexity label, not a time estimate: S is small, M is medium, L is large. The assignment tool uses weights 1, 2, and 3 only to balance complexity across the team.
 
 **Wave** shows the order imposed by dependencies. Wave 1 tasks can start now; later waves wait for their dependencies.
 
-**50 tasks:** 41 Core, 7 Should, 2 Delivery.
+**Participation** (D41): every member is expected to take a meaningful share of the plan and work across waves. No weekly-hours or capacity model is used.
+
+**53 tasks:** 42 Core, 9 Should, 2 Delivery.
 
 ## Setup
 
@@ -18,6 +20,7 @@ Generated from `backlog.csv` by `python tools/team_tools.py backlog`. Edit the C
 | T-002 | Create the repository skeleton: folders, .gitignore, .env.example, pre-commit hooks | Core | GIT (also DEVOPS) | S | 2 | T-001 |
 | T-003 | Docker Compose basics: database with pgvector, backend, frontend, health check | Core | DEVOPS (also DB) | M | 3 | T-002 |
 | T-004 | Continuous integration: lint and tests on every pull request | Core | DEVOPS (also QA) | S | 3 | T-002 |
+| T-095 | December team assignment tooling and records | Core | PY, DOC (also GIT) | L | 1 | - |
 
 ## Backend
 
@@ -104,6 +107,8 @@ Generated from `backlog.csv` by `python tools/team_tools.py backlog`. Edit the C
 | T-092 | Presentation slides (PDF) from the pitch skeleton | Core | PRES, DOC | L | 1 | - |
 | T-093 | Demo video | Core | PRES (also QA) | M | 10 | T-073 |
 | T-094 | Local-competitor scan (assumption A9) | Should | BIZ (also DOC) | M | 1 | - |
+| T-096 | WhatsApp team brief for the execution plan | Should | DOC (also BIZ) | L | 2 | T-095 |
+| T-097 | AI coding-agent guide for team contributors | Should | DOC (also BIZ) | M | 1 | - |
 
 ## Acceptance criteria and AI tips
 
