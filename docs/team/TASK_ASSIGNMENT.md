@@ -8,7 +8,7 @@ This describes the system the team uses to give each person the right tasks. It 
 |---|---|
 | **Fit** | Give each task to someone who has the skills for it, so the work is good and fast |
 | **Growth** | Let people practice skills they want to learn, with a stronger person reviewing |
-| **Fair load** | Nobody carries much more than their time allows |
+| **Full participation** | Every member takes a meaningful share of the plan and works across waves; skill levels decide which tasks fit a person, not whether they take part (D41) |
 | **Shared knowledge** | Every area is touched by at least two people, so one absence does not stop the project |
 | **Order** | Tasks that others depend on come first; Core tasks come before Should and Delivery (Decision Log, D29) |
 | **Visible work** | Each person's work is visible in the issues and the history, which is what Team Collaboration is graded on |
@@ -27,24 +27,24 @@ The fit score is **not a rating of a person.** It only says how well a task matc
 
 ## 3. How it works, step by step
 
-1. **Everyone fills their row in `skills.csv`** honestly (see `SKILLS_MATRIX.md`): skills from 0 to 3, hours per week, skills they want to learn, and their GitHub username.
+1. **Everyone fills their row in `skills.csv`** honestly (see `SKILLS_MATRIX.md`): skills from 0 to 3, skills they want to learn, and their GitHub username.
 2. **The maintainer checks the data:** `python tools/team_tools.py check`.
-3. **The tool suggests assignments:** `python tools/team_tools.py suggest --weeks 4 --growth`. Set `--weeks` to the real planning horizon.
+3. **The tool suggests assignments:** `python tools/team_tools.py suggest --growth`.
 4. **The maintainer reads `ASSIGNMENT_SUGGESTION.md`** and looks at, in this order:
-   - **Size of the plan.** If the estimate is larger than the capacity, tasks flagged *over capacity* are the first to defer, following the cut order in the Decision Log, section E.
+   - **Participation per member.** Every member should have a meaningful share of the task count and complexity, and work in more than one wave.
    - **Skill coverage.** A skill that only one person can do alone is a risk. Pair someone with that person.
    - **Tasks that need attention.** Pairing, no strong reviewer, or nobody with a skill.
-   - **Load per member** and the review load.
+   - **Review load.** Spread reviews among qualified reviewers where possible. Under D42, Ali accepts a higher review share as team leader; do not lower skill fit just to equalize counts. Keep any task without a strong independent reviewer flagged for follow-up.
 5. **The maintainer edits `assignments.csv`** where a human judgment is better than the tool's, and writes the reason in `decision_note`. Common reasons: someone is away, someone asked for a different task, two people should work together, or a task is a better learning step for someone.
 6. **Create the issues:** a dry run first (`python tools/team_tools.py issues --wave 1`), then `--run`. Each issue carries the goal, acceptance criteria, files to read, skills, size, reviewer, and the definition of done.
 7. **Release tasks in waves.** Wave 1 tasks can start now. A task in a later wave waits until the tasks it depends on are done. Move a task to **Ready** on the board when it can start.
-8. **Re-balance every week.** Update `skills.csv` if someone grew, move tasks if someone is blocked or overloaded, and re-run the suggestion for the remaining tasks.
+8. **Re-balance at every wave.** Update `skills.csv` if someone grew, move tasks if someone is blocked or overloaded, and re-run the suggestion for the remaining tasks.
 
 ## 4. Rules of the system
 
 - **At most two active tasks per person.** Finish before starting new work.
 - **Every task has an assignee and a reviewer,** and they are different people. The reviewer should be able to do the task's main skill, or be paired with someone who can.
-- **Large tasks are split.** A task of size L (three to five days) should be split if it blocks others or if two skills are needed.
+- **Large tasks are split.** A size L task should be split if it blocks others or if two skills are needed.
 - **When a task needs two different skills,** the tool suggests a pair. The two people work together or split the task between them.
 - **Learning tasks are allowed.** If someone wants to learn a skill and has some basics (level 1), they can take a task with a stronger reviewer. The tool allows at most two learning tasks per person.
 - **High-risk tasks get a strong reviewer.** Security, tenancy, authentication, financial formulas, and the approval gate are reviewed by someone at level 2 or more in the matching skill.
@@ -54,8 +54,9 @@ The fit score is **not a rating of a person.** It only says how well a task matc
 
 ## 5. Sizes and waves
 
-- **Size** is a rough guess to balance the load: **S** about half a day, **M** one to two days, **L** three to five days. The tool uses 4, 12, and 32 hours. These are guesses, and they will be wrong in both directions. After a few tasks, compare the guess with reality and adjust.
+- **Size is relative complexity, not time.** **S** is small, **M** is medium, **L** is large. The tool uses the weights 1, 2, and 3 only to balance complexity across the team. Do not turn these labels into days or hours.
 - **Wave** is the dependency order. It is computed from `depends_on` in the backlog.
+- **The calendar is fixed.** The final defense is **15 December 2026**. The plan is sequenced backwards from it in four short phases, each ending with a demoable gate (see `docs/lms/parts/01_Project_Planning_and_Management.md`).
 
 ## 6. Labels
 
@@ -74,11 +75,11 @@ Load them once with `bash .github/labels.sh` (see `tools/README.md`).
 
 ## 7. If the plan does not fit
 
-It will not, at first. The backlog is larger than a few weeks of part-time work. When that happens:
+The date is fixed and there is no buffer. When a gate is at risk:
 
 1. Keep every **Core** task. These are what the demo needs.
-2. Move **Should** and **Delivery** tasks to later, in the cut order in the Decision Log, section E.
-3. If Core alone does not fit, talk to the maintainer: the options are to cut scope inside Core (log it as a decision), to add people-hours, or to simplify a task.
+2. Move **Should** and **Delivery** tasks out, in the cut order in the Decision Log, section E.
+3. If Core alone does not fit, talk to the maintainer: the options are to cut scope inside Core (log it as a decision), pair two people on the critical task, or simplify the task.
 4. Record the decision in the Decision Log.
 
 ## 8. Changing this system

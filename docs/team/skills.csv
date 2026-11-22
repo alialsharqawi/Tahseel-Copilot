@@ -1,3 +1,6 @@
-member,github,hours_per_week,wants_to_learn,GIT,PY,API,DB,LLM,VEC,EVAL,FE,UX,DATA,QA,SEC,DEVOPS,DOC,BIZ,PRES,AR
-Ali Al-Sharqawi,,,,,,,,,,,,,,,,,,,,
-
+member,github,wants_to_learn,GIT,PY,API,DB,LLM,VEC,EVAL,FE,UX,DATA,QA,SEC,DEVOPS,DOC,BIZ,PRES,AR
+Ali Al-Sharqawi,alialsharqawi,,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3
+Fatma Eissa,FatmaEissa,API;EVAL;DEVOPS,1,2,1,1,2,2,2,1,1,2,0,0,1,2,2,2,2
+Mariam,Mariam-abd-elhady,LLM;VEC;EVAL,1,2,1,1,1,1,1,2,1,2,1,0,0,1,1,1,3
+Zainab Hazem,ZainabHazem-sys,LLM;VEC;API,1,2,0,1,0,0,1,0,2,2,0,0,0,1,0,2,3
+Alaa,alaasamy331-droid,UX;API;FE,1,2,0,1,0,0,1,0,0,2,0,0,0,1,0,2,3
