@@ -16,7 +16,7 @@ Tahseel reads the receivables data, scores each customer's risk and explains the
 
 ## Status
 
-Documentation baseline, system architecture, database design, bilingual wireframes, team framework, and repository legal/security standards are completed (November 2026). **No implementation code yet.** Current status, next steps, and open items are tracked in `PROJECT_STATUS.md`.
+Documentation baseline, system architecture, database design, bilingual wireframes, team framework, and repository legal/security standards are completed (November 2026). The skills matrix is filled and skill-weighted assignments are generated. **No implementation code yet.** The final defense is **Tuesday, 15 December 2026** (Decision Log, D40). Current status, next steps, and open items are tracked in `PROJECT_STATUS.md`.
 
 ---
 
@@ -40,8 +40,8 @@ Tahseel-Copilot/
 │   │   └── Tahseel_AI_Business_Strength.md      evidence, stakeholders, competitors, ROI, validation plan
 │   ├── presentation/
 │   │   └── Tahseel_AI_Final_Pitch.md            pitch, slide skeleton, demo script, Q&A
-│   ├── team/                                    backlog, skills matrix, task assignment, onboarding, AI guide
-│   ├── lms/parts/                               the parts of the documentation submitted to the LMS (02 to 06)
+│   ├── team/                                    backlog, skills matrix, assignment plan, onboarding, team brief, AI guide
+│   ├── lms/parts/                               the six parts of the documentation submitted to the LMS (01 to 06)
 │   ├── diagrams/                                ERD, architecture, wireframes (dot, mmd, png, svg)
 │   └── archive/                                 superseded raw material, kept for history; not requirements
 ├── .github/                                     task form, pull request template, label script, SECURITY.md

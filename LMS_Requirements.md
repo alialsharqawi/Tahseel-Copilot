@@ -2,6 +2,8 @@
 
 Transcribed from the notices and screenshots we received, so the whole team can read them. The original screenshots are kept privately and are not part of the repository. Open questions and to-dos are tracked in `PROJECT_STATUS.md`; this file holds the facts as announced.
 
+**Final defense:** Tuesday, 15 December 2026 (Decision Log, D40). The project plan is sequenced backwards from that date.
+
 ---
 
 ## 1. Notice from CLS Learning Solutions (Digital Egypt Pioneers, Phase 5)
@@ -87,7 +89,7 @@ References are by file and section name, not by number.
 
 | Required item | Source material we already have | Status |
 |---|---|---|
-| Project Planning & Management | `Final_Concept` (goals, scope, tiers), `Decision_Log` (decisions, cut order), `Business_Strength` (business risks), `PRD` (KPIs; its 8-week plan is only a proposal) | Needs a real project plan: milestones, owners, dates |
+| Project Planning & Management | `Final_Concept` (goals, scope, tiers), `Decision_Log` (decisions, cut order, D40/D41), `Business_Strength` (business risks), `PRD` (KPIs; its old 8-week plan is superseded) | Done: `docs/lms/parts/01_Project_Planning_and_Management.md` (15 December 2026 plan, owners, gates) |
 | Literature Review | `Business_Strength` (problem evidence, competitive landscape, sources) | Needs expanding: more solutions, strengths and weaknesses, a comparison, and the sources |
 | Requirements Gathering and Stakeholder Analysis | `Business_Strength` (stakeholder analysis), `PRD` (user stories, acceptance criteria, API), `Final_Concept` (scope tiers) | The material exists; it needs formatting as functional and quality requirements |
 | System Architecture | `Final_Concept` (architecture), `Technical_Strength` (pipeline vs agent, ADRs, security), `Adaptability_Strategy` | Needs a drawn diagram |
