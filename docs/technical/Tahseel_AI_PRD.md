@@ -29,7 +29,7 @@ This is the detailed specification: formulas, fields, API, and acceptance criter
 | Actions (section 13) | Included `REVIEW_CREDIT_TERMS` | Removed; `TALK_TO_SALES_REP` added (D36) |
 | Policy table (section 19) | `policies` | `policy_rules` and `document_chunks` (D21) |
 | Memory | Not specified | Customer memory and conversation memory (D28), added to sections 19 and 21 |
-| Plan and interviews (sections 31 and 37) | Written as if interviews and an 8-week plan would happen | A proposal only. No interviews have taken place. The real project plan is in the LMS documentation |
+| Plan and interviews (sections 31 and 37) | Written as if interviews and an 8-week plan would happen | A proposal only, superseded on 21 November 2026. No interviews have taken place. The real project plan is the 15 December 2026 plan in `docs/lms/parts/01_Project_Planning_and_Management.md` |
 | Scope tiers | Not defined | Core, Should, Delivery (D29) |
 
 ---
@@ -1643,98 +1643,9 @@ A Collector cannot see unassigned customers and cannot approve a recommendation 
 
 ---
 
-## 31. 8-Week Capstone Plan
+## 31. Capstone Plan
 
-This was the original proposal. It has not been executed as written. The real project plan, with dates and owners, is in the LMS documentation (Project Planning).
-
-### Week 1 — Discovery + Data
-
-- define ICP
-- talk to potential distributors if access exists (optional)
-- map current workflow
-- create synthetic dataset
-- finalize schema
-
-**Deliverable:** problem statement + data model (validation is a later step)
-
-### Week 2 — Backend Foundation
-
-- FastAPI
-- PostgreSQL
-- authentication
-- tenant model
-- customers
-- invoices
-- payments
-
-**Deliverable:** working backend
-
-### Week 3 — Receivables Intelligence
-
-- outstanding calculation
-- overdue calculation
-- customer aggregation
-- risk rules
-- priority score
-
-**Deliverable:** receivables engine
-
-### Week 4 — RAG
-
-- document ingestion
-- chunking
-- embeddings
-- retrieval
-- citations
-- policy testing
-
-**Deliverable:** policy RAG
-
-### Week 5 — Agent
-
-- agent orchestrator
-- tool calling
-- risk tool
-- receivables tool
-- policy tool
-- forecast tool
-- recommendation generation
-
-**Deliverable:** working agent
-
-### Week 6 — Dashboard
-
-- executive dashboard
-- collection queue
-- customer profile
-- AI recommendation panel
-- tasks
-- audit logs
-
-**Deliverable:** usable product
-
-### Week 7 — Integration + Evaluation
-
-- connect frontend/backend
-- agent evaluations
-- RAG evaluations
-- security testing
-- error handling
-- logging
-
-**Deliverable:** production-like MVP
-
-### Week 8 — Deployment + Demo
-
-- Docker
-- deployment
-- HTTPS
-- monitoring
-- seed data
-- demo script
-- documentation
-
-**Deliverable:** deployed Tahseel AI (Delivery tier; a recorded demo is the fallback, D17)
+An early 8-week proposal was superseded on 21 November 2026. The final defense is **Tuesday, 15 December 2026**, and the plan is sequenced backwards from that date in four short phases, each ending with a demoable gate (Decision Log, D40). The plan of record, with dates, waves, and gate evidence, is `docs/lms/parts/01_Project_Planning_and_Management.md`. It does not use weekly-hour or person-day estimates.
 
 ---
 
