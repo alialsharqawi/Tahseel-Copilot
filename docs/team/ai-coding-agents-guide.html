@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>دليل الفريق لاستخدام وكلاء البرمجة بالـAI — Tahseel</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #132238;
+      --muted: #52657a;
+      --paper: #f3f6fa;
+      --white: #fff;
+      --navy: #102a43;
+      --blue: #176b87;
+      --teal: #087e78;
+      --gold: #f3b33d;
+      --line: #d7e0e9;
+      --red-bg: #fff0ed;
+      --green-bg: #e8f6f1;
+      --shadow: 0 8px 24px rgba(16, 42, 67, .08);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: system-ui, -apple-system, "Segoe UI", Tahoma, Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.75;
+    }
+
+    a { color: #075e7a; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+    a:hover { color: #06435a; }
+    h1, h2, h3, p { margin-block-start: 0; }
+    h1 { margin-block-end: 10px; font-size: clamp(2rem, 6vw, 3.2rem); line-height: 1.2; }
+    h2 { margin-block-end: 3px; font-size: clamp(1.35rem, 4vw, 1.8rem); }
+    h3 { margin-block-end: 6px; font-size: 1.08rem; }
+    p:last-child, ul:last-child, ol:last-child { margin-block-end: 0; }
+
+    .page { width: min(100% - 28px, 1000px); margin-inline: auto; padding-block: 18px 40px; }
+    .hero {
+      padding: clamp(24px, 5vw, 46px);
+      border-radius: 23px;
+      background: linear-gradient(135deg, #102a43, #14546b 70%, #087e78);
+      color: var(--white);
+      box-shadow: var(--shadow);
+    }
+    .eyebrow { margin-block-end: 8px; color: #b9e8e4; font-size: .82rem; font-weight: 800; }
+    .hero-intro { max-width: 760px; margin-block-end: 18px; color: #e5f1f5; font-size: 1.08rem; }
+    .stats, .grid, .tool-grid, .video-grid, .steps, .prompt-grid { display: grid; gap: 12px; }
+    .stats { grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: 800px; }
+    .stat { padding: 12px 14px; border: 1px solid rgba(255,255,255,.2); border-radius: 14px; background: rgba(255,255,255,.1); }
+    .stat strong, .stat span { display: block; }
+    .stat span { color: #d6e8ed; font-size: .84rem; }
+
+    main { display: grid; gap: 22px; margin-block-start: 22px; }
+    .section-heading { margin-block-end: 12px; }
+    .section-heading p { margin-block-end: 0; color: var(--muted); }
+    .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .tool-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .video-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .prompt-grid { grid-template-columns: 1fr; }
+    .card, .tool-card, .step, .video-card, .prompt-card, .callout {
+      min-width: 0;
+      padding: 17px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: var(--white);
+      box-shadow: var(--shadow);
+    }
+    .card p, .tool-card p, .step p, .video-card p { margin-block-end: 0; }
+    .tool-card { border-block-start: 4px solid var(--blue); }
+    .tool-card:nth-child(2) { border-block-start-color: var(--teal); }
+    .tool-card:nth-child(3) { border-block-start-color: #9a6a1a; }
+    .tag {
+      display: inline-block;
+      margin-block-end: 7px;
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: #e9eff5;
+      color: #29455f;
+      font-size: .77rem;
+      font-weight: 800;
+    }
+    .muted, .small { color: var(--muted); }
+    .small { font-size: .9rem; }
+    .plain-list, .steps-list { margin: 8px 0 0; padding-inline-start: 21px; }
+    .plain-list li, .steps-list li { margin-block: 5px; }
+    .callout { border-color: #ecd39e; background: #fff8e9; }
+    .callout.warning { border-color: #edc3b9; background: var(--red-bg); }
+    .callout.good { border-color: #b9dfe0; background: var(--green-bg); }
+    .step-number {
+      display: inline-grid;
+      width: 30px;
+      height: 30px;
+      margin-inline-end: 5px;
+      place-items: center;
+      border-radius: 10px;
+      background: var(--navy);
+      color: white;
+      font-weight: 900;
+    }
+    pre {
+      overflow-x: auto;
+      margin: 9px 0 0;
+      padding: 14px;
+      border-radius: 12px;
+      background: #102a43;
+      color: #eff8fb;
+      direction: ltr;
+      text-align: left;
+      font: .88rem/1.65 ui-monospace, SFMono-Regular, Consolas, monospace;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+    .links { display: grid; gap: 8px; }
+    .link-row { padding: 12px 14px; border: 1px solid var(--line); border-radius: 12px; background: white; }
+    .link-row strong { display: block; }
+    .footer {
+      margin-block-start: 22px;
+      padding: 17px;
+      border-radius: 16px;
+      background: var(--navy);
+      color: #e7f0f3;
+      font-size: .9rem;
+    }
+    .footer a { color: #b7ece5; }
+    .footer p:last-child { margin-block-end: 0; }
+
+    @media (max-width: 760px) {
+      .page { width: min(100% - 18px, 600px); padding-block-start: 9px; }
+      .hero { border-radius: 19px; }
+      .stats, .grid, .tool-grid, .steps, .video-grid { grid-template-columns: 1fr; }
+      .card, .tool-card, .step, .video-card, .prompt-card, .callout { border-radius: 14px; }
+    }
+    @media (max-width: 390px) {
+      body { font-size: 15px; }
+      .card, .tool-card, .step, .video-card, .prompt-card, .callout { padding: 14px; }
+    }
+    @media print {
+      body { background: white; }
+      .page { width: 100%; padding: 0; }
+      .hero, .card, .tool-card, .step, .video-card, .prompt-card, .callout { box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="hero">
+      <p class="eyebrow">TAHSEEL AI · دليل الفريق</p>
+      <h1>اشتغل مع وكيل برمجي… وخليك أنت صاحب القرار</h1>
+      <p class="hero-intro">الوكيل يقدر يفهم ملفات المشروع، يقترح خطة، يعدّل الكود، ويشغّل اختبارات. لكنه ممكن يغلط بثقة؛ مسؤولية الفهم والمراجعة والاعتماد تفضل عليك.</p>
+      <div class="stats" aria-label="قواعد سريعة">
+        <div class="stat"><strong>مهمة واحدة في كل مرة</strong><span>ابدأ من الـIssue ومعايير القبول</span></div>
+        <div class="stat"><strong>راجع كل تغيير</strong><span>لا تعتمد على ملخص الوكيل وحده</span></div>
+        <div class="stat"><strong>لا أسرار ولا بيانات حقيقية</strong><span>بيانات المشروع التجريبية اصطناعية</span></div>
+      </div>
+    </header>
+
+    <main>
+      <section aria-labelledby="meaning-title">
+        <div class="section-heading">
+          <h2 id="meaning-title">يعني إيه وكيل برمجي؟</h2>
+          <p>مش مجرد شات بيرد عليك: الوكيل يقرأ سياق الكود، يستخدم أدوات، ينفذ خطوات، ويرجع لك تغييرات تراجعها.</p>
+        </div>
+        <div class="grid">
+          <article class="card">
+            <h3>النموذج</h3>
+            <p>المحرّك اللي يفهم طلبك ويولّد الردود. قدراته وحدوده تختلف حسب النموذج المختار.</p>
+          </article>
+          <article class="card">
+            <h3>الوكيل وأدواته</h3>
+            <p>النموذج مع سياق المستودع وأدوات القراءة والتعديل وتشغيل الأوامر، ضمن صلاحيات وإعدادات تختارها.</p>
+          </article>
+          <article class="card">
+            <h3>أنت</h3>
+            <p>تحدد الهدف والنطاق، تجاوب عن القرارات، تراجع الـdiff، تتحقق من الاختبارات، وتقرر ما يدخل الـPR.</p>
+          </article>
+        </div>
+        <div class="callout" style="margin-block-start:12px">
+          <strong>توضيح مهم:</strong> هنا نقصد الأدوات التي تساعدكم أنتم في كتابة كود Tahseel. هذا غير وكيل Tahseel داخل المنتج؛ قرار المشروع هو <strong>منسّق واحد يستدعي أدوات مجمّعة</strong> (D7)، وليس مجموعة وكلاء منفصلة.
+        </div>
+      </section>
+
+      <section aria-labelledby="tools-title">
+        <div class="section-heading">
+          <h2 id="tools-title">مين الأدوات اللي ممكن تساعدنا؟</h2>
+          <p>دي أشهر بدائل عملية. بص على نوع الخطة والـreset قبل ما تبدأ؛ مش كل أداة بتدي حد يومي مجاني.</p>
+        </div>
+        <div class="tool-grid">
+          <article class="tool-card">
+            <span class="tag">مجاني محدود · شهري</span>
+            <h3>GitHub Copilot Agent</h3>
+            <p>موجود داخل VS Code. خطة Free تشمل حاليًا <strong>2,000 اقتراح إكمال inline في الشهر</strong>؛ استخدام Chat وAgent محدود ويظهر رصيده في الحساب. الرقم مش حصة يومية.</p>
+            <p class="small" style="margin-block-start:9px"><a href="https://docs.github.com/en/copilot/get-started/plans" target="_blank" rel="noreferrer">تفاصيل الخطط والحصص الرسمية</a> · <a href="https://code.visualstudio.com/docs/agents/quickstart" target="_blank" rel="noreferrer">دليل البداية في VS Code</a></p>
+          </article>
+          <article class="tool-card">
+            <span class="tag">الخطة والحساب يحددان التكلفة</span>
+            <h3>Claude Code</h3>
+            <p>وكيل طرفية قوي، لكن ما تعتمدش عليه كبديل مجاني إلا لو حسابك نفسه موضح إتاحة وحدودًا مجانية. شغّله من جذر المستودع؛ ملف <code>CLAUDE.md</code> يشرح له قواعد Tahseel.</p>
+            <p class="small" style="margin-block-start:9px"><a href="https://code.claude.com/docs/en/overview" target="_blank" rel="noreferrer">التوثيق الرسمي لـClaude Code</a></p>
+          </article>
+          <article class="tool-card">
+            <span class="tag">خطة Free · الاستخدام متغير</span>
+            <h3>OpenAI Codex</h3>
+            <p>صفحة OpenAI تعرض خطة Free، لكن مفيش رقم ثابت مضمون لعدد المهام يوميًا؛ الاستهلاك يتأثر بالنموذج وحجم التاسك. شوف المتبقي في لوحة الاستخدام قبل ما تعتمد عليه.</p>
+            <p class="small" style="margin-block-start:9px"><a href="https://developers.openai.com/codex/pricing/" target="_blank" rel="noreferrer">الخطط والاستخدام الرسمي</a> · <a href="https://developers.openai.com/codex/ide/" target="_blank" rel="noreferrer">دليل المحرر</a></p>
+          </article>
+          <article class="tool-card">
+            <span class="tag">مجاني للأفراد · يتجدد أسبوعيًا</span>
+            <h3>Google Antigravity</h3>
+            <p>IDE وCLI لوكلاء البرمجة. الخطة الفردية المجانية فيها حصة أساسية تتجدد أسبوعيًا، وحجم الاستخدام يتأثر بنوع المهمة؛ يعني مش حدًا يوميًا ثابتًا.</p>
+            <p class="small" style="margin-block-start:9px"><a href="https://antigravity.google/pricing" target="_blank" rel="noreferrer">الأسعار والحصة الرسمية</a> · <a href="https://antigravity.google/product/antigravity-cli" target="_blank" rel="noreferrer">Antigravity CLI</a></p>
+          </article>
+          <article class="tool-card">
+            <span class="tag">معلومة مهمة عن Gemini</span>
+            <h3>Gemini CLI القديم</h3>
+            <p>المستودع الرسمي يوضح أن الوصول المجاني للأفراد انتقل إلى Antigravity CLI؛ Gemini CLI القديم موجّه أساسًا لاشتراكات Google Cloud Code Assist. للمجاني ابدأ بـAntigravity، أو استخدم Gemini API عبر AI Studio.</p>
+            <p class="small" style="margin-block-start:9px"><a href="https://github.com/google-gemini/gemini-cli" target="_blank" rel="noreferrer">حالة Gemini CLI الرسمية</a></p>
+          </article>
+          <article class="tool-card">
+            <span class="tag">Open source · النموذج منفصل</span>
+            <h3>OpenCode</h3>
+            <p>وكيل مفتوح المصدر يعمل من الطرفية أو تطبيق سطح المكتب. البرنامج نفسه لا يضمن رصيد نماذج مجانيًا؛ وصّله بمزوّد مجاني متاح لك أو بنموذج محلي مثل Ollama.</p>
+            <p class="small" style="margin-block-start:9px"><a href="https://opencode.ai/docs/" target="_blank" rel="noreferrer">التوثيق الرسمي ومزوّدو النماذج</a></p>
+          </article>
+        </div>
+        <div class="callout good" style="margin-block-start:12px">
+          <strong>قاعدة مشتركة:</strong> افتح جذر المستودع قبل ما تبدأ. Claude Code يقرأ <code>CLAUDE.md</code> تلقائيًا؛ مع أي أداة أخرى، اطلب منها قراءة الملف وملفات المهمة ذات الصلة صراحةً، وما تفترضش إنها عارفة المشروع.
+        </div>
+      </section>
+
+      <section aria-labelledby="free-quota-title">
+        <div class="section-heading">
+          <h2 id="free-quota-title">مزودو النماذج المجانيون والـfallback</h2>
+          <p>الوكيل ممكن يكون مجاني، لكن الحصة غالبًا من مزوّد النموذج. دي بدائل عملية لو حدّ مزوّد خلص.</p>
+        </div>
+        <div class="tool-grid">
+          <article class="tool-card">
+            <span class="tag">حصة يومية حسب الموديل</span>
+            <h3>Gemini API عبر Google AI Studio</h3>
+            <p>بعض النماذج لها استخدام مجاني. الحد يُحسب لكل مشروع وموديل ويشمل RPM وTPM وRPD؛ افتح صفحة Rate limits في AI Studio لمعرفة رصيدك الفعلي. تصفير RPD عند منتصف الليل بتوقيت المحيط الهادئ.</p>
+            <p class="small" style="margin-block-start:9px"><a href="https://ai.google.dev/gemini-api/docs/rate-limits" target="_blank" rel="noreferrer">شرح الحصص الرسمي</a> · <a href="https://aistudio.google.com/rate-limit" target="_blank" rel="noreferrer">حصتك الحالية في AI Studio</a></p>
+          </article>
+          <article class="tool-card">
+            <span class="tag">حتى 50 طلبًا يوميًا للحساب المجاني</span>
+            <h3>OpenRouter · نماذج <code>:free</code></h3>
+            <p>يوصل لوكلاء مثل OpenCode بنماذج مجانية متاحة. للحساب الذي لم يشترِ رصيدًا: الحد الرسمي يصل إلى 20 طلبًا في الدقيقة و50 في اليوم؛ التوفر والحد قد يختلفان حسب الحساب والموديل.</p>
+            <p class="small" style="margin-block-start:9px"><a href="https://openrouter.ai/docs/api_reference/limits" target="_blank" rel="noreferrer">الحدود اليومية الرسمية</a> · <a href="https://openrouter.ai/docs/guides/routing/model-variants/free" target="_blank" rel="noreferrer">طريقة اختيار النماذج المجانية</a></p>
+          </article>
+          <article class="tool-card">
+            <span class="tag">الواجهة مجانية · الحصة من مزوّدك</span>
+            <h3>Cline</h3>
+            <p>إضافة مفتوحة المصدر للمحرر تتصل بمزوّد نموذج تختاره. الإضافة نفسها لا تعطيك حصة يومية: لو استخدمت Gemini أو OpenRouter فحدود حساب المزوّد هي التي تنطبق.</p>
+            <p class="small" style="margin-block-start:9px"><a href="https://github.com/cline/cline" target="_blank" rel="noreferrer">المستودع والتوثيق الرسمي</a></p>
+          </article>
+          <article class="tool-card">
+            <span class="tag">محلي · بلا حصة سحابية يومية</span>
+            <h3>Ollama</h3>
+            <p>تشغّل موديلات مفتوحة على جهازك؛ مفيش حدّ طلبات يومي من مزوّد سحابي، لكن السرعة والجودة يعتمدان على الرام وكرت الشاشة وحجم الموديل. موديلات Ollama Cloud لها شروط واستهلاك منفصل.</p>
+            <p class="small" style="margin-block-start:9px"><a href="https://docs.ollama.com/quickstart" target="_blank" rel="noreferrer">دليل التشغيل المحلي</a> · <a href="https://docs.ollama.com/cloud" target="_blank" rel="noreferrer">تفاصيل النماذج السحابية</a></p>
+          </article>
+        </div>
+        <div class="callout warning" style="margin-block-start:12px">
+          <strong>خلي الاستخدام مجاني فعلًا:</strong> في OpenRouter، لو أضفت موديلات مدفوعة كـfallback ممكن تتحاسب لما المجاني يقف. استخدم fallback من موديلات <code>:free</code> فقط، وما تعملش حسابات متعددة للتحايل على الحصة.
+        </div>
+        <div class="callout good" style="margin-block-start:12px">
+          <strong>لو الحصة خلصت:</strong> اطلب من الوكيل الحالي ملخصًا للخطوات والملفات، أوقفه، ثم سلّم نفس الفرع لأداة بديلة بعد ما تبدأ بقراءة <code>git status</code> والـdiff. ما تخليش وكيلين يعدّلوا نفس الفرع في نفس الوقت. لو مفيش حصة سحابية، اشتغل على الاختبارات والمراجعة أو استخدم Ollama محليًا.
+        </div>
+        <p class="small" style="margin-block-start:10px">الحصص تتغير حسب الحساب والبلد والموديل، وقد يوقف المزوّد المجاني مؤقتًا وقت الضغط. راجع الصفحة الرسمية قبل ما تبني عليها خطة التاسك.</p>
+      </section>
+
+      <section aria-labelledby="workflow-title">
+        <div class="section-heading">
+          <h2 id="workflow-title">إزاي تشتغل معاه على التاسك؟</h2>
+          <p>الوكيل يساعد داخل مسار الفريق المعتاد؛ ما يستبدلش الـIssue أو الـbranch أو المراجع.</p>
+        </div>
+        <div class="steps">
+          <article class="step">
+            <h3><span class="step-number">1</span>افهم التاسك</h3>
+            <p>افتح الـIssue، اقرأ الهدف ومعايير القبول وملفات <strong>Read first</strong>. تأكد إنك فاهم الفكرة قبل ما تطلب كود.</p>
+          </article>
+          <article class="step">
+            <h3><span class="step-number">2</span>جهّز مكان شغلك</h3>
+            <p>ابدأ من branch مخصص للمهمة. راجع <code>git status</code> أولًا؛ لو ظهرت تعديلات سابقة مش بتاعتك، ما تمسحهاش أو تستبدلها.</p>
+          </article>
+          <article class="step">
+            <h3><span class="step-number">3</span>ابدأ بالاستكشاف والخطة</h3>
+            <p>خليه يقرأ مستندات المشروع والتاسك، يعيد معايير القبول، ويقترح ملفات وخطة. صحّح أي فهم غلط قبل السماح بالتعديل.</p>
+          </article>
+          <article class="step">
+            <h3><span class="step-number">4</span>نفّذ على دفعات صغيرة</h3>
+            <p>اطلب تغييرًا محدودًا يطابق الخطة، مع الاختبارات اللازمة. لو ظهر غموض في قرار أو صيغة، خليه يسألك بدل التخمين.</p>
+          </article>
+          <article class="step">
+            <h3><span class="step-number">5</span>اختبر وافحص بنفسك</h3>
+            <p>راجع الملفات والـdiff، شغّل الأمر المحدد، وافحص حالات القبول. عبارة «خلصت» أو نتيجة الوكيل وحدها مش دليل إن كل شيء صحيح.</p>
+          </article>
+          <article class="step">
+            <h3><span class="step-number">6</span>افتح PR واضح</h3>
+            <p>اربط PR بالـIssue، اذكر أوامر الاختبار ونتيجتها واستخدام الـAI، واطلب مراجعة زميل. أنت تعمل commit بحسابك؛ الوكيل لا يدمج.</p>
+          </article>
+        </div>
+      </section>
+
+      <section aria-labelledby="prompts-title">
+        <div class="section-heading">
+          <h2 id="prompts-title">قوالب جاهزة تبدأ بها</h2>
+          <p>بدّل ما بين الأقواس بمعلومات الـIssue. خلي المطلوب محدد، واطلب منه يوضح أي حاجة مش مؤكدة.</p>
+        </div>
+        <div class="prompt-grid">
+          <article class="prompt-card">
+            <h3>أول رسالة: فهم من غير تعديل</h3>
+            <pre>نشتغل على Tahseel AI في المهمة [T-ID / رقم الـIssue].
+قبل أي تعديل:
+1) اقرأ CLAUDE.md، نص الـIssue، وكل ملفات Read first.
+2) اشرح الهدف ومعايير القبول بكلامك.
+3) اذكر الملفات المرجح تعديلها وأي سؤال أو تعارض.
+4) لا تعدّل ملفات ولا تشغّل أوامر تغيّر الحالة الآن.
+لو في شيء غير واضح، اسألني بدل ما تفترض.</pre>
+          </article>
+          <article class="prompt-card">
+            <h3>بعد ما توافق على الخطة: تنفيذ محدود</h3>
+            <pre>نفّذ الخطة الموافق عليها لهذه المهمة فقط.
+التزم بمعايير القبول وقرارات المستودع، وحافظ على أي تغييرات
+موجودة لا تخصك. لا تضف نطاقًا أو اعتماديات من نفسك.
+اكتب/حدّث الاختبارات اللازمة وشغّل الاختبارات المستهدفة.
+لا تقرأ .env، ولا تطبع أو تحفظ أسرارًا، ولا تستخدم بيانات حقيقية.
+لا تعمل commit أو push أو merge. في النهاية اذكر الملفات
+المعدلة وأوامر الفحص ونتيجة كل أمر وأي شيء لم يتم التحقق منه.</pre>
+          </article>
+          <article class="prompt-card">
+            <h3>طلب مراجعة: اكتشاف المشاكل فقط</h3>
+            <pre>راجع الـdiff مقابل الـIssue ومعايير القبول وقواعد Tahseel.
+لا تعدّل الملفات. اذكر فقط المشاكل الفعلية، مرتبة حسب الخطورة،
+مع الملف/الموضع وسبب المشكلة وطريقة اختبارها.
+تحقق خصوصًا من الحسابات، tenant_id، صلاحيات الأدوار،
+بوابة الموافقة، الأسرار، والاختبارات ذات الصلة.</pre>
+          </article>
+        </div>
+      </section>
+
+      <section aria-labelledby="rules-title">
+        <div class="section-heading">
+          <h2 id="rules-title">حدود ما ينفعش الوكيل يتجاوزها</h2>
+          <p>دي قواعد المنتج والفريق، مش اختيارات يقدر الوكيل يغيّرها من نفسه.</p>
+        </div>
+        <div class="grid">
+          <article class="callout warning">
+            <h3>بيانات وأسرار</h3>
+            <p>ممنوع مشاركة مفاتيح أو كلمات مرور أو محتوى <code>.env</code>، وممنوع بيانات عملاء حقيقية. استخدم البيانات الاصطناعية فقط.</p>
+          </article>
+          <article class="callout">
+            <h3>قواعد المنتج</h3>
+            <p>الأرقام من كود مختبَر، والسياسة لا تُخترع، والوكيل لا يكتب ذاكرة العميل. أي إجراء مؤثر يحتاج موافقة بشرية مطبقة في الـAPI.</p>
+          </article>
+          <article class="callout">
+            <h3>صلاحيات المستودع</h3>
+            <p>لا تدفع إلى <code>main</code>، لا تدمج PR، ولا تغيّر إعدادات GitHub. راجع صلاحيات الأداة ووافق فقط على الأوامر التي تفهمها.</p>
+          </article>
+        </div>
+        <div class="callout good" style="margin-block-start:12px">
+          لو الأداة عدّلت ملفات خارج التاسك، أو ظهر لك أمر مش مفهوم، وقف وراجع التغييرات مع المراجع. لا تطلب منها تنظيف الشغل أو استرجاعه عشوائيًا.
+        </div>
+      </section>
+
+      <section aria-labelledby="resources-title">
+        <div class="section-heading">
+          <h2 id="resources-title">روابط تتعلم منها</h2>
+          <p>ابدأ بالتوثيق الرسمي، وبعده شوف فيديو عملي. روابط يوتيوب تفتح نتائج بحث للقناة/الموضوع وليست توصية بفيديو بعينه؛ راجع المصدر وتاريخ النشر.</p>
+        </div>
+        <div class="video-grid">
+          <article class="video-card">
+            <span class="tag">VS Code / Copilot</span>
+            <h3>ابدأ بمهمة كاملة خطوة بخطوة</h3>
+            <p><a href="https://code.visualstudio.com/docs/agents/quickstart" target="_blank" rel="noreferrer">Quickstart الرسمي: نفّذ واختبر وراجع مع Agent</a></p>
+            <p class="small" style="margin-block-start:7px"><a href="https://www.youtube.com/@code/search?query=VS%20Code%20AI%20agents%20Copilot" target="_blank" rel="noreferrer">فيديوهات من قناة Visual Studio Code على YouTube</a></p>
+          </article>
+          <article class="video-card">
+            <span class="tag">Copilot / Agent Mode</span>
+            <h3>شوف استخدام الوكيل داخل المحرر</h3>
+            <p><a href="https://code.visualstudio.com/docs/agents/agents-tutorial" target="_blank" rel="noreferrer">الشرح الرسمي: بناء تطبيق ومراجعة التغييرات</a></p>
+            <p class="small" style="margin-block-start:7px"><a href="https://www.youtube.com/@GitHub/search?query=GitHub%20Copilot%20agent%20mode" target="_blank" rel="noreferrer">فيديوهات من قناة GitHub الرسمية على YouTube</a></p>
+          </article>
+          <article class="video-card">
+            <span class="tag">Claude Code</span>
+            <h3>تعرّف على التشغيل من الطرفية والمحرر</h3>
+            <p><a href="https://code.claude.com/docs/en/quickstart" target="_blank" rel="noreferrer">Quickstart الرسمي لـClaude Code</a></p>
+            <p class="small" style="margin-block-start:7px"><a href="https://www.youtube.com/results?search_query=Claude+Code+Anthropic+official+tutorial" target="_blank" rel="noreferrer">بحث فيديوهات: Claude Code / Anthropic</a></p>
+          </article>
+          <article class="video-card">
+            <span class="tag">OpenAI Codex</span>
+            <h3>اختار واجهة Codex المناسبة لك</h3>
+            <p><a href="https://developers.openai.com/codex/ide/" target="_blank" rel="noreferrer">توثيق Codex للمحرر</a> · <a href="https://developers.openai.com/codex/cli/" target="_blank" rel="noreferrer">توثيق Codex CLI</a></p>
+            <p class="small" style="margin-block-start:7px"><a href="https://www.youtube.com/results?search_query=OpenAI+Codex+coding+agent+tutorial" target="_blank" rel="noreferrer">بحث فيديوهات: OpenAI Codex coding agent</a></p>
+          </article>
+        </div>
+      </section>
+
+      <section aria-labelledby="project-links-title">
+        <div class="section-heading">
+          <h2 id="project-links-title">مراجع Tahseel قبل وأثناء الشغل</h2>
+          <p>إرشادات الأدوات لا تحل محل وثائق المشروع أو معايير الـIssue.</p>
+        </div>
+        <div class="links">
+          <div class="link-row"><strong><a href="../../CLAUDE.md">CLAUDE.md</a></strong><span class="small">تعليمات المشروع وترتيب القراءة والقواعد غير القابلة للتفاوض.</span></div>
+          <div class="link-row"><strong><a href="AI_WORKING_GUIDE.md">AI_WORKING_GUIDE.md</a></strong><span class="small">دليل الفريق الحالي للعمل مع AI، والتحقق من المخرجات، والخصوصية.</span></div>
+          <div class="link-row"><strong><a href="HOW_TO_WORK_ON_A_TASK.md">HOW_TO_WORK_ON_A_TASK.md</a> · <a href="../../CONTRIBUTING.md">CONTRIBUTING.md</a></strong><span class="small">مسار الـIssue والـbranch والاختبار والـPR والمراجعة.</span></div>
+          <div class="link-row"><strong><a href="../foundation/Tahseel_AI_Final_Concept.md">Final Concept</a> · <a href="../governance/Tahseel_AI_Decision_Log.md">Decision Log</a> · <a href="../technical/Tahseel_AI_PRD.md">PRD</a></strong><span class="small">النطاق، القرارات، والتفاصيل الفنية حسب موضوع المهمة.</span></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p><strong>استخدم الوكيل عشان تتعلم وتنجز، مش عشان تسلّمه مسؤوليتك.</strong> ما ترفعش كود ما تقدرش تشرحه، واطلب مساعدة المراجع لو وقفت.</p>
+      <p><a href="team-brief-whatsapp.html">العودة إلى إحاطة الفريق</a> · <a href="AI_WORKING_GUIDE.md">دليل العمل مع AI</a></p>
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,791 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>إحاطة فريق Tahseel AI — 22 نوفمبر 2026</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #132238;
+      --muted: #52657a;
+      --paper: #f3f6fa;
+      --white: #fff;
+      --navy: #102a43;
+      --blue: #176b87;
+      --teal: #087e78;
+      --gold: #f3b33d;
+      --line: #d7e0e9;
+      --core-bg: #e6f4f4;
+      --should-bg: #fff4dc;
+      --delivery-bg: #edf0f5;
+      --shadow: 0 8px 24px rgba(16, 42, 67, .08);
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: system-ui, -apple-system, "Segoe UI", Tahoma, Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.75;
+    }
+
+    a { color: #075e7a; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+    a:hover { color: #06435a; }
+
+    .page {
+      width: min(100% - 28px, 1040px);
+      margin-inline: auto;
+      padding-block: 18px 40px;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: clamp(24px, 5vw, 48px);
+      border-radius: 24px;
+      background: linear-gradient(135deg, #102a43 0%, #14546b 70%, #087e78 100%);
+      color: var(--white);
+      box-shadow: var(--shadow);
+    }
+
+    .hero::after {
+      position: absolute;
+      inset-inline-start: -58px;
+      inset-block-end: -105px;
+      width: 250px;
+      height: 250px;
+      border: 34px solid rgba(255, 255, 255, .08);
+      border-radius: 50%;
+      content: "";
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      margin: 0 0 8px;
+      color: #b9e8e4;
+      font-size: .82rem;
+      font-weight: 800;
+      letter-spacing: .04em;
+    }
+
+    h1, h2, h3, p { margin-block-start: 0; }
+    h1 { max-width: 760px; margin-block-end: 10px; font-size: clamp(2rem, 6vw, 3.4rem); line-height: 1.2; }
+    .hero-intro { max-width: 720px; margin-block-end: 22px; color: #e5f1f5; font-size: 1.08rem; }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      max-width: 760px;
+    }
+
+    .hero-stat {
+      padding: 12px 14px;
+      border: 1px solid rgba(255, 255, 255, .2);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, .1);
+    }
+
+    .hero-stat strong { display: block; color: #fff; font-size: 1.16rem; }
+    .hero-stat span { display: block; color: #d6e8ed; font-size: .84rem; }
+
+    main { display: grid; gap: 22px; margin-block-start: 22px; }
+    section { scroll-margin-block-start: 14px; }
+    .section-heading { margin-block-end: 12px; }
+    .section-heading h2 { margin-block-end: 3px; font-size: clamp(1.35rem, 4vw, 1.8rem); }
+    .section-heading p { margin-block-end: 0; color: var(--muted); }
+
+    .status-grid, .team-grid, .start-grid, .wave-grid, .steps-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .status-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .team-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .start-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .wave-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .steps-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+    .card, .wave, .callout {
+      min-width: 0;
+      padding: 17px;
+      border: 1px solid var(--line);
+      border-radius: 17px;
+      background: var(--white);
+      box-shadow: var(--shadow);
+    }
+
+    .card h3 { margin-block-end: 5px; font-size: 1.1rem; }
+    .card p:last-child, .card ul:last-child { margin-block-end: 0; }
+    .muted { color: var(--muted); }
+    .small { font-size: .9rem; }
+
+    .status-card { border-block-start: 4px solid var(--blue); }
+    .status-card.warning { border-block-start-color: #b97909; }
+    .status-card.good { border-block-start-color: var(--teal); }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      margin: 2px 3px 2px 0;
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: #e9eff5;
+      color: #29455f;
+      font-size: .77rem;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .pill.core { background: var(--core-bg); color: #075e5a; }
+    .pill.should { background: var(--should-bg); color: #805100; }
+    .pill.delivery { background: var(--delivery-bg); color: #455369; }
+    .pill.ready { background: #dff3e8; color: #17623d; }
+
+    .issue-list, .plain-list, .task-list {
+      margin: 9px 0 0;
+      padding-inline-start: 20px;
+    }
+
+    .issue-list li, .plain-list li, .task-list li { margin-block: 5px; }
+    .issue-list li::marker { color: var(--teal); }
+    .task-list { columns: 2; column-gap: 22px; }
+    .task-list li { break-inside: avoid; }
+
+    .issue-link { font-weight: 850; }
+    .task-meta { color: var(--muted); font-size: .84rem; }
+
+    .priority-banner {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 13px;
+      align-items: start;
+      padding: 17px;
+      border: 1px solid #b9dfe0;
+      border-radius: 17px;
+      background: #e8f6f5;
+    }
+
+    .priority-mark {
+      display: grid;
+      width: 38px;
+      height: 38px;
+      place-items: center;
+      border-radius: 12px;
+      background: var(--teal);
+      color: white;
+      font-weight: 900;
+    }
+
+    .priority-banner h3 { margin-block-end: 4px; }
+    .priority-banner p { margin-block-end: 0; }
+
+    .person-card { border-block-start: 4px solid var(--blue); }
+    .person-card.lead { border-block-start-color: var(--gold); }
+    .person-card .role { margin-block-end: 10px; color: var(--muted); font-size: .91rem; }
+    .person-card .now {
+      margin-block: 10px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: #eef6f8;
+    }
+
+    .person-card .now strong { display: block; margin-block-end: 3px; }
+
+    .wave {
+      padding: 0;
+      overflow: hidden;
+      box-shadow: none;
+    }
+
+    .wave summary {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+      padding: 13px 15px;
+      cursor: pointer;
+      list-style: none;
+      font-weight: 850;
+    }
+
+    .wave summary::-webkit-details-marker { display: none; }
+    .wave summary::after { content: "+"; color: var(--blue); font-size: 1.25rem; }
+    .wave[open] summary::after { content: "−"; }
+    .wave summary .wave-count { color: var(--muted); font-size: .78rem; font-weight: 650; }
+    .wave-body { padding: 0 15px 14px; border-block-start: 1px solid var(--line); }
+    .wave-body ul { margin-block: 10px 0; padding-inline-start: 20px; }
+    .wave-body li { margin-block: 8px; }
+
+    .dependency {
+      display: block;
+      color: var(--muted);
+      font-size: .79rem;
+    }
+
+    .callout {
+      border-inline-start: 5px solid var(--gold);
+      background: #fffaf0;
+    }
+
+    .callout h3 { margin-block-end: 5px; }
+    .callout p:last-child { margin-block-end: 0; }
+
+    .pie-layout {
+      display: grid;
+      grid-template-columns: minmax(210px, 270px) minmax(0, 1fr);
+      gap: 20px;
+      align-items: center;
+    }
+
+    .pie-chart {
+      width: min(100%, 260px);
+      aspect-ratio: 1;
+      margin-inline: auto;
+      border: 8px solid #fff;
+      border-radius: 50%;
+      background: conic-gradient(
+        #123b5d 0% 17.4%,
+        #087e78 17.4% 45.5%,
+        #c98700 45.5% 74.4%,
+        #7651a5 74.4% 87.6%,
+        #cb553c 87.6% 100%
+      );
+      box-shadow: 0 8px 24px rgba(16, 42, 67, .14);
+    }
+
+    .pie-legend {
+      display: grid;
+      gap: 9px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .pie-row {
+      display: grid;
+      grid-template-columns: 14px minmax(0, 1fr) auto;
+      gap: 9px;
+      align-items: start;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+    }
+
+    .pie-swatch {
+      width: 13px;
+      height: 13px;
+      margin-block-start: 5px;
+      border-radius: 4px;
+    }
+
+    .pie-person { font-weight: 850; }
+    .pie-role { display: block; color: var(--muted); font-size: .82rem; }
+    .pie-value { text-align: left; white-space: nowrap; }
+    .pie-value strong { display: block; font-size: 1.05rem; }
+    .pie-value span { color: var(--muted); font-size: .78rem; }
+    .review-note { margin-block-start: 13px; }
+
+    .leader-panel {
+      margin-block-end: 14px;
+      padding: clamp(18px, 3vw, 26px);
+      border: 0;
+      background: linear-gradient(135deg, #102a43 0%, #14546b 72%, #087e78 100%);
+      color: var(--white);
+    }
+
+    .leader-panel a { color: #b9e8e4; }
+    .leader-panel h3 { font-size: clamp(1.3rem, 3vw, 1.8rem); }
+    .leader-panel > p { color: #e5f1f5; }
+    .leader-eyebrow { margin-block-end: 7px; color: #f3c45f !important; font-size: .82rem; font-weight: 850; }
+    .leader-grid, .leader-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-block-start: 15px;
+    }
+
+    .leader-item, .leader-stat {
+      min-width: 0;
+      padding: 13px;
+      border: 1px solid rgba(255, 255, 255, .2);
+      border-radius: 13px;
+      background: rgba(255, 255, 255, .09);
+    }
+
+    .leader-item strong { display: block; margin-block-end: 4px; color: #fff; }
+    .leader-item span { color: #e5f1f5; font-size: .88rem; }
+    .leader-stat strong { display: block; color: #fff; font-size: 1.55rem; line-height: 1.2; }
+    .leader-stat span { display: block; margin-block-start: 5px; color: #e5f1f5; font-size: .82rem; }
+    .leader-next {
+      margin-block-start: 12px;
+      padding: 12px 14px;
+      border-inline-start: 4px solid var(--gold);
+      border-radius: 10px;
+      background: rgba(0, 0, 0, .14);
+      color: #f5fbfc;
+    }
+
+    .steps-grid .card { position: relative; }
+    .step-number {
+      display: inline-grid;
+      width: 30px;
+      height: 30px;
+      margin-block-end: 7px;
+      place-items: center;
+      border-radius: 10px;
+      background: var(--navy);
+      color: var(--white);
+      font-weight: 900;
+    }
+
+    .footer {
+      margin-block-start: 22px;
+      padding: 17px;
+      border-radius: 16px;
+      background: var(--navy);
+      color: #e7f0f3;
+      font-size: .88rem;
+    }
+
+    .footer a { color: #b7ece5; }
+    .footer p:last-child { margin-block-end: 0; }
+
+    .compass-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .compass-card {
+      padding: 17px;
+      border: 1px solid var(--line);
+      border-radius: 17px;
+      background: var(--white);
+      box-shadow: var(--shadow);
+    }
+
+    .compass-card h3 { margin-block-end: 5px; font-size: 1.05rem; }
+    .compass-card p:last-child { margin-block-end: 0; }
+    .compass-card.primary { border-block-start: 4px solid var(--gold); }
+    .compass-card.reading { border-block-start: 4px solid var(--blue); }
+    .compass-card.agent-guide { border-block-start: 4px solid var(--teal); }
+
+    @media (max-width: 720px) {
+      .page { width: min(100% - 18px, 580px); padding-block-start: 9px; }
+      .hero { border-radius: 19px; }
+      .hero-stats { grid-template-columns: 1fr; }
+      .compass-grid { grid-template-columns: 1fr; }
+      .leader-grid, .leader-stats { grid-template-columns: 1fr; }
+      .status-grid, .team-grid, .start-grid, .wave-grid { grid-template-columns: 1fr; }
+      .pie-layout { grid-template-columns: 1fr; }
+      .pie-chart { width: min(70vw, 260px); }
+      .steps-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .task-list { columns: 1; }
+      .card, .wave, .callout { border-radius: 14px; }
+    }
+
+    @media (max-width: 390px) {
+      body { font-size: 15px; }
+      .steps-grid { grid-template-columns: 1fr; }
+      .card { padding: 14px; }
+    }
+
+    @media print {
+      body { background: #fff; }
+      .page { width: 100%; padding: 0; }
+      .hero, .card, .wave, .callout, .footer { box-shadow: none; }
+      .wave { break-inside: avoid; }
+      .wave:not([open]) > .wave-body { display: block; }
+      a { color: inherit; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="hero">
+      <p class="eyebrow">TAHSEEL AI · إحاطة الفريق · 22 نوفمبر 2026</p>
+      <h1>كلنا عارفين نبدأ منين</h1>
+      <p class="hero-intro">
+        التخطيط والتوزيع خلصوا. دلوقتي نبدأ التنفيذ خطوة بخطوة، ونشتغل بالتوازي كل ما الاعتماديات تسمح.
+        هدفنا تسليم شريحة أساسية شغالة قبل المناقشة، مش مجرد ملفات كثيرة.
+      </p>
+      <div class="hero-stats" aria-label="ملخص سريع">
+        <div class="hero-stat"><strong>الثلاثاء 15 ديسمبر 2026</strong><span>موعد المناقشة النهائي</span></div>
+        <div class="hero-stat"><strong>48 Issue مفتوحة</strong><span>وكل الـIssues المفتوحة لها مسؤول</span></div>
+        <div class="hero-stat"><strong>5 مهام بلا اعتماديات مفتوحة</strong><span>تقدر تبدأ الآن بالتوازي</span></div>
+      </div>
+    </header>
+
+    <main>
+      <section aria-labelledby="compass-title">
+        <div class="section-heading">
+          <h2 id="compass-title">قبل ما تبدأ: افهم المشروع كويس</h2>
+          <p>الفكرة هي البوصلة؛ من غيرها ممكن ننجز كود شغال لكنه في اتجاه غلط.</p>
+        </div>
+        <div class="compass-grid">
+          <article class="compass-card primary">
+            <h3>اتقن الفكرة قبل ما تمسك التاسك</h3>
+            <p>افهم مين بيستخدم Tahseel، المشكلة اللي بيحلها، وإيه داخل النطاق وإيه لأ. لما تكون الصورة واضحة، هتعرف تسأل صح، تختار حل مناسب، وتكتشف بدري لو التنفيذ بيبعد عن هدف المنتج.</p>
+          </article>
+          <article class="compass-card reading">
+            <h3>اقرأ الأساسيات بالترتيب</h3>
+            <ol class="plain-list">
+              <li><a href="../../README.md">README</a> — الفكرة في صورة بسيطة والقواعد الأساسية.</li>
+              <li><a href="../foundation/Tahseel_AI_Final_Concept.md">Final Concept</a> — النطاق، الـCore والـShould والـDelivery، واللي مش هنبنيه.</li>
+              <li><a href="../governance/Tahseel_AI_Decision_Log.md">Decision Log</a> — القرارات المعتمدة؛ لو حصل تعارض، القرار هنا هو المرجع.</li>
+              <li><a href="../../PROJECT_STATUS.md">PROJECT_STATUS</a> — إحنا واقفين فين وإيه الخطوة الحالية.</li>
+            </ol>
+          </article>
+          <article class="compass-card reading">
+            <h3>وبعدها اقرأ المطلوب لمهمتك</h3>
+            <p>ابدأ من الـIssue: افهم معايير القبول وملفات <strong>Read first</strong>. ارجع إلى <a href="../technical/Tahseel_AI_PRD.md">PRD</a> للتفاصيل الفنية والمعادلات، وإلى <a href="HOW_TO_WORK_ON_A_TASK.md">دليل تنفيذ المهمة</a> و<a href="../../CONTRIBUTING.md">CONTRIBUTING</a> لطريقة الشغل والـPR.</p>
+          </article>
+          <article class="compass-card agent-guide">
+            <h3>هتستخدم مساعد برمجي؟ ابدأ من دليله</h3>
+            <p><a href="ai-coding-agents-guide.html"><strong>افتح دليل استخدام وكلاء البرمجة بالـAI</strong></a> — مين هم، وإزاي تشتغل معاهم على التاسك وتراجع شغلهم بأمان.</p>
+          </article>
+        </div>
+      </section>
+
+      <section aria-labelledby="status-title">
+        <div class="section-heading">
+          <h2 id="status-title">الدنيا واقفة فين دلوقتي؟</h2>
+          <p>الوضع واضح: تأسيس الفريق اكتمل، والخطوة الجاية هي التنفيذ الفعلي.</p>
+        </div>
+        <div class="status-grid">
+          <article class="card status-card good">
+            <h3>اللي خلص</h3>
+            <p>الخطة، مصفوفة المهارات، توزيع الـ50 مهمة، إعداد GitHub والـboard، وإغلاق T-001. اتحدّثت تعيينات الـIssues القديمة المفتوحة كمان.</p>
+          </article>
+          <article class="card status-card warning">
+            <h3>اللي لسه ما بدأش</h3>
+            <p>حسب آخر حالة موثقة، مفيش كود للمنتج لسه. إحنا داخلين مرحلة التنفيذ، وأول نقطة تأسيس هي <strong>T-002</strong>.</p>
+          </article>
+          <article class="card status-card">
+            <h3>الوقت والنطاق</h3>
+            <p>المناقشة يوم <strong>15 ديسمبر</strong>. خلّوا الـCore أولًا؛ مهام Should وDelivery ما توقفش الشغل الأساسي.</p>
+          </article>
+        </div>
+      </section>
+
+      <section aria-labelledby="start-title">
+        <div class="section-heading">
+          <h2 id="start-title">إيه اللي نقدر نبدأه فورًا؟</h2>
+          <p>دي مهام مفتوحة ومفيش اعتماديات سابقة تمنع بدايتها. الأولوية التنفيذية تفضل للـCore.</p>
+        </div>
+        <div class="priority-banner">
+          <div class="priority-mark" aria-hidden="true">ابدأ</div>
+          <div>
+            <h3>المسار الأساسي الآن: T-002 — هيكل المستودع</h3>
+            <p>زينب تبدأ <a class="issue-link" href="https://github.com/alialsharqawi/Tahseel-Copilot/issues/16" target="_blank" rel="noreferrer">Issue #16</a>، وعلي مراجعها وداعم فكّ العوائق. وفي نفس الوقت، يقدر ألاء وفاطمة يبدأوا مهامهم المستقلة من غير انتظار بعض.</p>
+          </div>
+        </div>
+        <div class="start-grid" style="margin-block-start:12px">
+          <article class="card">
+            <span class="pill ready">متاحة الآن</span><span class="pill core">Core</span>
+            <h3><a href="https://github.com/alialsharqawi/Tahseel-Copilot/issues/16" target="_blank" rel="noreferrer">#16 · T-002</a> — زينب</h3>
+            <p class="small">هيكل المستودع، `.gitignore`، `.env.example`، وإعداد pre-commit. <span class="task-meta">المراجع: علي.</span></p>
+          </article>
+          <article class="card">
+            <span class="pill ready">متاحة الآن</span><span class="pill core">Core</span>
+            <h3><a href="https://github.com/alialsharqawi/Tahseel-Copilot/issues/6" target="_blank" rel="noreferrer">#6 · T-022</a> — زينب</h3>
+            <p class="small">عينات سياسات اصطناعية، بما فيها حالات التعارض والسياسة المفقودة. <span class="task-meta">المراجع: فاطمة.</span></p>
+          </article>
+          <article class="card">
+            <span class="pill ready">متاحة الآن</span><span class="pill core">Core</span>
+            <h3><a href="https://github.com/alialsharqawi/Tahseel-Copilot/issues/17" target="_blank" rel="noreferrer">#17 · T-091</a> — علي</h3>
+            <p class="small">تجميع ملف توثيق الـLMS؛ اعتماديته T-090 مقفولة. <span class="task-meta">المراجع: فاطمة.</span></p>
+          </article>
+          <article class="card">
+            <span class="pill ready">متاحة الآن</span><span class="pill core">Core</span>
+            <h3><a href="https://github.com/alialsharqawi/Tahseel-Copilot/issues/61" target="_blank" rel="noreferrer">#61 · T-095</a> — علي</h3>
+            <p class="small">تحديث أداة التوزيع وسجلات خطة ديسمبر. <span class="task-meta">المراجع: فاطمة.</span></p>
+          </article>
+          <article class="card">
+            <span class="pill ready">متاحة الآن</span><span class="pill should">Should</span>
+            <h3><a href="https://github.com/alialsharqawi/Tahseel-Copilot/issues/62" target="_blank" rel="noreferrer">#62 · T-097</a> — علي</h3>
+            <p class="small">دليل استخدام وكلاء البرمجة ومراجعة روابط الحصص الرسمية. <span class="task-meta">المراجع: فاطمة.</span></p>
+          </article>
+          <article class="card">
+            <span class="pill ready">متاحة الآن</span><span class="pill core">Core</span>
+            <h3><a href="https://github.com/alialsharqawi/Tahseel-Copilot/issues/8" target="_blank" rel="noreferrer">#8 · T-092</a> — ألاء</h3>
+            <p class="small">ابدأ بهيكل الشرائح والقصة. خلي النتائج والصور الفعلية لحد ما المنتج والتقييم يطلعوا أرقامًا حقيقية. <span class="task-meta">المراجع: فاطمة.</span></p>
+          </article>
+          <article class="card">
+            <span class="pill ready">متاحة الآن</span><span class="pill should">Should</span>
+            <h3><a href="https://github.com/alialsharqawi/Tahseel-Copilot/issues/9" target="_blank" rel="noreferrer">#9 · T-094</a> — فاطمة</h3>
+            <p class="small">مسح المنافسين المحليين. مهمة مستقلة؛ اشتغلي عليها بالتوازي من غير ما تأخر مهام الـCore. <span class="task-meta">المراجع: علي.</span></p>
+          </article>
+        </div>
+      </section>
+
+      <section aria-labelledby="people-title">
+        <div class="section-heading">
+          <h2 id="people-title">تقسيمة الشغل والأدوار</h2>
+          <p>كل شخص عنده ملكية واضحة. أرقام الـIssues وروابطها في خريطة الموجات تحت.</p>
+        </div>
+        <div class="team-grid">
+          <article class="card person-card">
+            <h3>زينب · تأسيس البيانات والإعداد</h3>
+            <p class="role">هيكل المستودع، نموذج البيانات، إعدادات المستأجر والسياسات، والـseed.</p>
+            <div class="now"><strong>ابدئي الآن</strong><a href="https://github.com/alialsharqawi/Tahseel-Copilot/issues/16" target="_blank" rel="noreferrer">#16 T-002</a>، ومعاه <a href="https://github.com/alialsharqawi/Tahseel-Copilot/issues/6" target="_blank" rel="noreferrer">#6 T-022</a>.</div>
+            <p class="small"><strong>بعدها:</strong> T-010 نموذج البيانات ← T-016 إعدادات وسياسات ← T-021 seed. وبعد اكتمال واجهة T-060، راجعي نصوص العربية في T-067. عندك أيضًا T-052 وT-071.</p>
+          </article>
+          <article class="card person-card">
+            <h3>فاطمة · البنية والـAPI والـAI</h3>
+            <p class="role">Docker وCI، واجهة البداية، الاستيراد، إدخال السياسات، ذاكرة العملاء، والمسودات.</p>
+            <div class="now"><strong>ابدئي الآن</strong><a href="https://github.com/alialsharqawi/Tahseel-Copilot/issues/9" target="_blank" rel="noreferrer">#9 T-094</a> اختياريًا؛ مهام W3 تبدأ بعد T-002.</div>
+            <p class="small"><strong>بعد T-002:</strong> #18 Docker، #19 CI، و#20 هيكل الواجهة. في المراحل التالية: المصادقة، استيراد البيانات، السياسات، الذاكرة، توليد المسودات وأدوات الوكيل. علي يراجع T-060 ويدعمك في الـFE/UX.</p>
+          </article>
+          <article class="card person-card">
+            <h3>مريم · المحرك والمنتج والاختبارات</h3>
+            <p class="role">طبقة البيانات، حسابات المستحقات والمخاطر، orchestration، شاشات المستخدم، والسجل والاختبارات.</p>
+            <div class="now"><strong>أول اعتمادياتك</strong>استعدّي لـ<a href="https://github.com/alialsharqawi/Tahseel-Copilot/issues/26" target="_blank" rel="noreferrer">#26 T-012</a> و<a href="https://github.com/alialsharqawi/Tahseel-Copilot/issues/27" target="_blank" rel="noreferrer">#27 T-013</a> بعد اكتمال <a href="https://github.com/alialsharqawi/Tahseel-Copilot/issues/21" target="_blank" rel="noreferrer">#21 T-010</a>.</div>
+            <p class="small"><strong>بعدها:</strong> risk وagent، ثم Dashboard وCustomer Profile، ثم Queue وAI panel وaudit/safety. T-062 وT-073 عندك، وعلي يراجعهم لدعم FE/UX وQA.</p>
+          </article>
+          <article class="card person-card">
+            <h3>ألاء · البيانات والتقييم والتسليم</h3>
+            <p class="role">البيانات الاصطناعية، التوقعات، التقييم، دليل التشغيل، العرض والفيديو.</p>
+            <div class="now"><strong>ابدأ الآن</strong><a href="https://github.com/alialsharqawi/Tahseel-Copilot/issues/8" target="_blank" rel="noreferrer">#8 T-092</a>.</div>
+            <p class="small"><strong>بعد تجهيز البيانات:</strong> T-020 بعد T-010، ثم forecast بعد T-013، والتقييم بعد agent وpolicy tool. الفيديو T-093 يأتي بعد rehearsal T-073.</p>
+          </article>
+          <article class="card person-card lead">
+            <h3>علي · قائد الفريق ومراجع المسار الحرج</h3>
+            <p class="role">أراجع الـPRs المسندة لي، أساعد في فك الاعتماديات، وأساند من غير ما أوقف الشغل المستقل.</p>
+            <div class="now"><strong>دورك الآن</strong>راجع T-002 في <a href="https://github.com/alialsharqawi/Tahseel-Copilot/issues/16" target="_blank" rel="noreferrer">#16</a>، واتفق مع زينب على مخرجات الهيكل التي تحتاجها المهام التالية. جهّز PRs <a href="https://github.com/alialsharqawi/Tahseel-Copilot/issues/17" target="_blank" rel="noreferrer">#17 T-091</a> و<a href="https://github.com/alialsharqawi/Tahseel-Copilot/issues/61" target="_blank" rel="noreferrer">#61 T-095</a> و<a href="https://github.com/alialsharqawi/Tahseel-Copilot/issues/62" target="_blank" rel="noreferrer">#62 T-097</a>؛ وبعد إنجاز T-095 ابدأ <a href="https://github.com/alialsharqawi/Tahseel-Copilot/issues/63" target="_blank" rel="noreferrer">#63 T-096</a>.</div>
+            <p class="small"><strong>D42:</strong> قبلت مراجعة 34 من 53 مهمة في الخطة. تراجع T-060 مع فاطمة، وT-062 وT-073 مع مريم. مهامك التنفيذية تشمل T-040 بعد T-010، وT-042 بعد السياسات، وT-066 بعد T-016، إضافة إلى T-091 وT-095 إلى T-097؛ وT-051 من Should ما زال محتاج مراجعًا قويًا مستقلًا لو اتنفّذ.</p>
+          </article>
+        </div>
+      </section>
+
+      <section aria-labelledby="waves-title">
+        <div class="section-heading">
+          <h2 id="waves-title">إمتى دور كل حد هيجي؟ خريطة الموجات</h2>
+          <p>الموجة ترتيب اعتماديات، مش انتظار جماعي: المهمة تبدأ أول ما اعتمادياتها المباشرة تخلص، حتى لو مهام ثانية في موجة أقدم لسه مفتوحة.</p>
+        </div>
+        <div class="wave-grid">
+          <details class="wave" open>
+            <summary><span>الموجة 1 <span class="wave-count">5 مفتوحة · ابدأ الآن</span></span></summary>
+            <div class="wave-body"><ul>
+              <li><a href="https://github.com/alialsharqawi/Tahseel-Copilot/issues/6">#6 T-022</a> عينات السياسات — زينب <span class="task-meta">مراجع: فاطمة · Core</span></li>
+              <li><a href="https://github.com/alialsharqawi/Tahseel-Copilot/issues/8">#8 T-092</a> هيكل الشرائح — ألاء <span class="task-meta">مراجع: فاطمة · Core</span></li>
+              <li><a href="https://github.com/alialsharqawi/Tahseel-Copilot/issues/9">#9 T-094</a> مسح المنافسين — فاطمة <span class="task-meta">مراجع: علي · Should</span></li>
+              <li><a href="https://github.com/alialsharqawi/Tahseel-Copilot/issues/61">#61 T-095</a> أداة التوزيع وسجلات خطة ديسمبر — علي <span class="task-meta">مراجع: فاطمة · Core</span></li>
+              <li><a href="https://github.com/alialsharqawi/Tahseel-Copilot/issues/62">#62 T-097</a> دليل وكلاء البرمجة — علي <span class="task-meta">مراجع: فاطمة · Should</span></li>
+            </ul></div>
+          </details>
+          <details class="wave" open>
+            <summary><span>الموجة 2 <span class="wave-count">3 مفتوحة · اثنتان جاهزتان</span></span></summary>
+            <div class="wave-body"><ul>
+              <li><a href="https://github.com/alialsharqawi/Tahseel-Copilot/issues/16">#16 T-002</a> هيكل المستودع — زينب <span class="task-meta">مراجع: علي · Core · اعتمادية T-001 مقفولة</span></li>
+              <li><a href="https://github.com/alialsharqawi/Tahseel-Copilot/issues/17">#17 T-091</a> ملف توثيق الـLMS — علي <span class="task-meta">مراجع: فاطمة · Core · اعتمادية T-090 مقفولة</span></li>
+              <li><a href="https://github.com/alialsharqawi/Tahseel-Copilot/issues/63">#63 T-096</a> إحاطة الفريق لـWhatsApp — علي <span class="dependency">بعد T-095</span> <span class="task-meta">مراجع: فاطمة · Should</span></li>
+            </ul></div>
+          </details>
+          <details class="wave">
+            <summary><span>الموجة 3 <span class="wave-count">3 مفتوحة · بعد T-002</span></span></summary>
+            <div class="wave-body"><ul>
+              <li><a href="https://github.com/alialsharqawi/Tahseel-Copilot/issues/18">#18 T-003</a> Docker Compose — فاطمة <span class="dependency">يعتمد على T-002</span></li>
+              <li><a href="https://github.com/alialsharqawi/Tahseel-Copilot/issues/19">#19 T-004</a> CI للاختبارات والـlint — فاطمة <span class="dependency">يعتمد على T-002</span></li>
+              <li><a href="https://github.com/alialsharqawi/Tahseel-Copilot/issues/20">#20 T-060</a> هيكل الواجهة — فاطمة، وعلي يراجع <span class="dependency">يعتمد على T-002</span></li>
+            </ul></div>
+          </details>
+          <details class="wave">
+            <summary><span>الموجة 4 <span class="wave-count">4 مفتوحة · حسب مخرج كل مهمة</span></span></summary>
+            <div class="wave-body"><ul>
+              <li><a href="https://github.com/alialsharqawi/Tahseel-Copilot/issues/21">#21 T-010</a> نموذج البيانات والترحيلات — زينب <span class="dependency">بعد T-003</span></li>
+              <li><a href="https://github.com/alialsharqawi/Tahseel-Copilot/issues/22">#22 T-067</a> مراجعة نصوص العربية — زينب، بعد واجهة T-060</li>
+              <li><a href="https://github.com/alialsharqawi/Tahseel-Copilot/issues/23">#23 T-080</a> HTTPS — فاطمة، بعد T-003 <span class="pill delivery">Delivery</span></li>
+              <li><a href="https://github.com/alialsharqawi/Tahseel-Copilot/issues/24">#24 T-081</a> README Quick Start — ألاء، بعد T-003 <span class="pill delivery">Delivery</span></li>
+            </ul></div>
+          </details>
+          <details class="wave">
+            <summary><span>الموجة 5 <span class="wave-count">8 مفتوحة · بعد نموذج البيانات</span></span></summary>
+            <div class="wave-body"><ul>
+              <li>#25 T-011 المصادقة والأدوار — فاطمة</li><li>#26 T-012 عزل المستأجر — مريم</li>
+              <li>#27 T-013 محرك المستحقات — مريم</li><li>#28 T-016 إعدادات المستأجر والسياسات — زينب</li>
+              <li>#29 T-020 بيانات اصطناعية — ألاء</li><li>#30 T-040 LLMClient — علي</li>
+              <li>#31 T-041 إدخال السياسات — فاطمة</li><li>#32 T-045 API الذاكرة — فاطمة</li>
+            </ul><p class="dependency">كلها تعتمد على T-010.</p></div>
+          </details>
+          <details class="wave">
+            <summary><span>الموجة 6 <span class="wave-count">11 مفتوحة · اعتمادات متعددة</span></span></summary>
+            <div class="wave-body"><ul>
+              <li>#33 T-014 محرك المخاطر — مريم <span class="dependency">T-013 + T-016</span></li>
+              <li>#34 T-017 التوقع النقدي — ألاء <span class="dependency">T-013</span></li>
+              <li>#35 T-021 seed — زينب <span class="dependency">T-016 + T-020</span></li>
+              <li>#36 T-030 API الاستيراد — فاطمة <span class="dependency">T-013</span></li>
+              <li>#37 T-042 أداة policy retrieval — علي <span class="dependency">T-041 + T-016</span></li>
+              <li>#38 T-043 orchestrator — مريم <span class="dependency">T-040 + T-013</span></li>
+              <li>#39 T-046 embeddings للملاحظات — فاطمة <span class="dependency">T-045 + T-041</span></li>
+              <li>#40 T-048 مولّد المسودات — فاطمة <span class="dependency">T-040</span></li>
+              <li>#41 T-062 Dashboard — مريم، وعلي يراجع <span class="dependency">T-060 + T-013</span></li>
+              <li>#42 T-064 Customer Profile — مريم <span class="dependency">T-060 + T-045</span></li>
+              <li>#43 T-066 شاشات الإعدادات — علي <span class="dependency">T-016</span> <span class="pill should">Should</span></li>
+            </ul></div>
+          </details>
+          <details class="wave">
+            <summary><span>الموجة 7 <span class="wave-count">8 مفتوحة</span></span></summary>
+            <div class="wave-body"><ul>
+              <li>#44 T-015 الأولوية والإجراء المقترح — مريم <span class="dependency">T-014</span></li>
+              <li>#45 T-031 تخطيط أعمدة CSV بالـLLM — فاطمة <span class="dependency">T-030 + T-040</span></li>
+              <li>#46 T-032 Health Report endpoint — فاطمة <span class="dependency">T-014</span> <span class="pill should">Should</span></li>
+              <li>#47 T-044 أدوات الوكيل — فاطمة <span class="dependency">T-043</span></li>
+              <li>#48 T-047 ذاكرة المحادثة — فاطمة <span class="dependency">T-043</span></li>
+              <li>#49 T-049 التوصيات وبوابة الموافقة — مريم <span class="dependency">T-043 + T-011</span></li>
+              <li>#50 T-061 شاشة الاستيراد — مريم <span class="dependency">T-060 + T-030</span></li>
+              <li>#51 T-070 evaluation harness — ألاء <span class="dependency">T-043 + T-042</span></li>
+            </ul></div>
+          </details>
+          <details class="wave">
+            <summary><span>الموجة 8 <span class="wave-count">7 مفتوحة</span></span></summary>
+            <div class="wave-body"><ul>
+              <li>#52 T-050 المهام وسجل التدقيق — مريم <span class="dependency">T-049</span></li>
+              <li>#53 T-051 Guardrails — علي <span class="dependency">T-048 + T-049 · Should · يحتاج مراجعًا قويًا لو اتنفّذ</span></li>
+              <li>#54 T-052 التوصية المرتبطة بالعلاقة — زينب <span class="dependency">T-015</span> <span class="pill should">Should</span></li>
+              <li>#55 T-063 Collection Queue — مريم <span class="dependency">T-060 + T-015</span></li>
+              <li>#56 T-065 AI panel — مريم <span class="dependency">T-049 + T-048</span></li>
+              <li>#57 T-071 ablation — زينب <span class="dependency">T-070</span></li>
+              <li>#58 T-072 اختبارات السلامة — مريم <span class="dependency">T-049</span></li>
+            </ul></div>
+          </details>
+          <details class="wave">
+            <summary><span>الموجة 9 <span class="wave-count">Issue مفتوحة واحدة</span></span></summary>
+            <div class="wave-body"><ul>
+              <li><a href="https://github.com/alialsharqawi/Tahseel-Copilot/issues/59">#59 T-073</a> rehearsal شامل — مريم، وعلي يراجع <span class="dependency">بعد T-065</span></li>
+            </ul></div>
+          </details>
+          <details class="wave">
+            <summary><span>الموجة 10 <span class="wave-count">Issue مفتوحة واحدة</span></span></summary>
+            <div class="wave-body"><ul>
+              <li><a href="https://github.com/alialsharqawi/Tahseel-Copilot/issues/60">#60 T-093</a> فيديو العرض — ألاء <span class="dependency">بعد T-073</span></li>
+            </ul></div>
+          </details>
+        </div>
+        <p class="muted small" style="margin-block-start:10px">الموجتان 1 و2 فيهما خمس مهام بلا اعتماديات مفتوحة. باقي المهام تفتح واحدةً واحدةً حسب اعتمادياتها المباشرة؛ مش لازم كل موجة تخلص بالكامل قبل بدء مهمة لاحقة مستقلة.</p>
+      </section>
+
+      <section aria-labelledby="workflow-title">
+        <div class="section-heading">
+          <h2 id="workflow-title">إيه المطلوب من كل واحد وإزاي نشتغل؟</h2>
+          <p>طريقة واحدة واضحة تقلل إعادة الشغل وتخلّي المراجعة جزءًا من التنفيذ.</p>
+        </div>
+        <div class="steps-grid">
+          <article class="card"><span class="step-number">1</span><h3>ابدأ من الـIssue</h3><p class="small">اقرأ الهدف ومعايير القبول وملفات «اقرأ أولًا». اكتب خطة قصيرة وتعليقًا يوضح المطلوب قبل التنفيذ.</p></article>
+          <article class="card"><span class="step-number">2</span><h3>اتبع الاعتمادية</h3><p class="small">ابدأ المهمة لما مخرجات اعتمادياتها جاهزة. حرّك البطاقة إلى In progress؛ ولو لسه مستنية، حضّر الخطة والاختبارات بدل ما تعيد شغل السابق.</p></article>
+          <article class="card"><span class="step-number">3</span><h3>فرع وPR صغير</h3><p class="small">استخدم اسمًا مثل <code>feat/T-014-risk-engine</code>. اشتغل بتغييرات صغيرة، واختبر، ووثّق. لا تشتغل مباشرة على main.</p></article>
+          <article class="card"><span class="step-number">4</span><h3>سلّم دليل التحقق</h3><p class="small">افتح PR مرتبطًا بالـIssue، واكتب أوامر الاختبار ونتيجتها. للواجهات أرفق صورًا بالعربي والإنجليزي. لا تخترع أرقامًا أو نتائج.</p></article>
+          <article class="card"><span class="step-number">5</span><h3>راجع وارجع بسرعة</h3><p class="small">المراجع يراجع المهارات المطلوبة ويرد على النقاط. صاحب الـPR يعالج الملاحظات ويحدّث الـIssue. لو ظهر عائق، اكتبه وسمّي المطلوب بدل الانتظار بصمت.</p></article>
+          <article class="card"><span class="step-number">6</span><h3>نسّق كل يوم</h3><p class="small">تحديث مختصر على الـIssue أو الـboard: «خلصت إيه؟ الخطوة الجاية إيه؟ في عائق؟». خلي المهام النشطة بحد أقصى مهمتين للشخص، واطلب إعادة توزيع لو الحمل أو الاعتمادية عطّلتك.</p></article>
+        </div>
+        <div class="callout" style="margin-block-start:12px">
+          <h3>علي يراجع ويفك العوائق — مش بوابة توقف الفريق</h3>
+          <p>لو محتاج مراجع، عيّنه من الـIssue واطلب المراجعة مبكرًا. أثناء انتظار مخرج مرتبط، اشتغل على خطة أو اختبار أو مهمة مستقلة جاهزة. لكن ما تدمجش PR من غير المراجعة المطلوبة أو موافقة حماية الفرع.</p>
+        </div>
+      </section>
+
+      <section aria-labelledby="rules-title">
+        <div class="section-heading"><h2 id="rules-title">ثلاث قواعد تحافظ على الثقة</h2></div>
+        <div class="status-grid">
+          <article class="card"><h3>الأرقام من الكود</h3><p class="small">المبالغ والنتائج المالية تأتي من حسابات واختبارات، مش من تخمين الـAI.</p></article>
+          <article class="card"><h3>السياسة لا تُخترع</h3><p class="small">لو السياسة غير موجودة أو متعارضة، اكتب ذلك بوضوح واطلب مراجعة بشرية.</p></article>
+          <article class="card"><h3>قرار مؤثر = موافقة بشرية</h3><p class="small">لا إرسال تلقائي، ولا تغيير مالي، ولا تجاوز لموافقة الـAPI.</p></article>
+        </div>
+      </section>
+
+      <section aria-labelledby="finish-title">
+        <div class="section-heading">
+          <h2 id="finish-title">مساهمة التأسيس وتقسيمة التنفيذ</h2>
+          <p>الكعكة وحدها ما بتحكيش الصورة كلها: هي تقيس توزيع ملكية المهام المسجلة فقط، مش كل اللي اتعمل من أول المشروع.</p>
+        </div>
+        <article class="card leader-panel" aria-labelledby="leader-title">
+          <p class="leader-eyebrow">تأسيس · قيادة · ومجهود مستمر</p>
+          <h3 id="leader-title">علي (أنت): بنيت أرضية المشروع اللي الفريق داخل ينفّذ عليها</h3>
+          <p>الوضع المنظم اللي شايفينه ما جاش في يوم وليلة. من أول تحديد فكرة Tahseel ونطاقه وقراراته، لحد تحويله لخطة ومهام واضحة وتجهيز الفريق للتنفيذ — دي مساهمة تأسيس وقيادة لازم تظهر جنب توزيع الشغل القادم.</p>
+          <div class="leader-grid">
+            <div class="leader-item">
+              <strong>حددت الاتجاه والحدود</strong>
+              <span>فكرة المنتج، الـCore والـShould والـDelivery، والقرارات اللي بتحمي الثقة والنطاق والموعد النهائي للمناقشة.</span>
+            </div>
+            <div class="leader-item">
+              <strong>جهزت التنفيذ للفريق</strong>
+              <span>قُدت تحويل الخطة إلى 50 مهمة، وتوزيع مبني على المهارات، وموجات اعتماد واضحة، وBoard ومواعيد مراحل بدل تواريخ عشوائية لكل Issue.</span>
+            </div>
+            <div class="leader-item">
+              <strong>سلّمت شغل تأسيسي موثّق</strong>
+              <span>أنجزت T-090 وخطة المشروع، وساهمت في تسليمات الـLMS؛ وسجل GitHub يوثق PRs مدمجة باسمك، منها <a href="https://github.com/alialsharqawi/Tahseel-Copilot/pull/10" target="_blank" rel="noreferrer">#10</a> و<a href="https://github.com/alialsharqawi/Tahseel-Copilot/pull/11" target="_blank" rel="noreferrer">#11</a>.</span>
+            </div>
+          </div>
+          <div class="leader-stats" aria-label="مساهمات علي الموثقة">
+            <div class="leader-stat"><strong>6 PRs</strong><span>مدمجة باسمك في سجل GitHub: #1–#4 و#10 و#11.</span></div>
+            <div class="leader-stat"><strong>34 من 53</strong><span>مهمة أنت المراجع المعيّن لها حسب D42؛ ده تكليف مراجعة، غير نسبة ملكية الكود.</span></div>
+            <div class="leader-stat"><strong>9 مهام</strong><span>ملكية تنفيذية في التوزيع الحالي؛ منها T-090 المكتملة بالفعل.</span></div>
+          </div>
+          <div class="leader-next">
+            <strong>ولسه مكمل في التنفيذ:</strong> T-040 وT-042 من الـCore، ثم T-066 وT-051 من Should حسب الاعتماديات. وT-051 يحتاج مراجعًا قويًا مستقلًا لو اتنفّذ. الشغل التأسيسي مهم، وفي نفس الوقت المنتج نفسه لسه محتاج يتبني.
+          </div>
+        </article>
+        <div class="section-heading">
+          <h3>تقسيمة ملكية المهام الـ53 بالنقاط النسبية</h3>
+          <p>النسب هنا للتوزيع التنفيذي فقط: لا تقيس التأسيس السابق أو المراجعات. وتشمل المهام المغلقة T-001 وT-090 ومهام إعداد الفريق المضافة T-095 إلى T-097.</p>
+        </div>
+        <article class="card">
+          <div class="pie-layout">
+            <div class="pie-chart" role="img" aria-label="حصة المهام حسب نقاط التعقيد: علي 17.4 بالمئة، فاطمة 28.1 بالمئة، مريم 28.9 بالمئة، زينب 13.2 بالمئة، ألاء 12.4 بالمئة"></div>
+            <div>
+              <p class="muted small">الحساب بالنقاط النسبية: S = 1، M = 2، L = 3. إجمالي الخطة <strong>121 نقطة</strong>، وتشمل كل المهام بما فيها T-001 وT-090 المقفولتان.</p>
+              <ul class="pie-legend">
+                <li class="pie-row">
+                  <span class="pie-swatch" style="background:#123b5d"></span>
+                  <span><span class="pie-person">علي (أنت)</span><span class="pie-role">قيادة ومراجعة المسار الحرج؛ LLMClient وpolicy retrieval والإعدادات وGuardrails، وتجميع PDF.</span></span>
+                  <span class="pie-value"><strong>17.4%</strong><span>9 مهام · 21 نقطة</span></span>
+                </li>
+                <li class="pie-row">
+                  <span class="pie-swatch" style="background:#087e78"></span>
+                  <span><span class="pie-person">فاطمة</span><span class="pie-role">البنية وCI، هيكل الواجهة، الاستيراد، السياسات، الذاكرة والمسودات.</span></span>
+                  <span class="pie-value"><strong>28.1%</strong><span>15 مهمة · 34 نقطة</span></span>
+                </li>
+                <li class="pie-row">
+                  <span class="pie-swatch" style="background:#c98700"></span>
+                  <span><span class="pie-person">مريم</span><span class="pie-role">طبقة البيانات والمستحقات والمخاطر، الوكيل، شاشات المنتج، السلامة والـrehearsal.</span></span>
+                  <span class="pie-value"><strong>28.9%</strong><span>14 مهمة · 35 نقطة</span></span>
+                </li>
+                <li class="pie-row">
+                  <span class="pie-swatch" style="background:#7651a5"></span>
+                  <span><span class="pie-person">زينب</span><span class="pie-role">هيكل المستودع، نموذج البيانات والإعدادات والـseed، العربية، والعينات والتقييم.</span></span>
+                  <span class="pie-value"><strong>13.2%</strong><span>9 مهام · 16 نقطة</span></span>
+                </li>
+                <li class="pie-row">
+                  <span class="pie-swatch" style="background:#cb553c"></span>
+                  <span><span class="pie-person">ألاء</span><span class="pie-role">البيانات الاصطناعية والتوقعات والتقييم، دليل التشغيل والشرائح وفيديو العرض.</span></span>
+                  <span class="pie-value"><strong>12.4%</strong><span>6 مهام · 15 نقطة</span></span>
+                </li>
+              </ul>
+              <div class="callout review-note">
+                <h3>ملاحظة عن دورك يا علي</h3>
+                <p>نسبة الكعكة تحسب المهام المسندة كمالك فقط. لا تحسب المراجعات: حسب D42، أنت مراجع لـ<strong>34 من 53</strong> مهمة، ومنها T-060 وT-062 وT-073.</p>
+              </div>
+            </div>
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p><strong>إحنا فريق واحد:</strong> اسأل بدري، شارك العائق، وخلّي كل خطوة قابلة للمراجعة. كل مهمة صغيرة مكتملة تقرّبنا من نسخة نقدر نعرضها بثقة يوم 15 ديسمبر.</p>
+      <p>مصادر الحالة والتوزيع: <a href="../../PROJECT_STATUS.md">PROJECT_STATUS</a> · <a href="assignments.csv">التوزيع الحالي</a> · <a href="../governance/Tahseel_AI_Decision_Log.md">قرار D42</a> · <a href="HOW_TO_WORK_ON_A_TASK.md">دليل تنفيذ المهمة</a> · <a href="ai-coding-agents-guide.html">دليل مساعدات البرمجة</a></p>
+      <p>تاريخ اللقطة: 22 نوفمبر 2026. حالة الـIssues: 48 مفتوحة و2 مغلقة؛ #5/T-001 و#7/T-090.</p>
+    </footer>
+  </div>
+</body>
+</html>
