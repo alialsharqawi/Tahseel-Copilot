@@ -4,7 +4,7 @@ This part surveys the solutions that already exist for collecting overdue invoic
 
 ## 1. Method and limits
 
-We read vendor pages, official documentation, press releases, and software marketplace listings, and a few research papers. All web sources were accessed in early November 2026 (the sources of the first competitor pass, 31 October 2026, are listed in the business file).
+We reviewed vendor pages, official documentation, press releases, software marketplace listings, and selected research papers. The business analysis records the evidence sources and verification limits.
 
 **Limits, stated plainly**
 - We did not install or test any product. Everything about a product comes from what its maker or a listing says.
@@ -104,7 +104,7 @@ The assumptions behind the differences are in the business file (A8 and A9), wit
 
 ## 8. Sources
 
-Accessed in early November 2026 unless noted.
+The following sources informed this review; publication details are retained where applicable.
 
 **Enterprise suites**
 - HighRadius, collections management: https://www.highradius.com/products/collections-management-software/
@@ -115,7 +115,7 @@ Accessed in early November 2026 unless noted.
 - ezyCollect launches Aimie, ChannelLife: https://channellife.com.au/story/ezycollect-launches-aimie-to-tackle-late-sme-payments
 - Gaviti: https://gaviti.com/?p=6362
 
-**Small and medium business tools** (first pass, 31 October 2026)
+**Small and medium business tools**
 - ezyCollect: https://ezycollect.io/?p=21250445 ; CreditorWatch Collect: https://help.creditorwatch.com.au/en/articles/11650655-what-is-creditorwatch-collect ; Chaser (listing): https://www.capterra.ae/reviews/157101/chaser ; Upflow (listing): https://www.capterra.com.au/software/193097/upflow
 
 **Accounting and ERP**
@@ -128,4 +128,4 @@ Accessed in early November 2026 unless noted.
 - Ji et al., arXiv:2202.03629: https://arxiv.org/abs/2202.03629
 - Rudin, Nature Machine Intelligence 1(5), 206-215: https://doi.org/10.1038/s42256-019-0048-x
 
-**Market evidence** (first pass, 31 October 2026): see `Business_Strength`, section 11 (Allianz Trade and the FCIB survey).
+**Market evidence:** see `Business_Strength`, section 11 (Allianz Trade and the FCIB survey).

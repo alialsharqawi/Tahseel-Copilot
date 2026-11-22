@@ -1,8 +1,8 @@
 # Project Planning and Management
 
-This part answers the LMS requirement to clarify the idea, goals, and scope; set a timeline; distribute tasks and responsibilities; identify risks and how to handle them; and define success metrics. It is assembled from the governed sources: the scope (`docs/foundation/Tahseel_AI_Final_Concept.md`), the product specification (`docs/technical/Tahseel_AI_PRD.md`), the business analysis (`docs/business/Tahseel_AI_Business_Strength.md`, specifically its validation plan and risk sections), the backlog (`docs/team/backlog.csv`, 50 tasks), and the team decisions (`docs/governance/Tahseel_AI_Decision_Log.md`, in particular D29, D34, D37, and D38). When this part summarizes them, the source file is the owner of the detail (D35).
+This part answers the LMS requirement to clarify the idea, goals, and scope; set a timeline; distribute tasks and responsibilities; identify risks and how to handle them; and define success metrics. It is assembled from the governed sources: the scope (`docs/foundation/Tahseel_AI_Final_Concept.md`), the product specification (`docs/technical/Tahseel_AI_PRD.md`), the business analysis (`docs/business/Tahseel_AI_Business_Strength.md`, specifically its validation plan and risk sections), the backlog (`docs/team/backlog.csv`, 53 tasks), and the team decisions (`docs/governance/Tahseel_AI_Decision_Log.md`, in particular D29, D34, D37–D38, and D40–D42). When this part summarizes them, the source file is the owner of the detail (D35).
 
-**An honest note on the plan itself.** The milestones below are our proposal, built from the backlog's dependency waves. The binding calendar is the one the instructor sets on the LMS; the first submission (the three dynamic links) went live on 4 November 2026 as confirmed in `PROJECT_STATUS.md`. Team availability (real hours per week per member) is collected in the skills matrix at onboarding, and the plan is revised when those numbers exist.
+**Plan basis.** The delivery plan is organized into four dependency-ordered phases mapped to the backlog waves. Each phase ends with a demoable gate. The team works flexibly and with AI assistance, so the plan does not use weekly-hour or person-day estimates. Progress is tracked by gate evidence and the agreed cut order, not by hours.
 
 ## 1. The idea and its goals
 
@@ -30,50 +30,44 @@ The scope is structured evidence, not a wish list (from D29 and the Decision Log
 
 ## 3. Team, roles, and responsibilities
 
-Five members. Names and agreed responsibilities are being finalized at the onboarding kickoff (they will be recorded here and in `TEAM.md`; anything the team agrees on is committed, not only discussed).
+Five members. The concrete per-task assignments are in `docs/team/assignments.csv`, generated from the skills matrix by `tools/team_tools.py suggest`; the table below records what each person brings, not a fixed silo. Every member takes a meaningful share of the plan and works across waves (D41).
 
-| Area of ownership | Approx. share of backlog | Skills code | Notes |
+| Member | GitHub | Skills at level 2 or more | Main contribution |
 |---|---|---|---|
-| **Team Leader — Ali Al-Sharqawi** | LMS deliverables, governance, review, integration | GIT, DOC | Submits on the LMS (confirmed); holds the review/approval gate (D37) |
-| Databases and data (ERD, migrations, synthetic data) | ~9 tasks | DB, DATA | — |
-| Backend and AI (FastAPI, engine, retrieval, agent) | ~18 tasks | API, AI | strongest-skill pairing for the core engine |
-| Frontend (Next.js bilingual dashboards) | ~12 tasks | UI, FRONT | Arabic-first RTL (D6) |
-| Docs, QA, and demo materials | ~11 tasks | DOC, QA | evidence labels, evaluation runs, slides |
+| **Ali Al-Sharqawi** (Team Leader) | `alialsharqawi` | All skills at level 3 | Product direction and scope, governance, LMS planning, integration, and critical-path reviews; pairs on trust-critical tasks |
+| Fatma Eissa | `FatmaEissa` | PY, LLM, VEC, EVAL, DATA, DOC, BIZ, PRES, AR | Backend and AI modules, evaluation, and selected API/DevOps tasks with reviewers |
+| Mariam | `Mariam-abd-elhady` | PY, FE, DATA, AR | Frontend and data modules; pairs on LLM, retrieval, and evaluation |
+| Zainab Hazem | `ZainabHazem-sys` | PY, UX, DATA, PRES, AR | Repository and data foundation, UX, and Arabic review; builds LLM, retrieval, and API skills through reviewed tasks |
+| Alaa | `alaasamy331-droid` | PY, DATA, PRES, AR | Synthetic data, forecast, evaluation, documentation, and presentation; builds UX, API, and frontend skills through reviewed tasks |
 
-**The distribution rule (D37):** tasks are assigned by the skills matrix (`docs/team/skills.csv`) using `tools/team_tools.py suggest`, then a person takes the decision, then any override is recorded. One task = one issue = one branch = one pull request; every task has an assignee and a **different** reviewer; a person holds at most two active tasks. Sensitive tasks (security, tenancy, authentication, the approval gate, financial formulas) get a reviewer who can do that skill alone. Learning tasks are allowed with a stronger reviewer. Branch names follow `type/T-id-short-description` (D37, amended), and every member commits under their own account — the collaboration record is part of what is graded (D38).
+**The distribution rule (D37, amended by D41):** tasks are assigned by the skills matrix (`docs/team/skills.csv`) using `tools/team_tools.py suggest`, then a person takes the decision, then any override is recorded. The tool balances task count and relative complexity across every member, gives everyone a meaningful share and work across waves, and balances reviews. One task = one issue = one branch = one pull request; every task has an assignee and a **different** reviewer; a person holds at most two tasks in progress at once. Sensitive tasks (security, tenancy, authentication, the approval gate, financial formulas) get a reviewer who can do that skill alone. When the only strong reviewer is also the natural assignee, the task is paired: another member does it and the strong member reviews. Learning tasks are allowed with a stronger reviewer. Branch names follow `type/T-id-short-description` (D37, amended), and every member commits under their own account — the collaboration record is part of what is graded (D38).
+
+**How to read the workload split.** The role table describes focus areas, not a ranking of effort. Task count alone is not workload: the 53-task plan assigns Ali 9 tasks / 21 relative-complexity points (17.4%), Fatma 15 / 34 (28.1%), Mariam 14 / 35 (28.9%), Zainab 9 / 16 (13.2%), and Alaa 6 / 15 (12.4%). These points are complexity labels, not hours, and describe planned ownership rather than completed output.
+
+**Team Leader's contribution.** Ali's project direction, governance, LMS planning, and assigned reviews are additional to his owner-point share. T-090 is complete; his remaining ownership includes T-040, T-042, T-091, and T-095 (Core), plus T-066, T-051, T-096, and T-097 (Should). Six of his pull requests are merged (#1–#4, #10, and #11), and D42 assigns him as reviewer on 34 of the 53 tasks. T-051 is flagged for a strong independent reviewer if it is implemented.
 
 **AI use policy (D38):** AI is a tutor, not a substitute — each member must be able to explain what they submit; AI-use disclosures appear in pull requests.
 
-## 4. Work plan and timeline
+## 4. Work plan and phases
 
-The backlog's dependency waves give the real shape of the plan (sizes: S ≈ half a day, M ≈ 1–2 days, L ≈ 3–5 days; totals from `python tools/team_tools.py backlog`):
+The backlog's dependency waves give the real shape of the plan. Size labels are relative complexity (S < M < L), not time estimates; the tool uses them only to balance work across the team.
 
-| Phase | Approx. calendar (proposal) | Waves | Content | Load |
-|---|---|---|---|---|
-| **P0 — Kickoff and setup** | 5–8 Nov 2026 | Wave 1 | Board, labels, protection, skills matrix, first PR per member (T-001, T-022 partially) | ~9 person-days |
-| **P1 — Plan and documents** | 9–15 Nov 2026 | Wave 2 (this part, T-090; issue assembly) | Project plan, assignments, issues in all waves | ~2 person-days |
-| **P2 — Sprint 1: data and groundwork** | 16 Nov → 4 Dec 2026 | Waves 3–4 | Docker (T-003), CI (T-004), model/migrations (T-010), synthetic data (T-020), auth/roles (T-011), engine (T-013) | ~16 person-days |
-| **P3 — Sprint 2: the AI slice** | 7–25 Dec 2026 | Waves 5–6 | Retrieval with citations, agent tools and memory, the approval gate, dashboards for aging and the daily queue | ~56 person-days |
-| **P4 — Sprint 3: UI, guardrails, polish** | 4–22 Jan 2027 | Waves 7–8 | Bilingual UI, guards, forecast, Health Report, production basics | ~29 person-days |
-| **P5 — Evaluation and delivery** | Jan 2027 (instructor calendar) | Waves 9–10 | Evaluation + ablation, slides, demo video, and the final PDF via `tools/build_docs_pdf.py` (T-091) | ~3 person-days |
+| Phase | Waves | Content | Gate evidence |
+|---|---|---|---|
+| **P1 — Setup and data foundation** | Waves 1–4 | Board, protection, skills matrix, assignments and issues; project plan; Docker (T-003), CI (T-004), schema and migrations (T-010), synthetic data (T-020), auth and roles (T-011), overdue and risk engine (T-013) | All 53 issues exist; every member has a merged PR; the engine runs against the synthetic dataset and the aging tests pass |
+| **P2 — The AI slice** | Waves 5–6 | Retrieval with citations, agent tools and memory, the approval gate, dashboards for aging and the daily queue | The 12-step demo path works end to end on the Core: aging → explanation with citations → draft → approval → recorded outcome |
+| **P3 — Integration and guardrails** | Waves 7–8 | Bilingual UI, guards, forecast, Health Report, production basics | The bilingual demo runs without a manual step; the approval gate and tenant isolation are enforced at the API |
+| **P4 — Evaluation and delivery** | Waves 9–10 | Evaluation and the LLM-only ablation, slides, demo video, and the final PDF via `tools/build_docs_pdf.py` (T-091) | Evaluation results are in; all LMS deliverables are replaced in place; final presentation by the confirmed Team Leader |
 
-**Milestone gates** (checked at the end of each phase, evidence in the repo):
+**Milestone gates.** Each phase ends with the gate above, and the evidence stays in the repository. If a gate is not met, use the cut order in the Decision Log (section E) and keep the Core intact.
 
-1. **Gate 1 (P1):** all 50 issues exist on the board; every member has ≥ 1 merged PR; skills matrix filled.
-2. **Gate 2 (P2):** the engine runs against the synthetic dataset; the 19-table schema is migrated; CI green on every PR; the aging tests pass.
-3. **Gate 3 (P3):** the 12-step demo path works end to end on the core: aging → explanation with citations → draft → approval → recorded outcome.
-4. **Gate 4 (P4):** the cut decision exercised (if needed) with the Core intact; the basic evaluation executed.
-5. **Gate 5 (P5):** all LMS deliverables replaced in place (the links stay live); final presentation by the confirmed Team Leader.
-
-The cut order (Decision Log section E) applies at any gate where the remaining work exceeds the remaining time.
-
-**Why dates are honest here:** the wave totals sum to ~115 person-days of estimated work for a five-person team working part-time in parallel; if the real availability from the skills matrix is materially lower, phases shrink by cutting Should/Delivery per the agreed order, **not** by compressing the Core.
+**Why this plan is honest:** it follows the actual dependency waves, does not assume weekly hours or person-days, and protects the Core through demoable gates and an agreed cut order.
 
 ## 5. Risks and how we handle them
 
 | Risk | Impact | Likelihood | Mitigation | Evidence label |
 |---|---|---|---|---|
-| **Part-time availability collapses around exams** | Schedule slips | High | Cut order in advance (D29/section E); at most 2 active tasks per person; weekly 15-min sync; the 48-hour rule (a member silent 2 days gets asked, not blamed) | Plan of record |
+| **Availability drops around exams or other commitments** | A dependency may stall | High | Cut order in advance (D29/section E); at most 2 active tasks per person; a short weekly sync; the leader checks in early, surfaces blockers, and rebalances openly on the issue | Plan of record |
 | **No real distributor data** | The demo rests on synthetic data | Certain (constraint) | Synthetic generator with realistic patterns (D20), stated as synthetic everywhere (D27); the validation plan probes the real world after the capstone | Sourced (constraint) |
 | **LLM/model choice underperforms on Arabic** | Explanations degrade | Medium | Model choice deferred until a tool-calling + Arabic test (D12); fallbacks defined in the Decision Log | To verify |
 | **Embedding quality for mixed Arabic/English notes** | Retrieval misses | Medium | Embedding model chosen after the Arabic retrieval test (D16); hybrid retrieval (BM25 + vectors) so keyword hits survive embedding weakness | To verify |
@@ -90,7 +84,7 @@ The cut order (Decision Log section E) applies at any gate where the remaining w
 1. **Demo integrity:** the 12-step demo path succeeds end to end, and the numbers shown on screen are the engine's numbers (aging, exposure, risk level, priority ranking are exactly what the deterministic engine computes — verified by unit tests).
 2. **Explanation quality:** every policy-based recommendation shows its rule and its source citation; every agent recommendation shows tool calls and costs (D8/D36 vocabulary).
 3. **Evaluation (basic, never cut):** ~15 agent cases, ~10 RAG queries (including no-policy and conflicting-policy cases), ~5 safety tests, plus the ablation. We report actual results **including weaknesses** (D29) — the results section is written after the runs, never before.
-4. **Collaboration:** every commit under its own human account (D38); review trail visible; each member's first PR merged in week 1 (see §4, Gate 1).
+4. **Collaboration:** every commit under its own human account (D38); review trail visible; every member contributes a reviewed pull request (see §4, Gate 1).
 5. **Documentation integrity:** the LMS link suite stays live; the PDF regenerates from source (T-091); the hierarchy rule (D35) holds — nothing new above is contradicted by anything below.
 
 **For the product after the capstone** (from the Business Strength validation plan, we report them as plans, not results): 10 distributor conversations test A8 and the daily-list value; 2–3 free receivables health pilots measure the candidate outcome: days beyond terms moved and collection effort saved; then a pricing test. Kill criteria are written in `Tahseel_AI_Business_Strength.md` §8.

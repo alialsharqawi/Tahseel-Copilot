@@ -15,6 +15,7 @@ Run from the repository root:
     python tools/build_docs_pdf.py                          # overwrite the root PDF (a backup goes to _private/pdf_backups)
 """
 import argparse
+import csv
 import datetime
 import html
 import os
@@ -34,36 +35,53 @@ BROWSERS = ["chromium", "chromium-browser", "google-chrome", "google-chrome-stab
 
 CSS = """
 @page { size: A4; margin: 18mm 16mm 20mm 16mm;
-        @bottom-center { content: counter(page); font: 9pt 'DejaVu Sans', Arial, sans-serif; color: #607d8b; }
-        @bottom-left { content: "Tahseel AI: Project Documentation"; font: 8pt 'DejaVu Sans', Arial, sans-serif; color: #90a4ae; } }
+        @bottom-center { content: counter(page); font: 9pt 'DejaVu Sans', Arial, sans-serif; color: #758675; }
+        @bottom-left { content: "Tahseel AI: Project Documentation"; font: 8pt 'DejaVu Sans', Arial, sans-serif; color: #9bad9c; } }
 @page wide { size: A4 landscape; margin: 12mm; }
 @page cover { margin: 0; @bottom-center { content: none; } @bottom-left { content: none; } }
 body { font-family: 'Noto Sans', 'DejaVu Sans', Arial, sans-serif; font-size: 10pt; line-height: 1.45; color: #1f2933; }
-h1 { font-size: 22pt; color: #1a237e; border-bottom: 2px solid #1a237e; padding-bottom: 4pt; page-break-before: always; margin-top: 0; }
-h2 { font-size: 14pt; color: #283593; margin-top: 16pt; page-break-after: avoid; }
-h3 { font-size: 11.5pt; color: #37474f; margin-top: 12pt; page-break-after: avoid; }
+h1 { font-size: 22pt; color: #1f5b43; border-bottom: 2px solid #1f5b43; padding-bottom: 4pt; page-break-before: always; margin-top: 0; }
+h2 { font-size: 14pt; color: #28654a; margin-top: 16pt; page-break-after: avoid; }
+h3 { font-size: 11.5pt; color: #4d634f; margin-top: 12pt; page-break-after: avoid; }
 p, li { orphans: 3; widows: 3; }
 table { border-collapse: collapse; width: 100%; margin: 8pt 0; font-size: 8.6pt; }
-th, td { border: 1px solid #b0bec5; padding: 3pt 5pt; text-align: left; vertical-align: top; }
-th { background: #eceff1; }
+th, td { border: 1px solid #c5d2c7; padding: 3pt 5pt; text-align: left; vertical-align: top; }
+th { background: #e8efe8; }
 tr { page-break-inside: avoid; }
 code { font-family: 'DejaVu Sans Mono', monospace; font-size: 8.6pt; background: #f3f5f7; padding: 0 2pt; }
 pre { background: #f3f5f7; border: 1px solid #cfd8dc; padding: 6pt; font-size: 8pt; white-space: pre-wrap; word-wrap: break-word; page-break-inside: avoid; }
 pre code { background: none; padding: 0; }
-blockquote { border-left: 3px solid #90a4ae; margin: 8pt 0; padding: 2pt 10pt; color: #455a64; background: #f7f9fa; }
+blockquote { border-left: 3px solid #b78a3f; margin: 8pt 0; padding: 2pt 10pt; color: #455249; background: #faf7ef; }
 figure { margin: 8pt 0; text-align: center; }
 figure img { max-width: 100%; max-height: 230mm; }
 figure.wide { page: wide; page-break-before: always; page-break-after: always; margin: 0; }
 figure.wide img { max-width: 100%; max-height: 180mm; }
-.cover { page: cover; height: 295mm; overflow: hidden; page-break-after: always; padding: 70mm 25mm 0 25mm; box-sizing: border-box; background: #1a237e; color: #fff; }
-.cover h1 { color: #fff; border: none; font-size: 34pt; page-break-before: avoid; }
-.cover p { font-size: 13pt; color: #c5cae9; margin: 6pt 0; }
+.cover { page: cover; position: relative; height: 259mm; overflow: hidden; page-break-after: always; padding: 20mm 22mm 18mm; box-sizing: border-box; background: #173d2e; color: #f8f5ed; }
+.cover::before { content: ""; position: absolute; inset: 0 0 auto; height: 4mm; background: #c99a45; }
+.cover::after { content: ""; position: absolute; top: 24mm; right: -24mm; width: 82mm; height: 82mm; border: 1px solid #456653; border-radius: 50%; }
+.cover-topline, .cover-footer, .cover-team-heading, .cover-team-list li { display: flex; align-items: center; justify-content: space-between; }
+.cover-topline { position: relative; z-index: 1; color: #e1c27d; font-size: 9pt; letter-spacing: 0.7pt; text-transform: uppercase; }
+.cover-brand { font-weight: bold; }
+.cover-main { position: relative; z-index: 1; margin-top: 42mm; }
+.cover-eyebrow { color: #e1c27d; font-size: 9pt !important; letter-spacing: 1pt; text-transform: uppercase; }
+.cover h1 { color: #fff; border: none; font-size: 42pt; page-break-before: avoid; margin: 4mm 0 2mm; }
+.cover-subtitle { max-width: 135mm; font-size: 14pt !important; line-height: 1.5; color: #d7e3d9 !important; }
+.cover-team { margin-top: 14mm; padding: 8mm 9mm; background: #204a38; border-left: 3px solid #c99a45; }
+.cover-team h2 { margin: 0; color: #fff; font-size: 14pt; }
+.cover-team-count { color: #e1c27d; font-size: 9pt; }
+.cover-team-list { display: grid; grid-template-columns: 1fr 1fr; gap: 4mm 8mm; list-style: none; margin: 6mm 0 0; padding: 0; }
+.cover-team-list li { justify-content: flex-start; min-height: 11mm; border-top: 1px solid #496957; padding-top: 2mm; color: #f8f5ed; }
+.cover-team-list li::before { content: ""; width: 2.2mm; height: 2.2mm; flex: 0 0 auto; margin-right: 3mm; border-radius: 50%; background: #c99a45; }
+.cover-team-list .team-name { flex: 1; }
+.cover-team-list .team-role { margin-left: 2mm; color: #e1c27d; font-size: 8pt; }
+.cover-footer { position: absolute; z-index: 1; right: 22mm; bottom: 18mm; left: 22mm; gap: 8mm; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid #496957; padding-top: 5mm; color: #c9d8cd; font-size: 8pt; }
+.cover-repo { max-width: 125mm; overflow-wrap: anywhere; text-align: right; }
 .toc h1 { page-break-before: auto; }
 .toc ul { list-style: none; padding-left: 0; }
 .toc ul ul { padding-left: 16pt; font-size: 9pt; }
 .toc li { margin: 2pt 0; }
 .toc a { color: #1f2933; text-decoration: none; }
-.toc a::after { content: leader('.') target-counter(attr(href), page); color: #607d8b; }
+.toc a::after { content: leader('.') target-counter(attr(href), page); color: #758675; }
 .toc .part > a { font-weight: bold; font-size: 11pt; }
 """
 
@@ -93,6 +111,19 @@ def read_team_leader():
     except OSError:
         pass
     return ""
+
+
+def read_team_members():
+    roster = ROOT / "docs" / "team" / "skills.csv"
+    try:
+        with roster.open(encoding="utf-8", newline="") as f:
+            members = [row["member"].strip() for row in csv.DictReader(f)
+                       if row.get("member", "").strip()]
+    except OSError as exc:
+        raise SystemExit(f"Could not read the team roster at {roster}: {exc}") from exc
+    if not members:
+        raise SystemExit(f"No team members found in {roster}")
+    return members
 
 
 def read_repo_url():
@@ -146,13 +177,22 @@ def build_html(parts, warnings):
         first = tokens[0]["id"] if tokens else f"p{i + 1:02d}"
         entries.append((first, title, tokens))
         sections.append(body)
-    today = datetime.date.today().isoformat()
     leader = read_team_leader()
+    members = read_team_members()
     repo = read_repo_url()
-    cover = ('<div class="cover"><h1>Tahseel AI</h1><p>Project Documentation</p>'
-             '<p>DEPI Graduation Project: an agentic credit-control copilot for Egyptian B2B distributors</p>'
-             f'<p>Generated {today}</p>' + (f"<p>Team leader: {html.escape(leader)}</p>" if leader else "") +
-             (f"<p>Repository: {html.escape(repo)}</p>" if repo else "") + "</div>")
+    team_items = []
+    for member in members:
+        role = '<span class="team-role">Team Leader</span>' if member == leader else ""
+        team_items.append(f'<li><span class="team-name">{html.escape(member)}</span>{role}</li>')
+    cover = ('<div class="cover">'
+             '<div class="cover-topline"><span class="cover-brand">Tahseel AI</span><span>DEPI Graduation Project</span></div>'
+             '<div class="cover-main"><p class="cover-eyebrow">Project Documentation</p><h1>Tahseel AI</h1>'
+             '<p class="cover-subtitle">An agentic credit-control copilot for Egyptian B2B distributors.</p>'
+             '<section class="cover-team"><div class="cover-team-heading"><h2>Project Team</h2>'
+             f'<span class="cover-team-count">{len(members)} members</span></div>'
+             f'<ul class="cover-team-list">{"".join(team_items)}</ul></section></div>'
+             '<div class="cover-footer"><span>DEPI Graduation Project</span>'
+             + (f'<span class="cover-repo">{html.escape(repo)}</span>' if repo else "") + '</div></div>')
     return (f'<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Tahseel AI: Project Documentation</title>'
             f"<style>{CSS}</style></head><body>{cover}{toc_html(entries)}{''.join(sections)}</body></html>")
 
