@@ -1,0 +1,843 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>خطوة الفريق التالية | Tahseel AI</title>
+  <style>
+    :root {
+      font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+      color: #172b3a;
+      background: #f3f6f7;
+      font-synthesis: none;
+      --ink: #172b3a;
+      --muted: #647782;
+      --line: #dce5e8;
+      --paper: #fff;
+      --teal: #087f75;
+      --teal-soft: #e7f5f2;
+      --amber: #9a5b08;
+      --amber-soft: #fff3dc;
+      --red: #a63d42;
+      --red-soft: #fff0ef;
+      --blue: #355f9c;
+      --blue-soft: #edf3ff;
+      --shadow: 0 12px 32px rgb(23 43 58 / 7%);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-width: 320px;
+      background:
+        radial-gradient(ellipse at 92% 0, rgb(8 127 117 / 9%), transparent 30rem),
+        #f3f6f7;
+    }
+
+    a { color: inherit; }
+    button, input, select { font: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+
+    .shell {
+      width: min(1180px, calc(100% - 32px));
+      margin-inline: auto;
+      padding-block: 34px 60px;
+    }
+
+    .hero {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 22px;
+    }
+
+    .eyebrow {
+      margin: 0 0 9px;
+      color: var(--teal);
+      font-size: .79rem;
+      font-weight: 800;
+      letter-spacing: .04em;
+    }
+
+    h1, h2, h3, p { margin-top: 0; }
+
+    h1 {
+      margin-bottom: 8px;
+      color: var(--ink);
+      font-size: clamp(1.7rem, 3.4vw, 2.45rem);
+      line-height: 1.2;
+    }
+
+    .intro {
+      max-width: 720px;
+      margin-bottom: 0;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .actions {
+      display: flex;
+      flex: 0 0 auto;
+      flex-wrap: wrap;
+      gap: 9px;
+    }
+
+    .button {
+      display: inline-flex;
+      min-height: 42px;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 9px 14px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--paper);
+      color: var(--ink);
+      font-weight: 750;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .button.primary {
+      border-color: var(--teal);
+      background: var(--teal);
+      color: #fff;
+    }
+
+    .button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible {
+      outline: 3px solid #5ca9e6;
+      outline-offset: 2px;
+    }
+
+    .notice {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-block: 18px;
+      padding: 14px 16px;
+      border: 1px solid #cfe2e2;
+      border-radius: 14px;
+      background: #f0f8f7;
+      color: #245c59;
+      line-height: 1.65;
+    }
+
+    .notice strong { color: #174b47; }
+    .notice.error { border-color: #efc7c5; background: var(--red-soft); color: #7e292e; }
+    .notice.warning { border-color: #f0d7a9; background: var(--amber-soft); color: #744607; }
+    .notice[hidden] { display: none; }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-block: 20px 30px;
+    }
+
+    .stat {
+      padding: 16px 18px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+    }
+
+    .stat-label { color: var(--muted); font-size: .88rem; }
+    .stat-value { display: block; margin-top: 4px; font-size: 1.65rem; font-weight: 850; }
+    .stat-value.ready { color: var(--teal); }
+    .stat-value.blocked { color: var(--amber); }
+
+    .section-heading {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 14px;
+    }
+
+    .section-heading h2 {
+      margin-bottom: 3px;
+      font-size: 1.38rem;
+    }
+
+    .section-heading p {
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: .92rem;
+    }
+
+    .people-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .person-card {
+      min-width: 0;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+    }
+
+    .person-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .person-name { margin: 0; font-size: 1.13rem; }
+
+    .person-state {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 9px;
+      border-radius: 999px;
+      background: var(--teal-soft);
+      color: #11665e;
+      font-size: .78rem;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .person-state.waiting { background: var(--amber-soft); color: var(--amber); }
+
+    .person-summary {
+      margin-bottom: 13px;
+      color: var(--muted);
+      font-size: .9rem;
+      line-height: 1.65;
+    }
+
+    .task-group + .task-group { margin-top: 14px; }
+
+    .task-group h4 {
+      margin: 0 0 8px;
+      color: var(--muted);
+      font-size: .8rem;
+    }
+
+    .task-list { display: grid; gap: 9px; }
+
+    .task-card {
+      padding: 12px 13px;
+      border: 1px solid var(--line);
+      border-inline-start: 4px solid var(--teal);
+      border-radius: 12px;
+      background: #fcfefe;
+    }
+
+    .task-card.blocked { border-inline-start-color: #d59a3d; background: #fffdfa; }
+    .task-card.done { border-inline-start-color: #84939a; }
+
+    .task-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .task-title {
+      margin: 0;
+      font-size: .97rem;
+      line-height: 1.5;
+    }
+
+    .task-title a { text-decoration: none; }
+    .task-title a:hover { text-decoration: underline; }
+
+    .task-code {
+      display: block;
+      margin-bottom: 3px;
+      color: var(--muted);
+      font-size: .78rem;
+      font-weight: 750;
+      direction: ltr;
+      text-align: right;
+    }
+
+    .tag {
+      flex: 0 0 auto;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: var(--teal-soft);
+      color: #11665e;
+      font-size: .72rem;
+      font-weight: 800;
+    }
+
+    .tag.blocked { background: var(--amber-soft); color: var(--amber); }
+    .tag.review { background: var(--blue-soft); color: var(--blue); }
+
+    .task-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 12px;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: .81rem;
+      line-height: 1.5;
+    }
+
+    .blocker-line {
+      margin: 8px 0 0;
+      color: #80500f;
+      font-size: .83rem;
+      line-height: 1.55;
+    }
+
+    .blocker-line a { font-weight: 750; }
+
+    .empty-person {
+      padding: 12px;
+      border: 1px dashed #d8c99e;
+      border-radius: 12px;
+      background: #fffcf4;
+      color: #72521f;
+      font-size: .9rem;
+      line-height: 1.65;
+    }
+
+    .ready-limit {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: .8rem;
+      line-height: 1.5;
+    }
+
+    .all-tasks {
+      margin-top: 34px;
+      padding: 20px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+    }
+
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-block: 14px;
+    }
+
+    .filters input, .filters select {
+      min-height: 42px;
+      padding: 8px 11px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fff;
+      color: var(--ink);
+    }
+
+    .filters input { flex: 1 1 240px; }
+
+    .issue-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 9px;
+    }
+
+    .issue-row {
+      min-width: 0;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+    }
+
+    .issue-row .task-title { font-size: .91rem; }
+    .issue-row .task-meta { margin-top: 6px; }
+
+    .issue-row[hidden] { display: none; }
+
+    .footer-note {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: .83rem;
+      line-height: 1.7;
+    }
+
+    .footer-note a { color: var(--blue); font-weight: 700; }
+
+    .loading {
+      display: inline-block;
+      width: 15px;
+      height: 15px;
+      border: 2px solid currentColor;
+      border-left-color: transparent;
+      border-radius: 50%;
+      animation: spin .7s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    @media (max-width: 760px) {
+      .shell { width: min(100% - 22px, 620px); padding-top: 22px; }
+      .hero { display: block; }
+      .actions { margin-top: 16px; }
+      .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
+      .stat { padding: 12px; }
+      .people-grid, .issue-grid { grid-template-columns: 1fr; }
+      .section-heading { align-items: flex-start; flex-direction: column; }
+      .all-tasks { padding: 14px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">TAHSEEL AI · لوحة الفريق</p>
+        <h1>كل شخص يعرف خطوته التالية</h1>
+        <p class="intro">نزّل ملف HTML وافتحه في متصفح مع اتصال إنترنت. هتتحدث الـIssues والاعتماديات من GitHub عند فتح الصفحة أو الضغط على تحديث، وتوضح المهمة الجاهزة واللي موقفها.</p>
+      </div>
+      <div class="actions">
+        <a class="button" href="https://github.com/users/alialsharqawi/projects/2" target="_blank" rel="noopener noreferrer">افتح لوحة المشروع ↗</a>
+        <button class="button primary" id="refreshButton" type="button">تحديث البيانات</button>
+      </div>
+    </header>
+
+    <div id="statusNotice" class="notice" role="status" aria-live="polite">
+      <span class="loading" aria-hidden="true"></span>
+      <span>بجلب المهام والاعتماديات من GitHub…</span>
+    </div>
+
+    <div id="decisionNotice" class="notice warning" hidden>
+      <span aria-hidden="true">!</span>
+      <span><strong>محتاجين توحيد موعد T-092:</strong> الـIssue على P1، بينما خطة المراحل تذكر الـslides ضمن P4. اتأكدوا من الموعد قبل اعتباره نهائيًا.</span>
+    </div>
+
+    <section id="dashboard" hidden>
+      <div class="stats" aria-label="ملخص المهام">
+        <div class="stat"><span class="stat-label">Issues مفتوحة</span><strong class="stat-value" id="openCount">—</strong></div>
+        <div class="stat"><span class="stat-label">جاهزة حسب الاعتماديات</span><strong class="stat-value ready" id="readyCount">—</strong></div>
+        <div class="stat"><span class="stat-label">محجوبة باعتماد مفتوح</span><strong class="stat-value blocked" id="blockedCount">—</strong></div>
+        <div class="stat"><span class="stat-label">آخر تحديث</span><strong class="stat-value" id="updatedAt" style="font-size:1rem">—</strong></div>
+      </div>
+
+      <section aria-labelledby="peopleHeading">
+        <div class="section-heading">
+          <div>
+            <h2 id="peopleHeading">إيه تعمل دلوقتي؟</h2>
+            <p>الجاهزية محسوبة من إغلاق الاعتماديات، مش من حالة التقدم على اللوحة.</p>
+          </div>
+        </div>
+        <div id="peopleGrid" class="people-grid"></div>
+      </section>
+
+      <section class="all-tasks" aria-labelledby="tasksHeading">
+        <div class="section-heading">
+          <div>
+            <h2 id="tasksHeading">كل الـIssues المفتوحة</h2>
+            <p>افتح Issue للتفاصيل، أو استخدم الفلاتر لمعرفة المتاح والمحجوب.</p>
+          </div>
+        </div>
+        <div class="filters">
+          <input id="searchInput" type="search" placeholder="ابحث بالاسم أو T-ID أو رقم Issue" aria-label="ابحث عن مهمة">
+          <select id="ownerFilter" aria-label="فلترة حسب المسؤول"><option value="">كل المسؤولين</option></select>
+          <select id="readinessFilter" aria-label="فلترة حسب الجاهزية">
+            <option value="">الجاهزية كلها</option>
+            <option value="ready">جاهز حسب الاعتماديات</option>
+            <option value="blocked">محجوب</option>
+          </select>
+        </div>
+        <div id="issueGrid" class="issue-grid"></div>
+        <p id="noMatches" class="footer-note" hidden>مفيش مهام مطابقة للفلاتر دي.</p>
+      </section>
+    </section>
+
+    <p class="footer-note">
+      الصفحة للقراءة فقط ولا تحتاج أي توكن أو صلاحية GitHub. حالة In progress / In review لازم تتراجع من
+      <a href="https://github.com/users/alialsharqawi/projects/2" target="_blank" rel="noopener noreferrer">لوحة المشروع</a>؛
+      GitHub لا يتيحها لصفحة محلية عامة بدون تسجيل دخول. قبل بدء مهمة جاهزة، اتأكد إنها مش شغالة بالفعل، وبحد أقصى مهمتين نشطتين لكل شخص.
+    </p>
+  </main>
+
+  <script>
+    "use strict";
+
+    const repository = "alialsharqawi/Tahseel-Copilot";
+    const dataUrls = {
+      issues: `https://api.github.com/repos/${repository}/issues?state=all&per_page=100`,
+      backlog: `https://raw.githubusercontent.com/${repository}/main/docs/team/backlog.csv`,
+      assignments: `https://raw.githubusercontent.com/${repository}/main/docs/team/assignments.csv`
+    };
+    const boardUrl = "https://github.com/users/alialsharqawi/projects/2";
+    const displayNames = {
+      "Ali Al-Sharqawi": "علي الشرقاوي",
+      "Ali Al-sharqawi": "علي الشرقاوي",
+      "alialsharqawi": "علي الشرقاوي",
+      "Fatma Eissa": "فاطمة عيسى",
+      "FatmaEissa": "فاطمة عيسى",
+      "Mariam": "مريم",
+      "Mariam Abd Elhady": "مريم",
+      "Mariam-abd-elhady": "مريم",
+      "Zainab Hazem": "زينب حازم",
+      "ZainabHazem-sys": "زينب حازم",
+      "Alaa": "ألاء سامي",
+      "Alaa Samy": "ألاء سامي",
+      "alaasamy331-droid": "ألاء سامي"
+    };
+
+    const state = { tasks: [], owners: [] };
+    const elements = {
+      notice: document.getElementById("statusNotice"),
+      decision: document.getElementById("decisionNotice"),
+      dashboard: document.getElementById("dashboard"),
+      people: document.getElementById("peopleGrid"),
+      issues: document.getElementById("issueGrid"),
+      refresh: document.getElementById("refreshButton"),
+      search: document.getElementById("searchInput"),
+      owner: document.getElementById("ownerFilter"),
+      readiness: document.getElementById("readinessFilter"),
+      noMatches: document.getElementById("noMatches")
+    };
+
+    function escapeHtml(value) {
+      return String(value ?? "").replace(/[&<>"']/g, character => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+      })[character]);
+    }
+
+    function parseCsv(text) {
+      const input = text.replace(/^\uFEFF/, "");
+      const rows = [];
+      let row = [];
+      let field = "";
+      let quoted = false;
+
+      for (let index = 0; index < input.length; index += 1) {
+        const character = input[index];
+        if (quoted) {
+          if (character === '"' && input[index + 1] === '"') {
+            field += '"';
+            index += 1;
+          } else if (character === '"') {
+            quoted = false;
+          } else {
+            field += character;
+          }
+        } else if (character === '"' && field.length === 0) {
+          quoted = true;
+        } else if (character === ",") {
+          row.push(field);
+          field = "";
+        } else if (character === "\n" || character === "\r") {
+          if (character === "\r" && input[index + 1] === "\n") index += 1;
+          row.push(field);
+          if (row.some(value => value.length > 0)) rows.push(row);
+          row = [];
+          field = "";
+        } else {
+          field += character;
+        }
+      }
+
+      if (field.length || row.length) {
+        row.push(field);
+        rows.push(row);
+      }
+
+      const headers = rows.shift();
+      if (!headers) throw new Error("ملف CSV فارغ.");
+      return rows.map(values => Object.fromEntries(
+        headers.map((header, index) => [header, values[index] ?? ""])
+      ));
+    }
+
+    async function fetchText(url) {
+      const response = await fetch(url, { cache: "no-store" });
+      if (!response.ok) throw new Error(`تعذر جلب ${url}: HTTP ${response.status}`);
+      return response.text();
+    }
+
+    async function fetchJson(url) {
+      const response = await fetch(url, {
+        cache: "no-store",
+        headers: { Accept: "application/vnd.github+json" }
+      });
+      if (!response.ok) {
+        if (response.status === 403) throw new Error("وصلنا حد طلبات GitHub المؤقت؛ جرّب التحديث بعد دقيقة.");
+        throw new Error(`تعذر جلب قائمة GitHub: HTTP ${response.status}`);
+      }
+      return response.json();
+    }
+
+    function displayName(name) {
+      return displayNames[name] || name || "غير مسند";
+    }
+
+    function taskReadiness(task, byId) {
+      const unresolved = [];
+      const missing = [];
+      for (const dependencyId of task.dependencies) {
+        const dependency = byId.get(dependencyId);
+        if (!dependency) {
+          missing.push(dependencyId);
+        } else if (dependency.state !== "closed") {
+          unresolved.push(dependency);
+        }
+      }
+      return { unresolved, missing, ready: unresolved.length === 0 && missing.length === 0 };
+    }
+
+    function issueLink(task, label = `#${task.number}`) {
+      return `<a href="${escapeHtml(task.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(label)}</a>`;
+    }
+
+    function readinessTag(task, readiness) {
+      if (readiness.missing.length) return '<span class="tag blocked">بيانات اعتماد ناقصة</span>';
+      if (readiness.unresolved.length) return '<span class="tag blocked">محجوب</span>';
+      return `<span class="tag">${task.dependencies.length ? "جاهز الآن" : "مستقل"}</span>`;
+    }
+
+    function blockerDescription(task, readiness) {
+      if (readiness.missing.length) {
+        return `تعذر التحقق من الاعتماد: ${escapeHtml(readiness.missing.join("، "))}.`;
+      }
+      if (!readiness.unresolved.length) return "";
+      const names = readiness.unresolved.map(dependency => {
+        const owner = dependency.owner ? ` — عند ${escapeHtml(dependency.owner)}` : " — غير مسند";
+        return `${issueLink(dependency, `${dependency.id} (#${dependency.number})`)}${owner}`;
+      });
+      return `متوقف على: ${names.join("، ")}`;
+    }
+
+    function taskCard(task, byId, mode = "normal") {
+      const readiness = taskReadiness(task, byId);
+      const taskTitle = escapeHtml(task.title);
+      const tag = mode === "queued"
+        ? '<span class="tag review">جاهز بعد المهمة الحالية</span>'
+        : readinessTag(task, readiness);
+      const blockedText = blockerDescription(task, readiness);
+      const milestoneDate = task.dueOn
+        ? new Date(task.dueOn).toLocaleDateString("en-GB", { timeZone: "UTC" })
+        : "";
+      const milestone = task.milestone
+        ? `المرحلة: ${escapeHtml(task.milestone.replace(/^P\d+\s*[—-]\s*/, ""))}${milestoneDate ? ` · ${escapeHtml(milestoneDate)}` : ""}`
+        : milestoneDate ? `موعد المرحلة: ${escapeHtml(milestoneDate)}` : "";
+      const sizeText = task.size ? `الحجم النسبي: ${escapeHtml(task.size)}` : "";
+      const ownerText = task.owner ? `المسؤول: ${escapeHtml(task.owner)}` : "غير مسند";
+      const reviewerText = task.reviewer ? `المراجع: ${escapeHtml(task.reviewer)}` : "";
+      const depsText = task.dependencies.length
+        ? `يعتمد على: ${task.dependencies.map(id => escapeHtml(id)).join("، ")}`
+        : "من غير اعتماديات";
+      const cardClass = readiness.unresolved.length || readiness.missing.length ? "task-card blocked" : "task-card";
+
+      return `<article class="${cardClass}${mode === "done" ? " done" : ""}">
+        <div class="task-top">
+          <h3 class="task-title">
+            <span class="task-code">${escapeHtml(task.id)} · ${issueLink(task)}</span>
+            <a href="${escapeHtml(task.url)}" target="_blank" rel="noopener noreferrer">${taskTitle}</a>
+          </h3>
+          ${tag}
+        </div>
+        <div class="task-meta">
+          <span>${ownerText}</span>${reviewerText ? `<span>${reviewerText}</span>` : ""}
+          ${milestone ? `<span>${milestone}</span>` : ""}
+          ${sizeText ? `<span>${sizeText}</span>` : ""}
+        </div>
+        ${blockedText ? `<p class="blocker-line">${blockedText}</p>` : `<div class="task-meta"><span>${depsText}</span></div>`}
+      </article>`;
+    }
+
+    function taskSort(a, b) {
+      return (Number(a.wave) || 99) - (Number(b.wave) || 99) ||
+        (a.order || 0) - (b.order || 0) ||
+        a.id.localeCompare(b.id);
+    }
+
+    function buildPersonCard(owner, tasks, byId) {
+      const owned = tasks.filter(task => task.owner === owner && task.state === "open");
+      const ready = owned.filter(task => taskReadiness(task, byId).ready).sort(taskSort);
+      const blocked = owned.filter(task => !taskReadiness(task, byId).ready).sort(taskSort);
+      const hasReady = ready.length > 0;
+      const readyGroup = ready.length
+        ? `<div class="task-group"><h4>ابدأ دلوقتي — بحد أقصى مهمتين</h4><div class="task-list">${ready.slice(0, 2).map(task => taskCard(task, byId)).join("")}</div></div>`
+        : "";
+      const queuedGroup = ready.length > 2
+        ? `<div class="task-group"><h4>جاهزة بعد ما تفضى مهمة</h4><div class="task-list">${taskCard(ready[2], byId, "queued")}</div></div>`
+        : "";
+      const blockedGroup = blocked.length
+        ? `<div class="task-group"><h4>${hasReady ? "بعدها — مستنية اعتماد" : "مستنية اعتماد"}</h4><div class="task-list">${blocked.slice(0, 2).map(task => taskCard(task, byId)).join("")}</div>${blocked.length > 2 ? `<p class="ready-limit">وفيه ${blocked.length - 2} مهام محجوبة أخرى؛ شوف قائمة الـIssues تحت.</p>` : ""}</div>`
+        : "";
+      const body = readyGroup || blockedGroup
+        ? `${readyGroup}${queuedGroup}${blockedGroup}`
+        : `<div class="empty-person">مفيش مهمة مفتوحة مسندة لك في القائمة الحالية.</div>`;
+      const blockedCount = blocked.length;
+      const readyCountText = ready.length === 1 ? "مهمة واحدة" : `${ready.length} مهام`;
+      const summary = hasReady
+        ? `عندك ${readyCountText} مفتوحة جاهزة حسب الاعتماديات.`
+        : blockedCount
+          ? `كل مهامك المفتوحة (${blockedCount}) مستنية اعتمادًا مفتوحًا.`
+          : "مافيش مهام مفتوحة مسندة لك في قائمة المهام الحالية.";
+
+      return `<article class="person-card">
+        <div class="person-header">
+          <h3 class="person-name">${escapeHtml(owner)}</h3>
+          <span class="person-state${hasReady ? "" : " waiting"}">${hasReady ? "تقدر تبدأ" : "مستني اعتماد"}</span>
+        </div>
+        <p class="person-summary">${summary}</p>
+        ${body}
+        ${hasReady ? '<p class="ready-limit">قبل البدء، اتأكد من اللوحة إن المهمة مش شغالة بالفعل.</p>' : ""}
+      </article>`;
+    }
+
+    function renderPeople(tasks, byId) {
+      const ownerSet = new Set(tasks.map(task => task.owner).filter(Boolean));
+      const preferredOrder = ["فاطمة عيسى", "زينب حازم", "مريم", "ألاء سامي", "علي الشرقاوي"];
+      const owners = [...ownerSet].sort((a, b) => {
+        const first = preferredOrder.indexOf(a);
+        const second = preferredOrder.indexOf(b);
+        return (first < 0 ? 99 : first) - (second < 0 ? 99 : second) || a.localeCompare(b);
+      });
+      state.owners = owners;
+      elements.people.innerHTML = owners.map(owner => buildPersonCard(owner, tasks, byId)).join("");
+    }
+
+    function renderAllTasks(tasks, byId) {
+      const sorted = tasks.filter(task => task.state === "open").sort(taskSort);
+      elements.issues.innerHTML = sorted.map(task => {
+        const readiness = taskReadiness(task, byId);
+        const haystack = `${task.id} ${task.number} ${task.title} ${task.owner}`.toLowerCase();
+        return `<div class="issue-row"
+          data-owner="${escapeHtml(task.owner)}"
+          data-readiness="${readiness.ready ? "ready" : "blocked"}"
+          data-search="${escapeHtml(haystack)}">
+          ${taskCard(task, byId)}
+        </div>`;
+      }).join("");
+      updateFilters();
+    }
+
+    function updateFilters() {
+      const search = elements.search.value.trim().toLowerCase();
+      const owner = elements.owner.value;
+      const readiness = elements.readiness.value;
+      let visible = 0;
+      for (const row of elements.issues.children) {
+        const matches = (!search || row.dataset.search.includes(search)) &&
+          (!owner || row.dataset.owner === owner) &&
+          (!readiness || row.dataset.readiness === readiness);
+        row.hidden = !matches;
+        if (matches) visible += 1;
+      }
+      elements.noMatches.hidden = visible !== 0;
+    }
+
+    function populateOwnerFilter(owners) {
+      elements.owner.innerHTML = '<option value="">كل المسؤولين</option>' +
+        owners.map(owner => `<option value="${escapeHtml(owner)}">${escapeHtml(owner)}</option>`).join("");
+    }
+
+    function setNotice(message, kind = "", loading = false) {
+      elements.notice.className = `notice${kind ? ` ${kind}` : ""}`;
+      elements.notice.innerHTML = `${loading ? '<span class="loading" aria-hidden="true"></span>' : ""}<span>${escapeHtml(message)}</span>`;
+      elements.notice.hidden = false;
+    }
+
+    async function loadDashboard() {
+      elements.refresh.disabled = true;
+      elements.dashboard.hidden = true;
+      setNotice("بجلب المهام والاعتماديات من GitHub…", "", true);
+      try {
+        const [issueList, backlogText, assignmentText] = await Promise.all([
+          fetchJson(dataUrls.issues),
+          fetchText(dataUrls.backlog),
+          fetchText(dataUrls.assignments)
+        ]);
+        if (!Array.isArray(issueList)) throw new Error("استجابة GitHub غير متوقعة.");
+
+        const backlogRows = parseCsv(backlogText);
+        const assignmentRows = parseCsv(assignmentText);
+        const backlogById = new Map(backlogRows.map((row, index) => [row.id, { ...row, order: index }]));
+        const assignmentsById = new Map(assignmentRows.map(row => [row.id, row]));
+        const issueById = new Map();
+
+        for (const issue of issueList) {
+          if (issue.pull_request) continue;
+          const match = issue.title?.match(/\[(T-\d{3})\]/);
+          if (!match) continue;
+          issueById.set(match[1], issue);
+        }
+
+        const missingTasks = backlogRows.filter(row => !issueById.has(row.id));
+        if (missingTasks.length) {
+          throw new Error(`لم أجد Issues للمهام: ${missingTasks.map(row => row.id).join("، ")}. راجع قائمة GitHub أو ملف الـbacklog.`);
+        }
+
+        const tasks = backlogRows.map(row => {
+          const issue = issueById.get(row.id);
+          const assignment = assignmentsById.get(row.id) || {};
+          const actualOwners = (issue.assignees || []).map(person => displayName(person.name || person.login));
+          const owner = actualOwners.length
+            ? actualOwners.join("، ")
+            : displayName(assignment.assignee);
+          return {
+            id: row.id,
+            number: issue.number,
+            url: issue.html_url,
+            title: row.title || issue.title.replace(/^\[T-\d{3}\]\s*/, ""),
+            state: issue.state,
+            owner,
+            reviewer: displayName(assignment.reviewer),
+            wave: assignment.wave,
+            size: row.size,
+            area: row.area,
+            tier: row.tier,
+            order: backlogById.get(row.id).order,
+            dueOn: issue.milestone?.due_on || "",
+            milestone: issue.milestone?.title || "",
+            dependencies: row.depends_on
+              ? row.depends_on.split(";").map(value => value.trim()).filter(Boolean)
+              : []
+          };
+        });
+        const byId = new Map(tasks.map(task => [task.id, task]));
+        const openTasks = tasks.filter(task => task.state === "open");
+        const readyCount = openTasks.filter(task => taskReadiness(task, byId).ready).length;
+
+        state.tasks = tasks;
+        document.getElementById("openCount").textContent = String(openTasks.length);
+        document.getElementById("readyCount").textContent = String(readyCount);
+        document.getElementById("blockedCount").textContent = String(openTasks.length - readyCount);
+        document.getElementById("updatedAt").textContent = new Date().toLocaleString("en-GB", {
+          day: "2-digit", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit"
+        });
+        renderPeople(tasks, byId);
+        renderAllTasks(tasks, byId);
+        populateOwnerFilter(state.owners);
+        elements.dashboard.hidden = false;
+
+        const hasT092 = openTasks.some(task => task.id === "T-092");
+        elements.decision.hidden = !hasT092;
+        elements.notice.hidden = true;
+      } catch (error) {
+        console.error("Team dashboard refresh failed:", error);
+        setNotice(`${error.message} تأكد من الاتصال بالإنترنت ثم حاول التحديث.`, "error");
+      } finally {
+        elements.refresh.disabled = false;
+      }
+    }
+
+    elements.refresh.addEventListener("click", loadDashboard);
+    elements.search.addEventListener("input", updateFilters);
+    elements.owner.addEventListener("change", updateFilters);
+    elements.readiness.addEventListener("change", updateFilters);
+    elements.refresh.textContent = "تحديث البيانات";
+    loadDashboard();
+  </script>
+</body>
+</html>

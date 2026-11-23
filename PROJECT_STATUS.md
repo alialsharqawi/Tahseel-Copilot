@@ -1,7 +1,7 @@
 # Project Status
 
 **Last updated:** 23 November 2026
-**Phase:** Documentation baseline is complete. The team skills matrix and all 53 skill-weighted assignments are ready; all 53 task issues are on the project board, with 48 open and 5 closed, and the open issues are assigned to D40 phase milestones by wave. T-002 skeleton PR (#69) has merged. T-003 Stages 1–3 (backend, PostgreSQL/pgvector, frontend, and Compose integration) are implemented on `feat/T-003-docker-compose-basics` and await review. **Final defense: Tuesday, 15 December 2026.**
+**Phase:** Documentation baseline is complete. PR #69 (T-002) and PR #70 (T-096) are merged; Issues #16 and #63 are closed. The 53 task issues are on the project board (45 open, 8 closed), and open tasks are assigned to D40 phase milestones by wave. T-003 Stages 1–3 (backend, PostgreSQL/pgvector, frontend, and Docker Compose integration) are implemented on `feat/T-003-docker-compose-basics` and await review. **Current phase: P1 — Setup and data foundation (due 30 November 2026). Final defense: Tuesday, 15 December 2026.**
 
 ## Done
 
@@ -17,13 +17,15 @@
 - Six parts of the LMS documentation in `docs/lms/parts/`, including Project Planning and Management
 - Diagrams in `docs/diagrams/`: the ERD, the architecture, the request flow, the deployment, the navigation flow, the stakeholder map, and ten wireframes in English and Arabic
 - The team system: `CONTRIBUTING.md`, the guides and the 53-task backlog in `docs/team/`, the GitHub forms and labels in `.github/`, and `tools/team_tools.py`
+- The team action dashboard (`docs/team/team-now.html`): refreshes public GitHub issue data and shows task readiness and open dependency owners without credentials
+- The team brief (`docs/team/team-brief-whatsapp.html`): evergreen project and workflow guide; live task status now points to the dashboard
 - The filled skills matrix (`docs/team/skills.csv`) and the skill-weighted assignment suggestion (`docs/team/ASSIGNMENT_SUGGESTION.md`, `docs/team/assignments.csv`)
-- GitHub setup: branch protection on `main`, all five collaborators, the project board, the labels, and one issue per backlog task (53 issues; 48 open and 5 closed: T-001, T-090, T-091, T-094, T-095); all 53 task issues are on the board, with open tasks assigned to phase milestones by wave
+- GitHub setup: branch protection on `main`, all five collaborators, the project board, the labels, and one issue per backlog task (53 issues; 45 open and 8 closed: T-001, T-002, T-090, T-091, T-094, T-095, T-096, T-097); all 53 task issues are on the board, with open tasks assigned to phase milestones by wave
 - Legal and security infrastructure: proprietary academic license (`LICENSE`) and vulnerability policy (`.github/SECURITY.md`)
 
 ## Next
 
-1. Complete T-003 after Stage 3 review, then start T-004 (CI: lint and tests on every pull request)
+1. Complete T-003 after review, then continue P1 foundation tasks toward the 30 November gate, following issue dependencies; use `docs/team/team-now.html` for the recommended next task and blocker owners
 2. Build the Core vertical slice in wave order: data foundation, then the AI slice, then integration and guardrails
 3. Slides, demo video, and the evaluation results, with real numbers from the demo and the evaluation (updating the live Canva presentation link submitted on the LMS)
 
@@ -35,6 +37,7 @@
 | OpenRouter models | Choose after testing tool calling, structured output, and Arabic quality (D12) |
 | Embedding model | Choose after an Arabic and mixed-language retrieval test (D16) |
 | Strong independent reviewer | T-051 has no strong independent reviewer in the current skills matrix. Pair it or add a qualified reviewer before approval if it is built; otherwise cut it in the agreed order. |
+| T-092 milestone mismatch | GitHub places the presentation slides in P1, while the phase plan lists slides under P4. Confirm the intended phase before treating the issue due date as final. |
 | Business claims marked "To verify" | The VAT threshold, the Odoo job posting, the cheque sources, and a proper local-competitor scan (task T-094) |
 | Pitch placeholders | Replace the bracketed items in `Final_Pitch` with real demo and evaluation numbers |
 | Size labels in the backlog | S, M, and L are relative complexity, not time. Adjust them only if a task turns out to be mislabeled |
