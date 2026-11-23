@@ -5,6 +5,7 @@
 
 ## Done
 
+- Repository skeleton for T-002: `backend/`, `frontend/`, `data/`, `evals/`, and `deploy/` directories; `.env.example`; `.pre-commit-config.yaml`; and expanded `.gitignore` protections
 - Idea, scope, tiers, and non-goals (`docs/foundation/Tahseel_AI_Final_Concept.md`)
 - 42 decisions with reasons (`docs/governance/Tahseel_AI_Decision_Log.md`, D1 to D42)
 - Detailed specification: scoring formulas, a 19-table data model, API, and acceptance criteria (`docs/technical/Tahseel_AI_PRD.md`, version 1.1)

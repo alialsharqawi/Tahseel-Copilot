@@ -47,4 +47,4 @@ Fill this in as work happens, so the Team Collaboration evidence is ready.
 
 | Date | Member | Contribution |
 |---|---|---|
-| | | |
+| 22 November 2026 | Zainab Hazem | T-002: created the repository skeleton, environment template, and Pre-commit configuration |
