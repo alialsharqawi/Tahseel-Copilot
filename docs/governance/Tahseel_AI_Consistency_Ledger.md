@@ -9,7 +9,7 @@
 |---|---|---:|
 | Done | Applied in the consolidated files, LMS documentation parts, and team framework | 81 |
 | Archived | Content folded into the canonical files; the file moves to `docs/archive/` when `archive_docs.sh` is run | 7 |
-| Deferred | Waits for team skills/capacity inputs (`skills.csv`) or final LMS PDF assembly | 2 |
+| Deferred | Waits for final LMS PDF assembly or a post-capstone verification | 2 |
 | Closed | Needs no action | 4 |
 | Open | Still to verify (assumptions/market claims tracked in task T-094) | 2 |
 
@@ -17,7 +17,7 @@
 
 | # | Finding | Why it waits |
 |---|---|---|
-| 3 | TEAM has only placeholders; Team Collaboration is judged from commit history | Framework ready in `docs/team/`; awaits team members filling capacity and ratings in `skills.csv` |
+| 3 | TEAM has only placeholders; Team Collaboration is judged from commit history | Framework ready in `docs/team/`; the skills matrix and GitHub usernames are filled, and assignments are generated |
 | 34 | Origin tags (`[Ali]`, `[Delegated]`) in the version submitted to the LMS | Keep in the log; strip from the compiled LMS PDF copy |
 | 93 | Claims still unchecked: VAT threshold, job posting, cheque sources, a local-competitor scan | Labeled To verify; tracked as backlog task T-094 |
 | 95 | Whether global tools offer policy citations or factor-level explanations is not verified | Assumption A9; listed as To verify; tracked in task T-094 |
@@ -86,7 +86,7 @@
 | 59 | No way to write customer memory; API gaps | PRD, Final_Concept | C7, AC-009, and the missing endpoints | Done |
 | 60 | Action vocabulary; queue action vs agent recommendation | PRD, Final_Concept | D36 | Done |
 | 61 | Days beyond terms and DSO missing from dashboard and tools | PRD, Final_Concept | Portfolio KPIs tool and dashboard items | Done |
-| 62 | PRD 8-week plan assumed interviews | PRD | Marked as a proposal; the real plan comes with the LMS Project Planning | Done |
+| 62 | PRD 8-week plan assumed interviews | PRD | Section 31 replaced by a pointer to the 15 December 2026 plan; the old plan is marked superseded | Done |
 | 63 | PRD examples contradicted each other | PRD | One consistent example; demo numbers come from the generator | Done |
 | 64 | Technical_Strength numbering collided with decision numbers | Technical_Strength | T1 to T8 | Done |
 | 65 | Audit write blocked until approval; LLM summary stored; "calibration"; memory deletion | Technical_Strength | Corrected (D28, ADR-5) | Done |
