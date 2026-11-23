@@ -1,7 +1,7 @@
 # Project Status
 
 **Last updated:** 23 November 2026
-**Phase:** Documentation baseline is complete. PR #69 (T-002) and PR #70 (T-096) are merged; Issues #16 and #63 are closed. The 53 task issues are on the project board (45 open, 8 closed) and open tasks are assigned to D40 phase milestones by wave. **Current phase: P1 — Setup and data foundation (due 30 November 2026). Final defense: Tuesday, 15 December 2026.**
+**Phase:** Documentation baseline is complete. PR #69 (T-002) and PR #70 (T-096) are merged; Issues #16 and #63 are closed. The 53 task issues are on the project board (45 open, 8 closed), and open tasks are assigned to D40 phase milestones by wave. T-003 Stages 1–3 (backend, PostgreSQL/pgvector, frontend, and Docker Compose integration) are implemented on `feat/T-003-docker-compose-basics` and await review. **Current phase: P1 — Setup and data foundation (due 30 November 2026). Final defense: Tuesday, 15 December 2026.**
 
 ## Done
 
@@ -25,7 +25,7 @@
 
 ## Next
 
-1. Complete P1 foundation tasks toward the 30 November gate, following issue dependencies; use `docs/team/team-now.html` for the recommended next task and blocker owners
+1. Complete T-003 after review, then continue P1 foundation tasks toward the 30 November gate, following issue dependencies; use `docs/team/team-now.html` for the recommended next task and blocker owners
 2. Build the Core vertical slice in wave order: data foundation, then the AI slice, then integration and guardrails
 3. Slides, demo video, and the evaluation results, with real numbers from the demo and the evaluation (updating the live Canva presentation link submitted on the LMS)
 
@@ -44,7 +44,7 @@
 
 ## Known gaps in the material
 
-- **No product implementation yet.** The repository skeleton exists; the product is still to build
+- **Product features are not yet implemented.** T-003 provides the minimal backend, frontend, and PostgreSQL/pgvector Compose foundations; migrations, seed, and CI remain to be built
 - No evaluation results, slides, or demo video yet
 - The core business hypothesis (that a meaningful share of lateness comes from late follow-up, A8) is untested
 - Whether global collection tools offer policy citations or factor-level explanations is not verified
