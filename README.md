@@ -16,7 +16,7 @@ Tahseel reads the receivables data, scores each customer's risk and explains the
 
 ## Status
 
-Documentation baseline, system architecture, database design, bilingual wireframes, team framework, and repository legal/security standards are completed (November 2026). The skills matrix is filled and skill-weighted assignments are generated. **No implementation code yet.** The final defense is **Tuesday, 15 December 2026** (Decision Log, D40). Current status, next steps, and open items are tracked in `PROJECT_STATUS.md`.
+Documentation baseline, system architecture, database design, bilingual wireframes, team framework, and repository legal/security standards are completed (November 2026). The skills matrix is filled and skill-weighted assignments are generated. **Implementation has started:** T-003 now has a minimal bilingual frontend, FastAPI health endpoint, and Compose-managed PostgreSQL/pgvector database. The product features are not implemented yet. The final defense is **Tuesday, 15 December 2026** (Decision Log, D40). Current status, next steps, and open items are tracked in `PROJECT_STATUS.md`.
 
 ---
 
@@ -112,7 +112,7 @@ Payments or wallets, automatic credit blocking, automatic WhatsApp or email send
 
 ## Quick start
 
-Not runnable yet: there is no code. This section will hold the setup and run instructions when the code starts.
+Run the local stack with Docker Compose; set `POSTGRES_PASSWORD` in the environment first. See `deploy/README.md` for details. The frontend and backend can also be run separately using their READMEs.
 
 ## Planned code layout (once coding starts)
 

@@ -1,7 +1,7 @@
 # Project Status
 
 **Last updated:** 23 November 2026
-**Phase:** Documentation baseline is complete. The team skills matrix and all 53 skill-weighted assignments are ready; all 53 task issues are on the project board, with 48 open and 5 closed, and the open issues are assigned to D40 phase milestones by wave. Next: finish and merge the T-002 skeleton PR (#69), then start the Core vertical slice. **Final defense: Tuesday, 15 December 2026.**
+**Phase:** Documentation baseline is complete. The team skills matrix and all 53 skill-weighted assignments are ready; all 53 task issues are on the project board, with 48 open and 5 closed, and the open issues are assigned to D40 phase milestones by wave. T-002 skeleton PR (#69) has merged. T-003 Stages 1–3 (backend, PostgreSQL/pgvector, frontend, and Compose integration) are implemented on `feat/T-003-docker-compose-basics` and await review. **Final defense: Tuesday, 15 December 2026.**
 
 ## Done
 
@@ -23,7 +23,7 @@
 
 ## Next
 
-1. Finish and merge the T-002 skeleton PR (#69), then start T-003 (Docker Compose with pgvector, backend, frontend, and health check) and T-004 (CI: lint and tests on every pull request)
+1. Complete T-003 after Stage 3 review, then start T-004 (CI: lint and tests on every pull request)
 2. Build the Core vertical slice in wave order: data foundation, then the AI slice, then integration and guardrails
 3. Slides, demo video, and the evaluation results, with real numbers from the demo and the evaluation (updating the live Canva presentation link submitted on the LMS)
 
@@ -41,7 +41,7 @@
 
 ## Known gaps in the material
 
-- **No code yet.** The whole product is still to build
+- **Product features are not yet implemented.** T-003 provides the minimal backend, frontend, and PostgreSQL/pgvector Compose foundations; migrations, seed, and CI remain to be built
 - No evaluation results, slides, or demo video yet
 - The core business hypothesis (that a meaningful share of lateness comes from late follow-up, A8) is untested
 - Whether global collection tools offer policy citations or factor-level explanations is not verified
