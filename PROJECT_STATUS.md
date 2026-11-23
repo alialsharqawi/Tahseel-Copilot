@@ -1,7 +1,7 @@
 # Project Status
 
-**Last updated:** 22 November 2026
-**Phase:** Documentation baseline is complete. The team skills matrix and all 53 skill-weighted assignments are ready; all 53 task issues are on the project board and the 51 open issues are assigned to D40 phase milestones by wave. Next: submit the pending local changes through reviewed branches and PRs, then start T-002 (repository skeleton) and the Core vertical slice. **Final defense: Tuesday, 15 December 2026.**
+**Last updated:** 23 November 2026
+**Phase:** Documentation baseline is complete. The team skills matrix and all 53 skill-weighted assignments are ready; all 53 task issues are on the project board, with 48 open and 5 closed, and the open issues are assigned to D40 phase milestones by wave. Next: finish and merge the T-002 skeleton PR (#69), then start the Core vertical slice. **Final defense: Tuesday, 15 December 2026.**
 
 ## Done
 
@@ -17,15 +17,14 @@
 - Diagrams in `docs/diagrams/`: the ERD, the architecture, the request flow, the deployment, the navigation flow, the stakeholder map, and ten wireframes in English and Arabic
 - The team system: `CONTRIBUTING.md`, the guides and the 53-task backlog in `docs/team/`, the GitHub forms and labels in `.github/`, and `tools/team_tools.py`
 - The filled skills matrix (`docs/team/skills.csv`) and the skill-weighted assignment suggestion (`docs/team/ASSIGNMENT_SUGGESTION.md`, `docs/team/assignments.csv`)
-- GitHub setup: branch protection on `main`, all five collaborators, the project board, the labels, and one issue per backlog task (53 issues; T-001 and T-090 closed); all 53 task issues are on the board, with open tasks assigned to phase milestones by wave
+- GitHub setup: branch protection on `main`, all five collaborators, the project board, the labels, and one issue per backlog task (53 issues; 48 open and 5 closed: T-001, T-090, T-091, T-094, T-095); all 53 task issues are on the board, with open tasks assigned to phase milestones by wave
 - Legal and security infrastructure: proprietary academic license (`LICENSE`) and vulnerability policy (`.github/SECURITY.md`)
 
 ## Next
 
-1. Submit the 15 December reset, skills matrix, assignment files, and D42 review-load update through a branch and PR; the author commits under their own account (D38)
-2. Start T-002 (issue #16): repository skeleton — folders, `.gitignore`, `.env.example`, pre-commit hooks
-3. Build the Core vertical slice in wave order: data foundation, then the AI slice, then integration and guardrails
-4. Slides, demo video, and the evaluation results, with real numbers from the demo and the evaluation (updating the live Canva presentation link submitted on the LMS)
+1. Finish and merge the T-002 skeleton PR (#69), then start T-003 (Docker Compose with pgvector, backend, frontend, and health check) and T-004 (CI: lint and tests on every pull request)
+2. Build the Core vertical slice in wave order: data foundation, then the AI slice, then integration and guardrails
+3. Slides, demo video, and the evaluation results, with real numbers from the demo and the evaluation (updating the live Canva presentation link submitted on the LMS)
 
 ## Open items
 
@@ -100,9 +99,9 @@ These came from a second AI critique (run against a stale `main`) and were re-ve
 - **Tool refactor:** `tools/team_tools.py` now balances task count and complexity, rewards wave coverage and learning, pairs sole-expert tasks, enforces a soft cap, and skips issues that already exist.
 - **Assignments generated and reviewed:** `docs/team/assignments.csv` and `docs/team/ASSIGNMENT_SUGGESTION.md`. Every member has tasks in at least four waves. After the D42 pairings, the permanent T-091 reassignment, and the three team-support tasks, task shares are Ali 17.4%, Fatma 28.1%, Mariam 28.9%, Zainab 13.2%, and Alaa 12.4%; Ali reviews 34 of 53 tasks.
 - **T-001 closed:** branch protection on `main` verified (`true`), all five collaborators present, board and labels loaded.
-- **Issues created and synced:** 45 new issues (#16 to #60). The five that already existed (#5 to #9) were skipped during creation; the three open ones (#6/T-022, #8/T-092, and #9/T-094) have since been assigned and their owner/reviewer details synced to the current plan. Closed #5/T-001 and #7/T-090 remain closed. T-002 is issue #16.
+- **Issues created and synced:** 45 new issues (#16 to #60). The five that already existed (#5 to #9) were skipped during creation; the three that were open at the time (#6/T-022, #8/T-092, and #9/T-094) have since been assigned and their owner/reviewer details synced to the current plan. Five issues are now closed: #5/T-001, #7/T-090, #9/T-094, #17/T-091, and #61/T-095. T-002 is issue #16.
 - **D42 pairings applied on GitHub:** #20/T-060 is assigned to Fatma and reviewed by Ali; #41/T-062 and #59/T-073 are assigned to Mariam and reviewed by Ali. T-051/#53 remains a Should task and needs a strong independent reviewer if it is built.
-- **GitHub tracking sync (22 November 2026):** created the four D40 phase milestones; the original 48 open issues were assigned by wave (P1: 12, P2: 19, P3: 15, P4: 2). Added #61/T-095, #62/T-097, and #63/T-096 to P1 and the project board. The 51 open issues have milestone counts P1: 15, P2: 19, P3: 15, P4: 2; #17/T-091 is In progress, #61/T-095 is In review, and the other 49 are in Backlog. Closed #5/T-001 and #7/T-090 remain Done. The board contains 56 items total, including the three related pull requests. No individual issue deadlines were added.
+- **GitHub tracking sync (22 November 2026):** created the four D40 phase milestones; the original 48 open issues were assigned by wave (P1: 12, P2: 19, P3: 15, P4: 2). Added #61/T-095, #62/T-097, and #63/T-096 to P1 and the project board. At that time, the 51 open issues had milestone counts P1: 15, P2: 19, P3: 15, P4: 2; #17/T-091 was In progress, #61/T-095 was In review, and the other 49 were in Backlog. #5/T-001 and #7/T-090 were Done. The board contained 56 items, including the three related pull requests. No individual issue deadlines were added. Since then, #9/T-094, #17/T-091, and #61/T-095 have closed; the current counts are in the phase line above.
 - **Files changed:** `docs/team/skills.csv`, `docs/team/backlog.csv`, `docs/team/BACKLOG.md`, `docs/team/assignments.csv`, `docs/team/ASSIGNMENT_SUGGESTION.md`, `docs/team/SKILLS_MATRIX.md`, `docs/team/TASK_ASSIGNMENT.md`, `docs/team/ONBOARDING.md`, `docs/team/README.md`, `docs/team/team-brief-whatsapp.html`, `docs/team/ai-coding-agents-guide.html`, `docs/governance/Tahseel_AI_Decision_Log.md`, `docs/governance/Tahseel_AI_Consistency_Ledger.md`, `docs/lms/parts/01_Project_Planning_and_Management.md`, `docs/technical/Tahseel_AI_PRD.md`, `tools/team_tools.py`, `tools/test_team_tools.py`, `tools/README.md`, `tools/examples/skills.example.csv`, `PROJECT_STATUS.md`, `README.md`, `LMS_Requirements.md`, `TEAM.md`.
 
 ## LMS documentation refresh (22 November 2026)
@@ -128,6 +127,6 @@ These came from a second AI critique (run against a stale `main`) and were re-ve
 
 - Fixed `tools/team_tools.py` so generated issue bodies close the secondary-skills parenthesis; corrected the existing bodies on #17 and #61–#63.
 - Added a focused regression test and documented its command in `tools/README.md`.
-- Live GitHub verification: all 53 task issues are tracked; the 51 open issues match the local owner/reviewer assignments and phase milestones by dependency wave (P1–P4: 15, 19, 15, and 2); the board has 56 items, #17 is In progress, #61 and PR #64 are In review, the other 49 open tasks are in Backlog, and closed #5 and #7 are Done.
+- Live GitHub verification (22 November 2026): all 53 task issues were tracked; the 51 open issues at that time matched the local owner/reviewer assignments and phase milestones by dependency wave (P1–P4: 15, 19, 15, and 2); the board had 56 items, #17 was In progress, #61 and PR #64 were In review, the other 49 open tasks were in Backlog, and closed #5 and #7 were Done.
 - Validation passed: `python -m unittest tools.test_team_tools` (1 test), `python tools/team_tools.py check` (53 tasks, 5 members), `python tools/build_docs_pdf.py --check` (6 parts, 0 image warnings), and `git -c core.whitespace=cr-at-eol diff --check`. An isolated suggestion smoke test generated 53 unique tasks with distinct reviewers without changing the approved records. The refreshed PDF was rebuilt to 61 pages and visually reviewed page by page.
-- Commit `85af153` was authored under Ali's account and pushed on `docs/T-095-team-assignment-records`; PR #64 is open, requests Fatma's review, and is on the board In review. No checks are reported for the PR, and no workflow files are configured on `main`. The rebuilt T-091 PDF, builder, and source-part changes remain unstaged to keep PRs separate; T-091 should follow T-095 because its planning part references the new assignment register. Other task groups remain unstaged/untracked; the board screenshot is kept out of PR scope unless intentionally selected.
+- Commit `85af153` was authored under Ali's account and pushed on `docs/T-095-team-assignment-records`; PR #64 was open, requested Fatma's review, and was on the board In review. No checks are reported for the PR, and no workflow files are configured on `main`. The rebuilt T-091 PDF, builder, and source-part changes remain unstaged to keep PRs separate; T-091 should follow T-095 because its planning part references the new assignment register. Other task groups remain unstaged/untracked; the board screenshot is kept out of PR scope unless intentionally selected.
