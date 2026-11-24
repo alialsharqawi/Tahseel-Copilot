@@ -73,7 +73,11 @@ This part describes the PostgreSQL schema of Tahseel AI. It is generated from th
 
 ## 4. Data dictionary
 
-Types are **proposed** and are finalized in the first migration. `uuid` keys and `timestamptz` for moments are the working choices. `vector(dim)` takes its size from the embedding model chosen after the Arabic retrieval test (Decision Log, D16). Fields with a fixed set of values are stored as text with a CHECK constraint.
+The types in this dictionary are implemented by the SQLAlchemy models and
+initial Alembic migration. UUID keys and `timestamptz` for moments are used.
+`VECTOR` has no dimension until the embedding model is selected after the
+Arabic retrieval test (Decision Log, D16). Fields with a fixed set of values
+are stored as text with a CHECK constraint.
 
 ### tenants
 
@@ -393,7 +397,7 @@ Append-only record of every recommendation, approval, edit, rejection, tool call
 | `invoices` | unique (`tenant_id`, `invoice_number`) | The same invoice number cannot be imported twice by one tenant |
 | `invoices` | index (`tenant_id`, `customer_id`, `due_date`) | Fast overdue queries per customer |
 | `payments` | index (`tenant_id`, `invoice_id`) | Recompute `paid_amount` quickly |
-| `customer_notes`, `document_chunks` | vector index on `embedding` plus btree on `tenant_id` | Similarity search that always filters by tenant |
+| `customer_notes`, `document_chunks` | btree index on `tenant_id` | Tenant filtering; the vector index is deferred until the embedding dimension and distance metric are chosen |
 | `audit_logs` | no UPDATE or DELETE grant for the application role | Append-only |
 | `tenant_settings` | the risk weights total 100 (checked by the typed settings schema) | The score arithmetic stays valid |
 | enumerated fields | CHECK constraint on the allowed values | Bad values are rejected by the database |
@@ -402,4 +406,42 @@ Append-only record of every recommendation, approval, edit, rejection, tool call
 
 - The embedding dimension and the model are not chosen yet (D16).
 - Invoice line items are not modeled; the MVP works at invoice level (see the Adaptability Strategy).
-- Types, indexes, and constraints above are a design proposal and will be fixed when the first migration is written.
+
+## 7. T-010 implementation choices
+
+The migration uses `gen_random_uuid()` for UUID primary-key defaults and
+`now()` for `created_at`, `updated_at`, and `calculated_at` timestamps. The
+`tenant_settings.tenant_id` is its primary key and has no separate `id`.
+No other column receives a database default; status, boolean, JSONB, and
+financial values must be supplied by the caller.
+
+The dictionary does not specify nullability for most non-key fields. The
+implementation treats identity, required relationships, core record content,
+and state as required, and allows `NULL` for values that are inherently
+optional or unavailable before a workflow completes:
+
+- `customers`: `phone`, `email`, `credit_limit`, `sales_rep`,
+  `assigned_collector`, `preferred_channel`, and `contact_person`.
+- `invoices`: `dispute_reason`, `disputed_by`, and `disputed_at`.
+- `promises_to_pay`: `resolved_at`.
+- `customer_notes`: `embedding` and `deleted_at`.
+- `agent_runs`: `output`, `model`, `prompt_tokens`, `completion_tokens`,
+  `cost_estimate`, and `latency_ms`.
+- `recommendations`: `decided_by`, `decided_at`, and `decision_reason`.
+- `draft_versions`: `edited_text` and `edit_reason`.
+- `collection_tasks`: `notes`.
+- `conversations`: `customer_id`.
+- `messages`: `tool_calls`.
+- `documents`: `effective_date`.
+- `document_chunks`: `customer_id`, `section`, `page`, `effective_date`, and
+  `embedding`.
+- `tenant_settings`: `updated_by`.
+- `policy_rules`: `confirmed_by` and `confirmed_at`.
+- `audit_logs`: `before` and `after`.
+
+The documented invoice uniqueness constraint and invoice/payment indexes are
+implemented. Tenant B-tree indexes are created for `customer_notes` and
+`document_chunks`; no vector index is created because the embedding dimension
+and distance metric remain undecided. Foreign keys do not cascade deletes.
+The database role's append-only permissions for `audit_logs` remain a
+deployment responsibility and are not granted by this schema migration.
