@@ -121,7 +121,101 @@ Payments or wallets, automatic credit blocking, automatic WhatsApp or email send
 
 ## Quick start
 
-Run the local stack with Docker Compose; set `POSTGRES_PASSWORD` in the environment first. See `deploy/README.md` for details. The frontend and backend can also be run separately using their READMEs.
+### Prerequisites
+
+- Git
+- Docker Engine or Docker Desktop with Docker Compose v2
+
+You do not need a separate Python or Node.js installation for the Docker Compose stack.
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/alialsharqawi/Tahseel-Copilot.git
+cd Tahseel-Copilot
+```
+
+### 2. Create local environment settings
+
+Copy `.env.example` to the Git-ignored `.env` file:
+
+**PowerShell**
+
+```powershell
+Copy-Item .env.example .env
+```
+
+**macOS/Linux**
+
+```bash
+cp .env.example .env
+```
+
+Open `.env` and set a local value for `POSTGRES_PASSWORD`. This setting is required by
+Docker Compose. Do not use a real secret or commit `.env`; it is ignored by Git.
+
+Required for the Compose stack:
+
+| Setting | Required value |
+|---|---|
+| `POSTGRES_PASSWORD` | A non-empty local password |
+
+The other database settings are optional. Their defaults are:
+
+| Setting | Default |
+|---|---|
+| `POSTGRES_DB` | `tahseel` |
+| `POSTGRES_USER` | `tahseel` |
+| `POSTGRES_PORT` | `5432` |
+
+The remaining variables in `.env.example` are for future application configuration and
+are not required to start the current Docker Compose stack. This includes OpenRouter,
+embedding, application, and `NEXT_PUBLIC_API_URL` settings.
+
+### 3. Start the stack
+
+From the repository root:
+
+```bash
+docker compose up --build -d
+docker compose ps
+```
+
+Compose starts PostgreSQL with pgvector, the FastAPI backend, and the Next.js frontend.
+Database migrations are not required for the current starter application's health checks.
+Database-backed features may require migrations later; see `backend/README.md`.
+
+### 4. Verify the services
+
+In `docker compose ps`, the `db`, `backend`, and `frontend` services should become
+`healthy`.
+
+Then open:
+
+- Frontend: http://127.0.0.1:3000
+- Frontend health: http://127.0.0.1:3000/api/health
+- Backend health: http://127.0.0.1:8000/health
+- PostgreSQL: `127.0.0.1:5432` by default
+
+Both health URLs should return `{"status":"ok"}`. These endpoints verify only the current
+starter application, not unfinished collection, policy, memory, or agent features.
+
+If a port is already in use, stop the conflicting local service before starting Compose.
+To use a different PostgreSQL host port, set `POSTGRES_PORT` in `.env`.
+
+### 5. Stop the stack
+
+From the repository root:
+
+```bash
+docker compose down
+```
+
+This stops and removes the Compose containers while preserving the named PostgreSQL
+volume. Do not add `-v` unless you intentionally want to delete the database volume.
+
+More deployment details are in `deploy/README.md`. The frontend and backend can also be
+run separately using `frontend/README.md` and `backend/README.md`.
 
 ## Repository code layout
 
