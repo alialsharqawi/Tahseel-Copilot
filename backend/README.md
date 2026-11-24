@@ -23,5 +23,14 @@ Install the development dependencies and run the backend tests:
 
 ```bash
 pip install -r requirements-dev.txt
-pytest
+python -m pytest
+```
+
+## Lint
+
+Run Ruff checks from the repository root:
+
+```bash
+ruff check backend
+ruff format --check backend
 ```
