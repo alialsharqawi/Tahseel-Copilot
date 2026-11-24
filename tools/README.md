@@ -19,6 +19,7 @@ Options for `suggest`: `--growth` (a small bonus for tasks that match a skill so
 Options for `issues`: `--wave N` (tasks up to wave N), `--tier Core|Should|Delivery`, `--only T-013,T-014`, and `--run`.
 Use `--team-dir <folder>` to point the tool at another folder with the two CSV files.
 Run the focused issue-body formatting test with `python -m unittest tools.test_team_tools`.
+Run the synthetic policy corpus validation with `python -m unittest tools.test_policy_corpus`.
 
 ## build_docs_pdf.py: the LMS documentation PDF
 

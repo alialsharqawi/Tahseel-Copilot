@@ -33,6 +33,7 @@
 
 | Item | Detail |
 |---|---|
+| T-022 Arabic review | The 20-document synthetic bilingual policy corpus and no-match question list are drafted. Native-speaker review of the Arabic text is still needed before treating them as approved fixtures. |
 | Project Documentation Guidelines | We do not have a copy. We work from an assumed structure (`LMS_Requirements.md`, section 3). Ask the instructor for it if possible |
 | OpenRouter models | Choose after testing tool calling, structured output, and Arabic quality (D12) |
 | Embedding model | Choose after an Arabic and mixed-language retrieval test (D16) |
