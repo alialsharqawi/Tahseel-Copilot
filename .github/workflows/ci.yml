@@ -17,6 +17,23 @@ jobs:
   backend:
     name: Backend lint and tests
     runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: postgresql+psycopg://postgres:postgres@localhost:5432/tahseel
+      TEST_DATABASE_URL: postgresql+psycopg://postgres:postgres@localhost:5432/tahseel
+    services:
+      postgres:
+        image: pgvector/pgvector:0.8.7-pg17@sha256:b513c48566e4777cd3370451400000c78eda6a08131d68f4c31d4a76f27bd8fd
+        env:
+          POSTGRES_DB: tahseel
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d tahseel"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 5
 
     steps:
       - name: Check out repository
