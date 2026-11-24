@@ -16,6 +16,7 @@ node_modules/
 .next/
 dist/
 coverage/
+*.tsbuildinfo
 
 # Editors and operating systems
 .vscode/
