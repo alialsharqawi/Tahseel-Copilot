@@ -6,6 +6,7 @@
 ## Done
 
 - Docker Compose foundation for T-003: FastAPI health endpoint, bilingual frontend, and PostgreSQL/pgvector integration
+- T-010 database foundation: SQLAlchemy models and an initial Alembic migration for all 19 tables, with schema and migration tests
 - Synthetic bilingual policy corpus and validation fixtures for T-022
 - CI pipeline for T-004: backend and frontend lint/test jobs on pull requests to `main`, with required status checks configured
 - Repository skeleton for T-002: `backend/`, `frontend/`, `data/`, `evals/`, and `deploy/` directories; `.env.example`; `.pre-commit-config.yaml`; and expanded `.gitignore` protections
@@ -47,7 +48,7 @@
 
 ## Known gaps in the material
 
-- **Core product features are not yet implemented.** T-003 provides the minimal backend, frontend, and PostgreSQL/pgvector Compose foundations; migrations and seed remain to be built. T-004 provides CI, and T-022 provides the synthetic bilingual policy corpus and validation fixtures
+- **Core product features are not yet implemented.** T-003 provides the minimal backend, frontend, and PostgreSQL/pgvector Compose foundations; a seed script remains to be built. T-010 provides the initial migrations. T-004 provides CI, and T-022 provides the synthetic bilingual policy corpus and validation fixtures
 - No evaluation results, slides, or demo video yet
 - The core business hypothesis (that a meaningful share of lateness comes from late follow-up, A8) is untested
 - Whether global collection tools offer policy citations or factor-level explanations is not verified
@@ -137,6 +138,12 @@ These came from a second AI critique (run against a stale `main`) and were re-ve
 - Live GitHub verification (22 November 2026): all 53 task issues were tracked; the 51 open issues at that time matched the local owner/reviewer assignments and phase milestones by dependency wave (P1–P4: 15, 19, 15, and 2); the board had 56 items, #17 was In progress, #61 and PR #64 were In review, the other 49 open tasks were in Backlog, and closed #5 and #7 were Done.
 - Validation passed: `python -m unittest tools.test_team_tools` (1 test), `python tools/team_tools.py check` (53 tasks, 5 members), `python tools/build_docs_pdf.py --check` (6 parts, 0 image warnings), and `git -c core.whitespace=cr-at-eol diff --check`. An isolated suggestion smoke test generated 53 unique tasks with distinct reviewers without changing the approved records. The refreshed PDF was rebuilt to 61 pages and visually reviewed page by page.
 - Commit `85af153` was authored under Ali's account and pushed on `docs/T-095-team-assignment-records`; PR #64 was open, requested Fatma's review, and was on the board In review. No checks are reported for the PR, and no workflow files are configured on `main`. The rebuilt T-091 PDF, builder, and source-part changes remain unstaged to keep PRs separate; T-091 should follow T-095 because its planning part references the new assignment register. Other task groups remain unstaged/untracked; the board screenshot is kept out of PR scope unless intentionally selected.
+
+## T-010 database models and migrations (24 November 2026)
+
+- Added SQLAlchemy 2.x models and an initial Alembic migration for all 19 documented tables, with PostgreSQL JSONB and unbounded pgvector columns.
+- Documented nullability/default assumptions in `docs/lms/parts/05_Database_Design.md`; no ANN vector index or cascading foreign-key deletion was introduced.
+- Added offline migration coverage and a PostgreSQL upgrade/downgrade integration test. CI runs the integration test against the project's pinned pgvector/PostgreSQL image.
 
 ## P1 merge sync (24 November 2026)
 
