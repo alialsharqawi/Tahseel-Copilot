@@ -17,3 +17,14 @@ labels with a language toggle; Arabic mode uses right-to-left layout. `GET /api/
 returns `{"status":"ok"}` for the Compose health check.
 
 To create a production build, run `npm run build`; `npm start` serves that build.
+
+## Lint and tests
+
+Run ESLint and the frontend tests with:
+
+```bash
+npm run lint
+npm test
+```
+
+The tests cover the language toggle and the health API route.
