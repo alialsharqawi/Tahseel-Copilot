@@ -4,7 +4,7 @@ Next.js and React application for the executive dashboard, collection queue, cus
 
 ## Run locally
 
-Use Node.js 20.9 or newer. From this directory, install the locked dependencies and
+Use Node.js 24.15 or newer. From this directory, install the locked dependencies and
 start the development server:
 
 ```bash
