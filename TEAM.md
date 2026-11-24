@@ -43,8 +43,17 @@ The roles in the software (Owner, Finance Manager, Collector) are product roles 
 
 ## Contribution log
 
-Fill this in as work happens, so the Team Collaboration evidence is ready.
+Repository contribution evidence is based on merged pull requests and issue closures. As of 24 November 2026, the repository has 21 merged pull requests and 11 closed task issues.
 
 | Date | Member | Contribution |
 |---|---|---|
-| 22 November 2026 | Zainab Hazem | T-002: created the repository skeleton, environment template, and Pre-commit configuration |
+| 21 November 2026 | Mariam | Added the Mariam skills matrix entry |
+| 21 November 2026 | Fatma Eissa | Added the Fatma skills matrix entry |
+| 21 November 2026 | Zainab Hazem | Added the Zainab skills matrix entry |
+| 21 November 2026 | Alaa | Added the Alaa skills matrix entry |
+| 22 November 2026 | Ali Al-Sharqawi | T-091 documentation PDF, status updates, governance records, assignment tooling, and team guides |
+| 23 November 2026 | Zainab Hazem | T-002: repository skeleton, environment template, and Pre-commit configuration |
+| 23 November 2026 | Ali Al-Sharqawi | T-071 live team dashboard and T-096 team brief count corrections |
+| 23 November 2026 | Fatma Eissa | T-003: Docker Compose foundation for the backend, frontend, and PostgreSQL/pgvector database |
+| 24 November 2026 | Zainab Hazem | T-022: bilingual synthetic policy corpus and validation fixtures |
+| 24 November 2026 | Fatma Eissa | T-004: backend and frontend CI lint/test workflow |

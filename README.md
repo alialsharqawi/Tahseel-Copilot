@@ -16,7 +16,7 @@ Tahseel reads the receivables data, scores each customer's risk and explains the
 
 ## Status
 
-Documentation baseline, system architecture, database design, bilingual wireframes, team framework, and repository legal/security standards are completed (November 2026). The skills matrix is filled and skill-weighted assignments are generated. **Implementation has started:** T-003 now has a minimal bilingual frontend, FastAPI health endpoint, and Compose-managed PostgreSQL/pgvector database. The product features are not implemented yet. The final defense is **Tuesday, 15 December 2026** (Decision Log, D40). Current status, next steps, and open items are tracked in `PROJECT_STATUS.md`.
+Documentation baseline, system architecture, database design, bilingual wireframes, team framework, and repository legal/security standards are completed (November 2026). The skills matrix is filled and skill-weighted assignments are generated. **The repository skeleton is complete and merged:** PR #69 added `backend/`, `frontend/`, `data/`, `evals/`, and `deploy/`, with `.env.example`, `.pre-commit-config.yaml`, and expanded `.gitignore` protections. **P1 implementation is underway:** PR #72 delivered T-003 (minimal bilingual frontend, FastAPI health endpoint, and Compose-managed PostgreSQL/pgvector database), PR #73 delivered T-022 (synthetic bilingual policy corpus and validation fixtures), and PR #74 delivered T-004 (backend/frontend CI). As of 24 November 2026, GitHub has 21 merged pull requests and 42 open / 11 closed task issues. The core product features are not implemented yet. The final defense is **Tuesday, 15 December 2026** (Decision Log, D40). Current status, next steps, and open items are tracked in `PROJECT_STATUS.md`.
 
 ---
 
@@ -25,6 +25,7 @@ Documentation baseline, system architecture, database design, bilingual wirefram
 ```text
 Tahseel-Copilot/
 ├── README.md, LICENSE, CONTRIBUTING.md, CLAUDE.md, LMS_Requirements.md, TEAM.md, PROJECT_STATUS.md, GLOSSARY.md
+├── Tahseel_Project_Documentation_v1.pdf       LMS documentation PDF
 ├── docs/
 │   ├── foundation/
 │   │   └── Tahseel_AI_Final_Concept.md          scope, tiers, demo flow, architecture, roadmap
@@ -44,6 +45,13 @@ Tahseel-Copilot/
 │   ├── lms/parts/                               the six parts of the documentation submitted to the LMS (01 to 06)
 │   ├── diagrams/                                ERD, architecture, wireframes (dot, mmd, png, svg)
 │   └── archive/                                 superseded raw material, kept for history; not requirements
+├── backend/                                     FastAPI service, health endpoint, tests, and Docker configuration
+├── frontend/                                    Next.js bilingual interface and tests
+├── data/                                        Synthetic policy documents and future seed datasets
+├── database/init/                               PostgreSQL initialization scripts
+├── evals/                                       RAG and evaluation assets
+├── deploy/                                      Docker Compose deployment documentation
+├── compose.yaml                                 local backend, frontend, and PostgreSQL/pgvector stack
 ├── .github/                                     task form, pull request template, label script, SECURITY.md
 ├── tools/                                       team_tools.py: skills-based assignment and issue creation
 └── _private/                                    git-ignored: screenshots and personal references
@@ -53,20 +61,21 @@ Tahseel-Copilot/
 
 ---
 
-## Start here: reading order (about 20 minutes)
+## Start here: reading order (about 25 minutes)
 
 | Order | File | Why read it |
 |---:|---|---|
 | 1 | `README.md` (this file) | The big picture and the 12 key facts below |
-| 2 | `LMS_Requirements.md` | What we must submit and how we are graded |
-| 3 | `docs/foundation/Tahseel_AI_Final_Concept.md` | Exact scope: what we build, in which tier, what we do not, the demo flow |
-| 4 | `docs/governance/Tahseel_AI_Decision_Log.md` | Every major choice: what we chose, what we rejected, and why |
-| 5 | `docs/technical/Tahseel_AI_Technical_Strength.md` | How the design earns trust; memory design; evaluation plan; security |
-| 6 | `docs/business/Tahseel_AI_Business_Strength.md` | Evidence for the problem, stakeholders, competitors, value model, validation plan |
-| 7 | `docs/technical/Tahseel_AI_PRD.md` | The detailed specification: risk and priority formulas, data model, API, acceptance criteria |
-| 8 | `docs/architecture/Tahseel_AI_Adaptability_Strategy.md` | How one platform serves different sectors through configuration |
-| 9 | `docs/presentation/Tahseel_AI_Final_Pitch.md` | The pitch, slide skeleton, demo script, likely questions and answers |
-| Anytime | `GLOSSARY.md`, `TEAM.md`, `PROJECT_STATUS.md` | Terms, people, and current status |
+| 2 | `PROJECT_STATUS.md` | Current merged work, open tasks, blockers, phase gates, and next steps |
+| 3 | `LMS_Requirements.md` | What we must submit and how we are graded |
+| 4 | `docs/foundation/Tahseel_AI_Final_Concept.md` | Exact scope: what we build, in which tier, what we do not, the demo flow |
+| 5 | `docs/governance/Tahseel_AI_Decision_Log.md` | Every major choice: what we chose, what we rejected, and why |
+| 6 | `docs/technical/Tahseel_AI_Technical_Strength.md` | How the design earns trust; memory design; evaluation plan, and security |
+| 7 | `docs/business/Tahseel_AI_Business_Strength.md` | Evidence for the problem, stakeholders, competitors, value model, and validation plan |
+| 8 | `docs/technical/Tahseel_AI_PRD.md` | Detailed formulas, data model, API, acceptance criteria, and implementation requirements |
+| 9 | `docs/architecture/Tahseel_AI_Adaptability_Strategy.md` | How one platform serves sectors through configuration and adapters |
+| 10 | `docs/presentation/Tahseel_AI_Final_Pitch.md` | Pitch, slide skeleton, demo script, measured-result placeholders, and likely questions |
+| Anytime | `GLOSSARY.md`, `TEAM.md` | Shared terms and team roles |
 | New to the team | `docs/team/ONBOARDING.md`, then `CONTRIBUTING.md` | How to get started and how we work |
 
 When two documents disagree, the higher one in the hierarchy wins: Decision Log, then Final Concept, then PRD, then the strength documents, then the pitch (Decision Log, D35).
@@ -114,8 +123,13 @@ Payments or wallets, automatic credit blocking, automatic WhatsApp or email send
 
 Run the local stack with Docker Compose; set `POSTGRES_PASSWORD` in the environment first. See `deploy/README.md` for details. The frontend and backend can also be run separately using their READMEs.
 
-## Planned code layout (once coding starts)
+## Repository code layout
 
 ```text
-backend/  frontend/  data/  evals/  deploy/
+backend/  FastAPI service, health endpoint, tests, and Docker configuration
+frontend/ Next.js bilingual interface and tests
+data/      Synthetic policy corpus and future seed datasets
+evals/     RAG, agent, recommendation, and safety evaluation assets
+deploy/    Docker Compose deployment documentation
+database/  PostgreSQL initialization scripts
 ```
