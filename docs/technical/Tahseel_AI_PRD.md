@@ -893,7 +893,7 @@ A time-split backtest harness reruns the forecast as of past dates on the synthe
 
 ## 19. Data Model
 
-This section is the single field-level definition. `Tahseel_AI_Final_Concept.md`, section 8, lists the tables. Every table except `tenants` carries `tenant_id`. "Overdue" is computed, never stored.
+This section is the single field-level definition. `Tahseel_AI_Final_Concept.md`, section 8, lists the tables. Every table except `tenants` carries `tenant_id`. Foreign keys between tenant-scoped tables enforce both `tenant_id` and the referenced row ID through a composite constraint; referencing only a globally unique row ID does not enforce tenant ownership. "Overdue" is computed, never stored.
 
 ### tenants
 
