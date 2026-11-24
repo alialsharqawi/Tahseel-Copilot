@@ -20,6 +20,7 @@ from .models import (
     TenantSettings,
     User,
 )
+from .tenant_access import TenantContext, TenantScopedDataAccess
 
 __all__ = [
     "AgentRun",
@@ -40,6 +41,8 @@ __all__ = [
     "Recommendation",
     "RiskScore",
     "Tenant",
+    "TenantContext",
+    "TenantScopedDataAccess",
     "TenantSettings",
     "User",
 ]

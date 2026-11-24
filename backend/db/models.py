@@ -12,6 +12,7 @@ from sqlalchemy import (
     Date,
     DateTime,
     ForeignKey,
+    ForeignKeyConstraint,
     Index,
     Integer,
     MetaData,
@@ -88,7 +89,10 @@ class Tenant(UUIDPrimaryKey, CreatedAt, Base):
 
 class User(UUIDPrimaryKey, TenantScoped, CreatedAt, Base):
     __tablename__ = "users"
-    __table_args__ = (_enum_check("role", ("OWNER", "FINANCE_MANAGER", "COLLECTOR")),)
+    __table_args__ = (
+        _enum_check("role", ("OWNER", "FINANCE_MANAGER", "COLLECTOR")),
+        UniqueConstraint("tenant_id", "id", name="uq_users_tenant_id"),
+    )
 
     name: Mapped[str] = mapped_column(Text, nullable=False)
     email: Mapped[str] = mapped_column(Text, nullable=False)
@@ -102,6 +106,12 @@ class Customer(UUIDPrimaryKey, TenantScoped, CreatedAt, Base):
         _enum_check("tier", ("strategic", "regular")),
         _enum_check("preferred_channel", ("call", "whatsapp", "email")),
         _enum_check("status", ("active", "inactive")),
+        UniqueConstraint("tenant_id", "id", name="uq_customers_tenant_id"),
+        ForeignKeyConstraint(
+            ["tenant_id", "assigned_collector"],
+            ["users.tenant_id", "users.id"],
+            name="fk_customers_tenant_assigned_collector_users",
+        ),
     )
 
     name: Mapped[str] = mapped_column(Text, nullable=False)
@@ -136,6 +146,17 @@ class Invoice(UUIDPrimaryKey, TenantScoped, CreatedAt, Base):
             "tenant_id",
             "invoice_number",
             name="uq_invoices_tenant_invoice_number",
+        ),
+        UniqueConstraint("tenant_id", "id", name="uq_invoices_tenant_id"),
+        ForeignKeyConstraint(
+            ["tenant_id", "customer_id"],
+            ["customers.tenant_id", "customers.id"],
+            name="fk_invoices_tenant_customer_customers",
+        ),
+        ForeignKeyConstraint(
+            ["tenant_id", "disputed_by"],
+            ["users.tenant_id", "users.id"],
+            name="fk_invoices_tenant_disputed_by_users",
         ),
         Index(
             "ix_invoices_tenant_customer_due",
@@ -173,7 +194,19 @@ class Invoice(UUIDPrimaryKey, TenantScoped, CreatedAt, Base):
 
 class Payment(UUIDPrimaryKey, TenantScoped, CreatedAt, Base):
     __tablename__ = "payments"
-    __table_args__ = (Index("ix_payments_tenant_invoice", "tenant_id", "invoice_id"),)
+    __table_args__ = (
+        Index("ix_payments_tenant_invoice", "tenant_id", "invoice_id"),
+        ForeignKeyConstraint(
+            ["tenant_id", "customer_id"],
+            ["customers.tenant_id", "customers.id"],
+            name="fk_payments_tenant_customer_customers",
+        ),
+        ForeignKeyConstraint(
+            ["tenant_id", "invoice_id"],
+            ["invoices.tenant_id", "invoices.id"],
+            name="fk_payments_tenant_invoice_invoices",
+        ),
+    )
 
     customer_id: Mapped[UUID] = mapped_column(
         PostgreSQLUUID(as_uuid=True),
@@ -195,7 +228,24 @@ class Payment(UUIDPrimaryKey, TenantScoped, CreatedAt, Base):
 
 class PromiseToPay(UUIDPrimaryKey, TenantScoped, CreatedAt, Base):
     __tablename__ = "promises_to_pay"
-    __table_args__ = (_enum_check("status", ("pending", "kept", "broken")),)
+    __table_args__ = (
+        _enum_check("status", ("pending", "kept", "broken")),
+        ForeignKeyConstraint(
+            ["tenant_id", "customer_id"],
+            ["customers.tenant_id", "customers.id"],
+            name="fk_promises_to_pay_tenant_customer_customers",
+        ),
+        ForeignKeyConstraint(
+            ["tenant_id", "invoice_id"],
+            ["invoices.tenant_id", "invoices.id"],
+            name="fk_promises_to_pay_tenant_invoice_invoices",
+        ),
+        ForeignKeyConstraint(
+            ["tenant_id", "recorded_by"],
+            ["users.tenant_id", "users.id"],
+            name="fk_promises_to_pay_tenant_recorded_by_users",
+        ),
+    )
 
     customer_id: Mapped[UUID] = mapped_column(
         PostgreSQLUUID(as_uuid=True),
@@ -234,6 +284,16 @@ class CustomerNote(UUIDPrimaryKey, TenantScoped, CreatedAt, Base):
         _enum_check("note_type", ("collector", "sales_rep", "call_outcome")),
         _enum_check("source", ("ui", "import")),
         Index("ix_customer_notes_tenant_id", "tenant_id"),
+        ForeignKeyConstraint(
+            ["tenant_id", "customer_id"],
+            ["customers.tenant_id", "customers.id"],
+            name="fk_customer_notes_tenant_customer_customers",
+        ),
+        ForeignKeyConstraint(
+            ["tenant_id", "author_id"],
+            ["users.tenant_id", "users.id"],
+            name="fk_customer_notes_tenant_author_users",
+        ),
     )
 
     customer_id: Mapped[UUID] = mapped_column(
@@ -261,6 +321,14 @@ class CustomerNote(UUIDPrimaryKey, TenantScoped, CreatedAt, Base):
 
 class AgentRun(UUIDPrimaryKey, TenantScoped, CreatedAt, Base):
     __tablename__ = "agent_runs"
+    __table_args__ = (
+        UniqueConstraint("tenant_id", "id", name="uq_agent_runs_tenant_id"),
+        ForeignKeyConstraint(
+            ["tenant_id", "user_id"],
+            ["users.tenant_id", "users.id"],
+            name="fk_agent_runs_tenant_user_users",
+        ),
+    )
 
     user_id: Mapped[UUID] = mapped_column(
         PostgreSQLUUID(as_uuid=True),
@@ -299,6 +367,22 @@ class Recommendation(UUIDPrimaryKey, TenantScoped, CreatedAt, Base):
             ),
         ),
         _enum_check("status", ("pending", "approved", "edited", "rejected")),
+        UniqueConstraint("tenant_id", "id", name="uq_recommendations_tenant_id"),
+        ForeignKeyConstraint(
+            ["tenant_id", "customer_id"],
+            ["customers.tenant_id", "customers.id"],
+            name="fk_recommendations_tenant_customer_customers",
+        ),
+        ForeignKeyConstraint(
+            ["tenant_id", "agent_run_id"],
+            ["agent_runs.tenant_id", "agent_runs.id"],
+            name="fk_recommendations_tenant_agent_run_agent_runs",
+        ),
+        ForeignKeyConstraint(
+            ["tenant_id", "decided_by"],
+            ["users.tenant_id", "users.id"],
+            name="fk_recommendations_tenant_decided_by_users",
+        ),
     )
 
     customer_id: Mapped[UUID] = mapped_column(
@@ -334,7 +418,19 @@ class Recommendation(UUIDPrimaryKey, TenantScoped, CreatedAt, Base):
 
 class DraftVersion(UUIDPrimaryKey, TenantScoped, CreatedAt, Base):
     __tablename__ = "draft_versions"
-    __table_args__ = (_enum_check("tone", ("formal", "friendly", "firm")),)
+    __table_args__ = (
+        _enum_check("tone", ("formal", "friendly", "firm")),
+        ForeignKeyConstraint(
+            ["tenant_id", "recommendation_id"],
+            ["recommendations.tenant_id", "recommendations.id"],
+            name="fk_draft_versions_tenant_recommendation_recommendations",
+        ),
+        ForeignKeyConstraint(
+            ["tenant_id", "created_by"],
+            ["users.tenant_id", "users.id"],
+            name="fk_draft_versions_tenant_created_by_users",
+        ),
+    )
 
     recommendation_id: Mapped[UUID] = mapped_column(
         PostgreSQLUUID(as_uuid=True),
@@ -374,6 +470,26 @@ class CollectionTask(UUIDPrimaryKey, TenantScoped, CreatedAt, Base):
             ),
         ),
         _enum_check("status", ("pending", "done", "cancelled")),
+        ForeignKeyConstraint(
+            ["tenant_id", "customer_id"],
+            ["customers.tenant_id", "customers.id"],
+            name="fk_collection_tasks_tenant_customer_customers",
+        ),
+        ForeignKeyConstraint(
+            ["tenant_id", "recommendation_id"],
+            ["recommendations.tenant_id", "recommendations.id"],
+            name="fk_collection_tasks_tenant_recommendation_recommendations",
+        ),
+        ForeignKeyConstraint(
+            ["tenant_id", "assigned_to"],
+            ["users.tenant_id", "users.id"],
+            name="fk_collection_tasks_tenant_assigned_to_users",
+        ),
+        ForeignKeyConstraint(
+            ["tenant_id", "created_by"],
+            ["users.tenant_id", "users.id"],
+            name="fk_collection_tasks_tenant_created_by_users",
+        ),
     )
 
     customer_id: Mapped[UUID] = mapped_column(
@@ -412,6 +528,19 @@ class CollectionTask(UUIDPrimaryKey, TenantScoped, CreatedAt, Base):
 
 class Conversation(UUIDPrimaryKey, TenantScoped, CreatedAt, Base):
     __tablename__ = "conversations"
+    __table_args__ = (
+        UniqueConstraint("tenant_id", "id", name="uq_conversations_tenant_id"),
+        ForeignKeyConstraint(
+            ["tenant_id", "user_id"],
+            ["users.tenant_id", "users.id"],
+            name="fk_conversations_tenant_user_users",
+        ),
+        ForeignKeyConstraint(
+            ["tenant_id", "customer_id"],
+            ["customers.tenant_id", "customers.id"],
+            name="fk_conversations_tenant_customer_customers",
+        ),
+    )
 
     user_id: Mapped[UUID] = mapped_column(
         PostgreSQLUUID(as_uuid=True),
@@ -430,7 +559,14 @@ class Conversation(UUIDPrimaryKey, TenantScoped, CreatedAt, Base):
 
 class Message(UUIDPrimaryKey, TenantScoped, CreatedAt, Base):
     __tablename__ = "messages"
-    __table_args__ = (_enum_check("role", ("user", "assistant", "tool")),)
+    __table_args__ = (
+        _enum_check("role", ("user", "assistant", "tool")),
+        ForeignKeyConstraint(
+            ["tenant_id", "conversation_id"],
+            ["conversations.tenant_id", "conversations.id"],
+            name="fk_messages_tenant_conversation_conversations",
+        ),
+    )
 
     conversation_id: Mapped[UUID] = mapped_column(
         PostgreSQLUUID(as_uuid=True),
@@ -459,6 +595,12 @@ class Document(UUIDPrimaryKey, TenantScoped, CreatedAt, Base):
                 "other",
             ),
         ),
+        UniqueConstraint("tenant_id", "id", name="uq_documents_tenant_id"),
+        ForeignKeyConstraint(
+            ["tenant_id", "uploaded_by"],
+            ["users.tenant_id", "users.id"],
+            name="fk_documents_tenant_uploaded_by_users",
+        ),
     )
 
     name: Mapped[str] = mapped_column(Text, nullable=False)
@@ -476,7 +618,19 @@ class Document(UUIDPrimaryKey, TenantScoped, CreatedAt, Base):
 
 class DocumentChunk(UUIDPrimaryKey, TenantScoped, CreatedAt, Base):
     __tablename__ = "document_chunks"
-    __table_args__ = (Index("ix_document_chunks_tenant_id", "tenant_id"),)
+    __table_args__ = (
+        Index("ix_document_chunks_tenant_id", "tenant_id"),
+        ForeignKeyConstraint(
+            ["tenant_id", "document_id"],
+            ["documents.tenant_id", "documents.id"],
+            name="fk_document_chunks_tenant_document_documents",
+        ),
+        ForeignKeyConstraint(
+            ["tenant_id", "customer_id"],
+            ["customers.tenant_id", "customers.id"],
+            name="fk_document_chunks_tenant_customer_customers",
+        ),
+    )
 
     document_id: Mapped[UUID] = mapped_column(
         PostgreSQLUUID(as_uuid=True),
@@ -505,6 +659,16 @@ class PolicyRule(UUIDPrimaryKey, TenantScoped, Base):
         _enum_check(
             "rule_type",
             ("escalation", "grace_period", "limit", "review_required"),
+        ),
+        ForeignKeyConstraint(
+            ["tenant_id", "source_document_id"],
+            ["documents.tenant_id", "documents.id"],
+            name="fk_policy_rules_tenant_source_document_documents",
+        ),
+        ForeignKeyConstraint(
+            ["tenant_id", "confirmed_by"],
+            ["users.tenant_id", "users.id"],
+            name="fk_policy_rules_tenant_confirmed_by_users",
         ),
     )
 
@@ -541,6 +705,13 @@ class TenantSettings(TenantScoped, Base):
         ForeignKey("tenants.id"),
         primary_key=True,
     )
+    __table_args__ = (
+        ForeignKeyConstraint(
+            ["tenant_id", "updated_by"],
+            ["users.tenant_id", "users.id"],
+            name="fk_tenant_settings_tenant_updated_by_users",
+        ),
+    )
     settings: Mapped[dict[str, Any]] = mapped_column(JSONB, nullable=False)
     updated_by: Mapped[UUID | None] = mapped_column(
         PostgreSQLUUID(as_uuid=True),
@@ -559,7 +730,14 @@ class TenantSettings(TenantScoped, Base):
 
 class RiskScore(UUIDPrimaryKey, TenantScoped, Base):
     __tablename__ = "risk_scores"
-    __table_args__ = (_enum_check("level", ("LOW", "MEDIUM", "HIGH", "CRITICAL")),)
+    __table_args__ = (
+        _enum_check("level", ("LOW", "MEDIUM", "HIGH", "CRITICAL")),
+        ForeignKeyConstraint(
+            ["tenant_id", "customer_id"],
+            ["customers.tenant_id", "customers.id"],
+            name="fk_risk_scores_tenant_customer_customers",
+        ),
+    )
 
     customer_id: Mapped[UUID] = mapped_column(
         PostgreSQLUUID(as_uuid=True),
@@ -580,6 +758,13 @@ class RiskScore(UUIDPrimaryKey, TenantScoped, Base):
 
 class AuditLog(UUIDPrimaryKey, TenantScoped, CreatedAt, Base):
     __tablename__ = "audit_logs"
+    __table_args__ = (
+        ForeignKeyConstraint(
+            ["tenant_id", "user_id"],
+            ["users.tenant_id", "users.id"],
+            name="fk_audit_logs_tenant_user_users",
+        ),
+    )
 
     user_id: Mapped[UUID] = mapped_column(
         PostgreSQLUUID(as_uuid=True),

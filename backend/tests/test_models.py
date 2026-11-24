@@ -12,6 +12,7 @@ from sqlalchemy import (
     CheckConstraint,
     Date,
     DateTime,
+    ForeignKeyConstraint,
     Integer,
     Numeric,
     SmallInteger,
@@ -325,6 +326,195 @@ EXPECTED_FOREIGN_KEYS = {
     },
 }
 
+EXPECTED_TENANT_FOREIGN_KEYS = {
+    "fk_customers_tenant_assigned_collector_users": (
+        "customers",
+        ("tenant_id", "assigned_collector"),
+        "users",
+        ("tenant_id", "id"),
+    ),
+    "fk_invoices_tenant_customer_customers": (
+        "invoices",
+        ("tenant_id", "customer_id"),
+        "customers",
+        ("tenant_id", "id"),
+    ),
+    "fk_invoices_tenant_disputed_by_users": (
+        "invoices",
+        ("tenant_id", "disputed_by"),
+        "users",
+        ("tenant_id", "id"),
+    ),
+    "fk_payments_tenant_customer_customers": (
+        "payments",
+        ("tenant_id", "customer_id"),
+        "customers",
+        ("tenant_id", "id"),
+    ),
+    "fk_payments_tenant_invoice_invoices": (
+        "payments",
+        ("tenant_id", "invoice_id"),
+        "invoices",
+        ("tenant_id", "id"),
+    ),
+    "fk_promises_to_pay_tenant_customer_customers": (
+        "promises_to_pay",
+        ("tenant_id", "customer_id"),
+        "customers",
+        ("tenant_id", "id"),
+    ),
+    "fk_promises_to_pay_tenant_invoice_invoices": (
+        "promises_to_pay",
+        ("tenant_id", "invoice_id"),
+        "invoices",
+        ("tenant_id", "id"),
+    ),
+    "fk_promises_to_pay_tenant_recorded_by_users": (
+        "promises_to_pay",
+        ("tenant_id", "recorded_by"),
+        "users",
+        ("tenant_id", "id"),
+    ),
+    "fk_customer_notes_tenant_customer_customers": (
+        "customer_notes",
+        ("tenant_id", "customer_id"),
+        "customers",
+        ("tenant_id", "id"),
+    ),
+    "fk_customer_notes_tenant_author_users": (
+        "customer_notes",
+        ("tenant_id", "author_id"),
+        "users",
+        ("tenant_id", "id"),
+    ),
+    "fk_agent_runs_tenant_user_users": (
+        "agent_runs",
+        ("tenant_id", "user_id"),
+        "users",
+        ("tenant_id", "id"),
+    ),
+    "fk_recommendations_tenant_customer_customers": (
+        "recommendations",
+        ("tenant_id", "customer_id"),
+        "customers",
+        ("tenant_id", "id"),
+    ),
+    "fk_recommendations_tenant_agent_run_agent_runs": (
+        "recommendations",
+        ("tenant_id", "agent_run_id"),
+        "agent_runs",
+        ("tenant_id", "id"),
+    ),
+    "fk_recommendations_tenant_decided_by_users": (
+        "recommendations",
+        ("tenant_id", "decided_by"),
+        "users",
+        ("tenant_id", "id"),
+    ),
+    "fk_draft_versions_tenant_recommendation_recommendations": (
+        "draft_versions",
+        ("tenant_id", "recommendation_id"),
+        "recommendations",
+        ("tenant_id", "id"),
+    ),
+    "fk_draft_versions_tenant_created_by_users": (
+        "draft_versions",
+        ("tenant_id", "created_by"),
+        "users",
+        ("tenant_id", "id"),
+    ),
+    "fk_collection_tasks_tenant_customer_customers": (
+        "collection_tasks",
+        ("tenant_id", "customer_id"),
+        "customers",
+        ("tenant_id", "id"),
+    ),
+    "fk_collection_tasks_tenant_recommendation_recommendations": (
+        "collection_tasks",
+        ("tenant_id", "recommendation_id"),
+        "recommendations",
+        ("tenant_id", "id"),
+    ),
+    "fk_collection_tasks_tenant_assigned_to_users": (
+        "collection_tasks",
+        ("tenant_id", "assigned_to"),
+        "users",
+        ("tenant_id", "id"),
+    ),
+    "fk_collection_tasks_tenant_created_by_users": (
+        "collection_tasks",
+        ("tenant_id", "created_by"),
+        "users",
+        ("tenant_id", "id"),
+    ),
+    "fk_conversations_tenant_user_users": (
+        "conversations",
+        ("tenant_id", "user_id"),
+        "users",
+        ("tenant_id", "id"),
+    ),
+    "fk_conversations_tenant_customer_customers": (
+        "conversations",
+        ("tenant_id", "customer_id"),
+        "customers",
+        ("tenant_id", "id"),
+    ),
+    "fk_messages_tenant_conversation_conversations": (
+        "messages",
+        ("tenant_id", "conversation_id"),
+        "conversations",
+        ("tenant_id", "id"),
+    ),
+    "fk_documents_tenant_uploaded_by_users": (
+        "documents",
+        ("tenant_id", "uploaded_by"),
+        "users",
+        ("tenant_id", "id"),
+    ),
+    "fk_document_chunks_tenant_document_documents": (
+        "document_chunks",
+        ("tenant_id", "document_id"),
+        "documents",
+        ("tenant_id", "id"),
+    ),
+    "fk_document_chunks_tenant_customer_customers": (
+        "document_chunks",
+        ("tenant_id", "customer_id"),
+        "customers",
+        ("tenant_id", "id"),
+    ),
+    "fk_tenant_settings_tenant_updated_by_users": (
+        "tenant_settings",
+        ("tenant_id", "updated_by"),
+        "users",
+        ("tenant_id", "id"),
+    ),
+    "fk_policy_rules_tenant_source_document_documents": (
+        "policy_rules",
+        ("tenant_id", "source_document_id"),
+        "documents",
+        ("tenant_id", "id"),
+    ),
+    "fk_policy_rules_tenant_confirmed_by_users": (
+        "policy_rules",
+        ("tenant_id", "confirmed_by"),
+        "users",
+        ("tenant_id", "id"),
+    ),
+    "fk_risk_scores_tenant_customer_customers": (
+        "risk_scores",
+        ("tenant_id", "customer_id"),
+        "customers",
+        ("tenant_id", "id"),
+    ),
+    "fk_audit_logs_tenant_user_users": (
+        "audit_logs",
+        ("tenant_id", "user_id"),
+        "users",
+        ("tenant_id", "id"),
+    ),
+}
+
 EXPECTED_ENUMS = {
     "users": {"role": ("OWNER", "FINANCE_MANAGER", "COLLECTOR")},
     "customers": {
@@ -524,7 +714,8 @@ def test_primary_and_foreign_keys_match_the_dictionary() -> None:
         assert all(not column.nullable for column in table.primary_key.columns)
 
         actual_foreign_keys = {
-            column.name: (
+            (
+                column.name,
                 foreign_key.column.table.name,
                 foreign_key.column.name,
                 column.nullable,
@@ -532,7 +723,27 @@ def test_primary_and_foreign_keys_match_the_dictionary() -> None:
             for column in table.columns
             for foreign_key in column.foreign_keys
         }
-        assert actual_foreign_keys == EXPECTED_FOREIGN_KEYS.get(table_name, {})
+        expected_foreign_keys = {
+            (column_name, target_table, target_column, nullable)
+            for column_name, (target_table, target_column, nullable) in (
+                EXPECTED_FOREIGN_KEYS.get(table_name, {}).items()
+            )
+        }
+        assert expected_foreign_keys <= actual_foreign_keys
+
+    actual_tenant_foreign_keys = {
+        constraint.name: (
+            table.name,
+            tuple(element.parent.name for element in constraint.elements),
+            constraint.elements[0].column.table.name,
+            tuple(element.column.name for element in constraint.elements),
+        )
+        for table in Base.metadata.tables.values()
+        for constraint in table.constraints
+        if isinstance(constraint, ForeignKeyConstraint)
+        and constraint.name in EXPECTED_TENANT_FOREIGN_KEYS
+    }
+    assert actual_tenant_foreign_keys == EXPECTED_TENANT_FOREIGN_KEYS
 
 
 def test_nullability_and_server_defaults_are_explicit() -> None:
@@ -658,8 +869,23 @@ def test_documented_enum_checks_indexes_and_unique_constraint() -> None:
         if isinstance(constraint, UniqueConstraint)
     }
     assert invoice_unique_constraints == {
-        "uq_invoices_tenant_invoice_number": ("tenant_id", "invoice_number")
+        "uq_invoices_tenant_invoice_number": ("tenant_id", "invoice_number"),
+        "uq_invoices_tenant_id": ("tenant_id", "id"),
     }
+    for table_name, constraint_name in (
+        ("users", "uq_users_tenant_id"),
+        ("customers", "uq_customers_tenant_id"),
+        ("agent_runs", "uq_agent_runs_tenant_id"),
+        ("recommendations", "uq_recommendations_tenant_id"),
+        ("conversations", "uq_conversations_tenant_id"),
+        ("documents", "uq_documents_tenant_id"),
+    ):
+        constraints = {
+            constraint.name: tuple(column.name for column in constraint.columns)
+            for constraint in Base.metadata.tables[table_name].constraints
+            if isinstance(constraint, UniqueConstraint)
+        }
+        assert constraints[constraint_name] == ("tenant_id", "id")
 
 
 def test_all_foreign_keys_have_orm_relationships() -> None:
@@ -706,6 +932,18 @@ def test_initial_migration_renders_all_tables_and_unbounded_vectors() -> None:
         for column_name in expected_constraints:
             constraint_name = f"ck_{table_name}_{column_name}_allowed_values"
             assert f"CONSTRAINT {constraint_name}" in result.stdout
+    for constraint_name in EXPECTED_TENANT_FOREIGN_KEYS:
+        assert f"CONSTRAINT {constraint_name}" in result.stdout
+    for constraint_name in (
+        "uq_users_tenant_id",
+        "uq_customers_tenant_id",
+        "uq_invoices_tenant_id",
+        "uq_agent_runs_tenant_id",
+        "uq_recommendations_tenant_id",
+        "uq_conversations_tenant_id",
+        "uq_documents_tenant_id",
+    ):
+        assert f"CONSTRAINT {constraint_name}" in result.stdout
     for indexes in EXPECTED_INDEXES.values():
         for index_name in indexes:
             assert f"CREATE INDEX {index_name}" in result.stdout
