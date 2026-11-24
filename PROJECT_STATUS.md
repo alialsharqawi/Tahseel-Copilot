@@ -1,10 +1,13 @@
 # Project Status
 
-**Last updated:** 23 November 2026
-**Phase:** Documentation baseline is complete. PR #69 (T-002) and PR #70 (T-096) are merged; Issues #16 and #63 are closed. The 53 task issues are on the project board (45 open, 8 closed), and open tasks are assigned to D40 phase milestones by wave. T-003 Stages 1–3 (backend, PostgreSQL/pgvector, frontend, and Docker Compose integration) are implemented on `feat/T-003-docker-compose-basics` and await review. **Current phase: P1 — Setup and data foundation (due 30 November 2026). Final defense: Tuesday, 15 December 2026.**
+**Last updated:** 24 November 2026
+**Phase:** Documentation baseline is complete. The repository skeleton is complete through PR #69 (T-002, Issue #16); PRs #72 (T-003), #73 (T-022), and #74 (T-004) are merged, and Issues #18, #6, and #19 are closed. The 53 task issues are on the project board (42 open, 11 closed), and open tasks are assigned to D40 phase milestones by wave. T-003 provides the backend, PostgreSQL/pgvector, frontend, and Docker Compose integration. **Current phase: P1 — Setup and data foundation (due 30 November 2026). Final defense: Tuesday, 15 December 2026.**
 
 ## Done
 
+- Docker Compose foundation for T-003: FastAPI health endpoint, bilingual frontend, and PostgreSQL/pgvector integration
+- Synthetic bilingual policy corpus and validation fixtures for T-022
+- CI pipeline for T-004: backend and frontend lint/test jobs on pull requests to `main`, with required status checks configured
 - Repository skeleton for T-002: `backend/`, `frontend/`, `data/`, `evals/`, and `deploy/` directories; `.env.example`; `.pre-commit-config.yaml`; and expanded `.gitignore` protections
 - Idea, scope, tiers, and non-goals (`docs/foundation/Tahseel_AI_Final_Concept.md`)
 - 42 decisions with reasons (`docs/governance/Tahseel_AI_Decision_Log.md`, D1 to D42)
@@ -20,12 +23,12 @@
 - The team action dashboard (`docs/team/team-now.html`): refreshes public GitHub issue data and shows task readiness and open dependency owners without credentials
 - The team brief (`docs/team/team-brief-whatsapp.html`): evergreen project and workflow guide; live task status now points to the dashboard
 - The filled skills matrix (`docs/team/skills.csv`) and the skill-weighted assignment suggestion (`docs/team/ASSIGNMENT_SUGGESTION.md`, `docs/team/assignments.csv`)
-- GitHub setup: branch protection on `main`, all five collaborators, the project board, the labels, and one issue per backlog task (53 issues; 45 open and 8 closed: T-001, T-002, T-090, T-091, T-094, T-095, T-096, T-097); all 53 task issues are on the board, with open tasks assigned to phase milestones by wave
+- GitHub setup: branch protection on `main`, all five collaborators, the project board, the labels, and one issue per backlog task (53 issues; 42 open and 11 closed); all 53 task issues are on the board, with open tasks assigned to D40 phase milestones by wave
 - Legal and security infrastructure: proprietary academic license (`LICENSE`) and vulnerability policy (`.github/SECURITY.md`)
 
 ## Next
 
-1. Complete T-003 after review, then continue P1 foundation tasks toward the 30 November gate, following issue dependencies; use `docs/team/team-now.html` for the recommended next task and blocker owners
+1. Continue P1 foundation tasks toward the 30 November gate, following issue dependencies; use `docs/team/team-now.html` for the recommended next task and blocker owners
 2. Build the Core vertical slice in wave order: data foundation, then the AI slice, then integration and guardrails
 3. Slides, demo video, and the evaluation results, with real numbers from the demo and the evaluation (updating the live Canva presentation link submitted on the LMS)
 
@@ -33,19 +36,18 @@
 
 | Item | Detail |
 |---|---|
-| T-022 Arabic review | The 20-document synthetic bilingual policy corpus and no-match question list are drafted. Native-speaker review of the Arabic text is still needed before treating them as approved fixtures. |
 | Project Documentation Guidelines | We do not have a copy. We work from an assumed structure (`LMS_Requirements.md`, section 3). Ask the instructor for it if possible |
 | OpenRouter models | Choose after testing tool calling, structured output, and Arabic quality (D12) |
 | Embedding model | Choose after an Arabic and mixed-language retrieval test (D16) |
 | Strong independent reviewer | T-051 has no strong independent reviewer in the current skills matrix. Pair it or add a qualified reviewer before approval if it is built; otherwise cut it in the agreed order. |
 | T-092 milestone mismatch | GitHub places the presentation slides in P1, while the phase plan lists slides under P4. Confirm the intended phase before treating the issue due date as final. |
-| Business claims marked "To verify" | The VAT threshold, the Odoo job posting, the cheque sources, and a proper local-competitor scan (task T-094) |
+| Business claims marked "To verify" | The VAT threshold, the Odoo job posting, and the cheque sources |
 | Pitch placeholders | Replace the bracketed items in `Final_Pitch` with real demo and evaluation numbers |
 | Size labels in the backlog | S, M, and L are relative complexity, not time. Adjust them only if a task turns out to be mislabeled |
 
 ## Known gaps in the material
 
-- **Product features are not yet implemented.** T-003 provides the minimal backend, frontend, and PostgreSQL/pgvector Compose foundations; migrations, seed, and CI remain to be built
+- **Core product features are not yet implemented.** T-003 provides the minimal backend, frontend, and PostgreSQL/pgvector Compose foundations; migrations and seed remain to be built. T-004 provides CI, and T-022 provides the synthetic bilingual policy corpus and validation fixtures
 - No evaluation results, slides, or demo video yet
 - The core business hypothesis (that a meaningful share of lateness comes from late follow-up, A8) is untested
 - Whether global collection tools offer policy citations or factor-level explanations is not verified
@@ -135,3 +137,13 @@ These came from a second AI critique (run against a stale `main`) and were re-ve
 - Live GitHub verification (22 November 2026): all 53 task issues were tracked; the 51 open issues at that time matched the local owner/reviewer assignments and phase milestones by dependency wave (P1–P4: 15, 19, 15, and 2); the board had 56 items, #17 was In progress, #61 and PR #64 were In review, the other 49 open tasks were in Backlog, and closed #5 and #7 were Done.
 - Validation passed: `python -m unittest tools.test_team_tools` (1 test), `python tools/team_tools.py check` (53 tasks, 5 members), `python tools/build_docs_pdf.py --check` (6 parts, 0 image warnings), and `git -c core.whitespace=cr-at-eol diff --check`. An isolated suggestion smoke test generated 53 unique tasks with distinct reviewers without changing the approved records. The refreshed PDF was rebuilt to 61 pages and visually reviewed page by page.
 - Commit `85af153` was authored under Ali's account and pushed on `docs/T-095-team-assignment-records`; PR #64 was open, requested Fatma's review, and was on the board In review. No checks are reported for the PR, and no workflow files are configured on `main`. The rebuilt T-091 PDF, builder, and source-part changes remain unstaged to keep PRs separate; T-091 should follow T-095 because its planning part references the new assignment register. Other task groups remain unstaged/untracked; the board screenshot is kept out of PR scope unless intentionally selected.
+
+## P1 merge sync (24 November 2026)
+
+- PR #72 merged T-003: FastAPI health endpoint, bilingual frontend, PostgreSQL/pgvector Compose database, Dockerfiles, and backend/frontend setup. Issue #18 closed.
+- PR #73 merged T-022: 20 synthetic bilingual policy documents, conflict and missing-policy fixtures, and corpus validation tests. Issue #6 closed.
+- PR #74 merged T-004: backend and frontend lint/test jobs in the pull-request CI workflow. Issue #19 closed.
+- Live issue state is now 42 open and 11 closed across the 53 task issues. Open milestone counts are P1: 6, P2: 19, P3: 15, P4: 2.
+- Remaining P1 work should follow issue dependencies: data model and migrations, synthetic receivables data, authentication/RBAC, and the overdue/risk engine.
+- TEAM.md now records 21 merged pull requests and current contribution evidence across all five members.
+- SECURITY.md now distinguishes required security controls from controls that are not yet implemented or verified, including RBAC and tenant isolation.

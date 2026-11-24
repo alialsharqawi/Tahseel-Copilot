@@ -2,7 +2,9 @@
 
 Tahseel AI operates as an agentic credit-control and invoice management copilot handling sensitive business-to-business (B2B) financial workflows, ERP data integration pipelines, and deterministic debt-collection risk logic. 
 
-We take the security of our application, API interfaces, mathematical engines, and prospective client data seriously, through concrete controls: three-role access (D15), tenant isolation on every record, a human approval gate enforced at the API, and an append-only audit log (Decision Log D3, D21, D30).
+We take the security of our application, API interfaces, mathematical engines, and prospective client data seriously. The repository defines the required controls: three-role access (D15), tenant isolation on every record, a human approval gate enforced at the API, and an append-only audit log (Decision Log D3, D21, D30). These are implementation requirements and are not claimed as fully deployed controls until the relevant tasks and tests are merged.
+
+**Repository status as of 24 November 2026:** 21 pull requests have been merged. The foundations for Docker Compose, PostgreSQL/pgvector, and CI are merged, while authentication, RBAC, cross-tenant isolation tests, and the API approval gate remain implementation work. Security claims must cite merged code and passing tests rather than assumptions or documentation alone.
 
 ---
 
