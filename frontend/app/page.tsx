@@ -4,7 +4,7 @@ import { LanguageSwitcher } from "./components/language-switcher";
 import { useLocale } from "./i18n/locale-provider";
 
 export default function Home() {
-  const { t } = useLocale();
+  const { locale, t } = useLocale();
 
   return (
     <>
@@ -12,7 +12,7 @@ export default function Home() {
         <p className="brand">{t("brand")}</p>
         <LanguageSwitcher />
       </header>
-      <main>
+      <main lang={locale} dir={locale === "ar" ? "rtl" : "ltr"}>
         <section className="welcome">
           <h1>{t("welcome.title")}</h1>
           <p>{t("welcome.description")}</p>

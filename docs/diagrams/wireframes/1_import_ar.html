@@ -49,18 +49,18 @@ input,.fld{border:1px solid #b0bec5;border-radius:5px;padding:6px 9px;background
 <div class="steps"><div class="step ">1. رفع الملف</div><div class="step on">2. ربط الأعمدة</div><div class="step ">3. التحقق</div><div class="step ">4. المعاينة</div></div>
 <div class="grid" style="grid-template-columns:1.2fr 1fr;align-items:start">
  <div class="card"><h3>الملف: receivables_export.xlsx</h3>
-  <div class="muted" style="margin-bottom:8px">تم اقتراح الربط من عناوين الأعمدة وعدة صفوف تجريبية مقنّعة. أكّد الربط أو غيّره قبل استيراد أي بيانات.</div>
+  <div class="muted" style="margin-bottom:8px">اقترحنا هذا الربط استنادًا إلى عناوين الأعمدة وبعض الصفوف النموذجية بعد إخفاء بياناتها. راجعه وأكّده أو عدّله قبل استيراد البيانات.</div>
   <table><tr><th>العمود في ملفك</th><th>حقل تحصيل</th><th></th></tr><tr><td dir="ltr">Cust Name</td><td dir="ltr"><span class="fld" style="display:inline-block;min-width:170px">customer_name ▾</span></td><td><span class="tag">مقترح</span></td></tr><tr><td dir="ltr">Inv No</td><td dir="ltr"><span class="fld" style="display:inline-block;min-width:170px">invoice_number ▾</span></td><td><span class="tag">مقترح</span></td></tr><tr><td dir="ltr">Inv Date</td><td dir="ltr"><span class="fld" style="display:inline-block;min-width:170px">invoice_date ▾</span></td><td><span class="tag">مقترح</span></td></tr><tr><td dir="ltr">Due</td><td dir="ltr"><span class="fld" style="display:inline-block;min-width:170px">due_date ▾</span></td><td><span class="tag">مقترح</span></td></tr><tr><td dir="ltr">Amt</td><td dir="ltr"><span class="fld" style="display:inline-block;min-width:170px">amount ▾</span></td><td><span class="tag">مقترح</span></td></tr><tr><td dir="ltr">Paid</td><td dir="ltr"><span class="fld" style="display:inline-block;min-width:170px">paid_amount ▾</span></td><td><span class="tag">مقترح</span></td></tr><tr><td dir="ltr">Pay Date</td><td dir="ltr"><span class="fld" style="display:inline-block;min-width:170px">payment_date ▾</span></td><td><span class="tag">مقترح</span></td></tr><tr><td dir="ltr">Rep</td><td dir="ltr"><span class="fld" style="display:inline-block;min-width:170px">sales_rep ▾</span></td><td><span class="tag">مقترح</span></td></tr><tr><td dir="ltr">Terms</td><td dir="ltr"><span class="fld" style="display:inline-block;min-width:170px">payment_terms ▾</span></td><td><span class="tag">مقترح</span></td></tr><tr><td dir="ltr">Remarks</td><td><span class="fld" style="display:inline-block;min-width:170px">غير مربوط ▾</span></td><td></td></tr></table></div>
  <div class="grid">
   <div class="card"><h3>نتيجة التحقق</h3>
    <div class="fx"><span class="badge b-LOW">✓</span>تمت قراءة 1,500 صف</div>
-   <div class="fx"><span class="badge b-MEDIUM">!</span>9 أرقام فواتير مكررة (يُحتفظ بالأحدث)</div>
-   <div class="fx"><span class="badge b-HIGH">!</span>3 صفوف بلا تاريخ استحقاق (صحّح أو تجاهل)</div>
-   <div class="fx"><span class="badge b-LOW">✓</span>تم توحيد التواريخ والأرقام</div></div>
+   <div class="fx"><span class="badge b-MEDIUM">!</span>9 أرقام فواتير مكررة (سيُحتفَظ بأحدث فاتورة)</div>
+   <div class="fx"><span class="badge b-HIGH">!</span>3 صفوف من دون تاريخ استحقاق (صحّحها أو تجاهلها)</div>
+   <div class="fx"><span class="badge b-LOW">✓</span>وُحّدت صيغ التواريخ والأرقام</div></div>
   <div class="card"><h3>معاينة</h3><table dir="ltr"><tr><th>customer</th><th>invoice</th><th>due</th><th>amount</th></tr>
    <tr><td>ABC Trading</td><td>INV-1042</td><td>2026-09-09</td><td>70,000</td></tr><tr><td>Delta Spare Parts</td><td>INV-2210</td><td>2026-10-02</td><td>48,500</td></tr>
    <tr><td>Al-Amal Foods</td><td>INV-3305</td><td>2026-10-19</td><td>21,000</td></tr></table></div>
   <div style="display:flex;gap:8px"><span class="btn p">تأكيد واستيراد</span><span class="btn">رجوع</span></div>
  </div></div>
-<div class="sample">هيكل تخطيطي. بيانات تجريبية لتوضيح التصميم فقط وليست نتيجة.</div>
+<div class="sample">تصميم تخطيطي. البيانات المعروضة للتوضيح فقط وليست نتائج فعلية.</div>
 </div></div></body></html>
