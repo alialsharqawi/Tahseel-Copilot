@@ -11,8 +11,9 @@
 - CI pipeline for T-004: backend and frontend lint/test jobs on pull requests to `main`, with required status checks configured
 - Repository skeleton for T-002: `backend/`, `frontend/`, `data/`, `evals/`, and `deploy/` directories; `.env.example`; `.pre-commit-config.yaml`; and expanded `.gitignore` protections
 - Idea, scope, tiers, and non-goals (`docs/foundation/Tahseel_AI_Final_Concept.md`)
-- 42 decisions with reasons (`docs/governance/Tahseel_AI_Decision_Log.md`, D1 to D42)
-- Detailed specification: scoring formulas, a 19-table data model, API, and acceptance criteria (`docs/technical/Tahseel_AI_PRD.md`, version 1.1)
+- 44 decisions with reasons (`docs/governance/Tahseel_AI_Decision_Log.md`, D1 to D44)
+- Detailed specification: scoring formulas, a 19-table data model, API, and acceptance criteria (`docs/technical/Tahseel_AI_PRD.md`, version 1.2)
+- D43/D44 fix the MVP aging and DSO formulas and defer tenant-level reporting customization; T-013 remains independent of the settings service
 - Technical strength case, memory design, evaluation plan, and security (`docs/technical/Tahseel_AI_Technical_Strength.md`)
 - Business case with evidence labels, verified sources, competitors, stakeholder analysis, ROI model, and validation plan (`docs/business/Tahseel_AI_Business_Strength.md`)
 - Multi-sector design (`docs/architecture/Tahseel_AI_Adaptability_Strategy.md`)
@@ -33,6 +34,7 @@
 2. Continue P1 foundation tasks toward the 30 November gate, following issue dependencies; use `docs/team/team-now.html` for the recommended next task and blocker owners
 3. Build the Core vertical slice in wave order: data foundation, then the AI slice, then integration and guardrails
 4. Slides, demo video, and the evaluation results, with real numbers from the demo and the evaluation (updating the live Canva presentation link submitted on the LMS)
+5. T-013 tests have not started; begin them only after review and approval of the D43/D44, PRD, and backlog diffs
 
 ## Open items
 

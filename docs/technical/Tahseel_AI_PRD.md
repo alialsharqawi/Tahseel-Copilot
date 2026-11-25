@@ -5,8 +5,8 @@
 **Primary Market:** Egypt  
 **Primary Customer:** B2B distributors selling on credit  
 **Status:** Detailed product specification, consolidated  
-**Version:** 1.1  
-**Date:** 2026-10-08 (original), 2026-10-31 (consolidated)
+**Version:** 1.2
+**Date:** 2026-10-08 (original), 2026-10-31 (consolidated), 2026-11-25 (D43–D44)
 
 ---
 
@@ -358,19 +358,49 @@ Import rules:
 Outstanding = Invoice Amount - Paid Amount
 ```
 
-If today > due date:
+`report_date` is supplied to the calculation; the engine does not read the system clock. An invoice is current when its due date is on or after the report date:
 
 ```text
-Days Overdue = Today - Due Date
+Current = Due Date >= report_date
 ```
 
-Otherwise:
+Otherwise, the invoice is overdue:
 
 ```text
-Days Until Due = Due Date - Today
+Days Overdue = report_date - Due Date
 ```
 
-Overdue is computed from the due date and today. It is never stored.
+For an invoice not yet due:
+
+```text
+Days Until Due = max(0, Due Date - report_date)
+```
+
+Overdue days are computed and never stored. Outstanding is derived from invoice amount and payments; a partially paid invoice contributes only its unpaid balance.
+
+#### Aging buckets
+
+Aging groups unpaid outstanding balances by whole days overdue as of `report_date`. `Current` is fixed as above. The overdue ranges are inclusive and non-overlapping:
+
+| Bucket | Days overdue |
+|---|---:|
+| Current | Not past due (`due_date >= report_date`) |
+| 1–30 | 1–30 |
+| 31–60 | 31–60 |
+| 61–90 | 61–90 |
+| Over 90 | 91 or more |
+
+The code-level default is the ordered sequence of inclusive overdue ranges:
+
+```text
+DEFAULT_AGING_BUCKETS = ((1, 30), (31, 60), (61, 90), (91, None))
+```
+
+Each pair is `(lower_day, upper_day)`; `None` means no upper limit. `Current` is fixed and is not part of this sequence.
+
+Unpaid disputed invoices are included in the applicable bucket totals and flagged separately. The disputed subtotal is a breakdown of those totals and must not be added to them again.
+
+The pure aging calculation accepts ordered overdue-bucket definitions as an input and defaults to `DEFAULT_AGING_BUCKETS`, the fixed code-level MVP configuration above. It has no database or tenant-settings-service dependency. Supplied ranges must be ordered, contiguous, start at day 1, have no gaps or overlaps, and end with an open-ended range.
 
 ```text
 Overdue Exposure (customer) = sum of Outstanding of the customer's
@@ -686,6 +716,18 @@ x
 Number of Days
 ```
 
+For the same inclusive reporting period:
+
+```text
+Average Accounts Receivable = (Opening AR + Closing AR) / 2
+Opening AR                  = balance immediately before the period starts
+Closing AR                  = balance at the end of the period
+Credit Sales                = sum of invoice amounts with invoice_date in the period
+Number of Days              = calendar days from period start through period end
+```
+
+Opening AR is derived from invoice and payment history when that history is available. If opening AR cannot be determined from supplied data, use zero and identify that assumption in the KPI result. If credit sales are zero, return DSO as null/N/A, not zero or infinity. Total-sales DSO is out of scope; the receivables data does not contain a complete sales ledger. Disputed unpaid balances remain receivables; the D43 disputed-invoice decision applies explicitly to aging, while customer overdue exposure above continues to exclude disputed invoices.
+
 Days beyond terms is the primary metric. DSO is the secondary KPI and the unit that converts days into cash in the ROI model.
 
 ### Cash Forecast
@@ -806,6 +848,8 @@ Average Days Beyond Terms (trend)
 DSO
 Promise-to-Pay Fulfillment
 ```
+
+The dashboard uses the fixed D43 aging definitions. Disputed unpaid balances contribute to aging totals and are flagged separately. Display DSO as N/A when the period has zero credit sales.
 
 ### Collection Queue
 
@@ -1258,6 +1302,8 @@ GET /receivables/kpis                  days beyond terms, DSO, overdue ratio
 GET /receivables/health-report
 ```
 
+Responses containing aging include the report date, the ordered bucket definitions, each bucket's outstanding total, and the disputed subtotal within each bucket. KPI responses return null/N/A for DSO when credit sales are zero and indicate when opening AR used the zero fallback.
+
 ### Collection Queue and Risk
 
 ```http
@@ -1583,7 +1629,7 @@ The demo checklist is kept in one place: `Tahseel_AI_Final_Concept.md`, section 
 
 ## 30. Acceptance Criteria
 
-AC-001 to AC-010 and AC-014 are Core. AC-008, AC-011, AC-012, and AC-013 are Should.
+AC-001 to AC-010 and AC-014 to AC-015 are Core. AC-008, AC-011, AC-012, and AC-013 are Should.
 
 ### AC-001 Data Import
 
@@ -1591,7 +1637,7 @@ Given a valid CSV/XLSX file, the system maps fields, validates records, and show
 
 ### AC-002 Overdue Detection
 
-Given an invoice with a due date before today, overdue days are calculated correctly.
+Given a report date, an invoice due on or after that date is Current; an earlier due date is assigned to exactly one inclusive overdue bucket using whole days past due. Unpaid disputed balances are included and flagged separately. The engine uses the supplied report date and bucket definitions, with the D43 defaults when none are supplied.
 
 ### AC-003 Risk Explanation
 
@@ -1640,6 +1686,10 @@ Beyond the configured cap, a draft needs a manager override.
 ### AC-014 Role Enforcement
 
 A Collector cannot see unassigned customers and cannot approve a recommendation flagged for manager review. This is enforced at the API.
+
+### AC-015 Portfolio KPI Arithmetic
+
+For an inclusive reporting period, DSO is `(Average AR / Credit Sales) x Days in Period`, where `Average AR = (Opening AR + Closing AR) / 2`. Opening AR is derived from available invoice/payment history; if it cannot be determined, use zero and identify the assumption in the result. Zero credit sales returns null/N/A. Credit sales are invoice amounts dated within the period.
 
 ---
 

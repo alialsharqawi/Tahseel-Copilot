@@ -49,7 +49,7 @@ Generated from `backlog.csv` by `python tools/team_tools.py backlog`. Edit the C
 |---|---|---|---|---|---|---|
 | T-030 | Import API: parse CSV and Excel, mapping, validation, preview | Core | PY, API (also DATA) | L | 6 | T-013 |
 | T-031 | LLM-assisted column mapping from headers and masked sample rows | Core | LLM, PY | M | 7 | T-030, T-040 |
-| T-032 | Receivables Health Report endpoint | Should | PY, API | M | 7 | T-014 |
+| T-032 | Receivables Health Report endpoint | Should | PY, API | M | 7 | T-013, T-014 |
 
 ## AI
 

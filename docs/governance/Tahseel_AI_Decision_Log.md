@@ -438,3 +438,21 @@ The roadmap is kept in one place: `Tahseel_AI_Final_Concept.md`, section 12.
 - **Not chosen:** Forcing equal review counts when that would put a reviewer on a task outside their skill fit, or hiding the review-load imbalance.
 - **Why:** Ali explicitly accepts the extra review work to provide stronger guidance while the team starts the Core slice.
 - **Limit:** This exception does not waive the different-reviewer rule or make Ali a strong independent reviewer of tasks assigned to himself. T-051 remains a visible risk to resolve through pairing or an additional qualified reviewer if it is not cut.
+
+## K. Receivables calculations and reporting scope (25 November 2026)
+
+### D43. Receivables aging and DSO formulas `[Ali]`
+- **Chosen:**
+  - Aging is measured in whole days past due as of the report date. An invoice is `Current` when `due_date >= report_date`; otherwise `days_overdue = report_date - due_date`.
+  - The fixed MVP aging buckets are `Current`, `1–30`, `31–60`, `61–90`, and `Over 90` (`91+`). Unpaid disputed invoices are included in aging totals and flagged separately.
+  - `DSO = (Average AR / Credit Sales) x Days in Period`, with `Average AR = (Opening AR + Closing AR) / 2` for the same inclusive period. Credit sales are invoice amounts dated in that period. If credit sales are zero, DSO is null/N/A. If opening AR cannot be determined from supplied data, use zero. Total-sales DSO is out of scope because the product has no sales ledger.
+  - T-013 implements aging as a pure engine that accepts bucket definitions and defaults to a code-level configuration constant; it does not depend on the tenant settings service.
+- **Not chosen:** Invoice-date aging, overlapping `61–90`/`90+` ranges, or using the LLM to calculate these figures.
+- **Why:** Due-date aging measures lateness consistently; disputed balances remain receivables but must be visible as disputed. One fixed, deterministic DSO definition keeps the MVP testable and aligned with its credit-invoice data.
+- **Consequences:** Tests use an explicit report date and exact bucket edges. The aging result includes disputed balances in bucket totals and exposes their amounts separately. Zero-sales DSO is represented as null, not zero or infinity.
+
+### D44. Defer tenant-level reporting customization `[Ali]`
+- **Chosen:** The MVP uses the fixed D43 definitions. Per-tenant customization is deferred. If a real customer or pilot demonstrates a need, introduce tenant-level constrained presets first; only Owner and Finance Manager may edit them.
+- **Not chosen:** Per-user settings, free-form formulas, or making customization a dependency of T-013.
+- **Why:** One definition per organization avoids coworkers seeing different figures, while deferring configuration keeps the Core receivables engine independent of the Should-tier settings service.
+- **Consequences:** T-013 accepts bucket definitions as an engine input but uses the fixed default unless a caller explicitly supplies another definition. Any future settings UI, API, report-history behavior, and permissions require a separately approved scope and decision.
