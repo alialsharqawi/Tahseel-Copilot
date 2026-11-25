@@ -1,0 +1,8 @@
+invoice_number,customer_name,phone,email,invoice_date,due_date,amount,status
+SYN-IMP-001,Alpha Distribution,+201001234567,alpha@example.synthetic,2026-01-15,2026-02-15,15000.00,open
+SYN-IMP-002,Beta Trading,,beta@example.synthetic,15/02/2026,15/03/2026,"25,000.50",paid
+SYN-IMP-003,Gamma Supplies,+201112223333,,2026-03-10,2026-04-10,18000,open
+SYN-IMP-003,Gamma Supplies,+201112223333,,2026-03-10,2026-04-10,18000,open
+SYN-IMP-004,Delta Stores,+201223334444,delta@example.synthetic,04/15/2026,05/15/2026,"EGP 32,500",disputed
+SYN-IMP-005,Epsilon Market,,,2026-05-20,2026-06-20,12000.00,open
+SYN-IMP-006,Zeta Wholesale,+201556667777,zeta@example.synthetic,20-06-2026,20-07-2026,"1,500.75",paid
