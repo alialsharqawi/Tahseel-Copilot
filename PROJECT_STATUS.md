@@ -1,6 +1,6 @@
 # Project Status
 
-**Last updated:** 25 November 2026
+**Last updated:** 26 November 2026
 **Phase:** Documentation baseline is complete. The repository skeleton is complete through PR #69 (T-002, Issue #16); PRs #72 (T-003), #73 (T-022), and #74 (T-004) are merged, and Issues #18, #6, and #19 are closed. The 53 task issues are on the project board (42 open, 11 closed), and open tasks are assigned to D40 phase milestones by wave. T-003 provides the backend, PostgreSQL/pgvector, frontend, and Docker Compose integration. **Current phase: P1 — Setup and data foundation (due 30 November 2026). Final defense: Tuesday, 15 December 2026.**
 
 ## Done
@@ -11,9 +11,10 @@
 - CI pipeline for T-004: backend and frontend lint/test jobs on pull requests to `main`, with required status checks configured
 - Repository skeleton for T-002: `backend/`, `frontend/`, `data/`, `evals/`, and `deploy/` directories; `.env.example`; `.pre-commit-config.yaml`; and expanded `.gitignore` protections
 - Idea, scope, tiers, and non-goals (`docs/foundation/Tahseel_AI_Final_Concept.md`)
-- 44 decisions with reasons (`docs/governance/Tahseel_AI_Decision_Log.md`, D1 to D44)
-- Detailed specification: scoring formulas, a 19-table data model, API, and acceptance criteria (`docs/technical/Tahseel_AI_PRD.md`, version 1.2)
+- 45 decisions with reasons (`docs/governance/Tahseel_AI_Decision_Log.md`, D1 to D45)
+- Detailed specification: scoring formulas, a 19-table data model, API, and acceptance criteria (`docs/technical/Tahseel_AI_PRD.md`, version 1.3)
 - D43/D44 fix the MVP aging and DSO formulas and defer tenant-level reporting customization; T-013 remains independent of the settings service
+- D45 records the confirmed T-013 calculation rules and approved edge cases; currency remains an unenforced one-currency-per-tenant assumption, and D34 is unchanged
 - Technical strength case, memory design, evaluation plan, and security (`docs/technical/Tahseel_AI_Technical_Strength.md`)
 - Business case with evidence labels, verified sources, competitors, stakeholder analysis, ROI model, and validation plan (`docs/business/Tahseel_AI_Business_Strength.md`)
 - Multi-sector design (`docs/architecture/Tahseel_AI_Adaptability_Strategy.md`)
@@ -34,7 +35,15 @@
 2. Continue P1 foundation tasks toward the 30 November gate, following issue dependencies; use `docs/team/team-now.html` for the recommended next task and blocker owners
 3. Build the Core vertical slice in wave order: data foundation, then the AI slice, then integration and guardrails
 4. Slides, demo video, and the evaluation results, with real numbers from the demo and the evaluation (updating the live Canva presentation link submitted on the LMS)
-5. T-013 tests have not started; begin them only after review and approval of the D43/D44, PRD, and backlog diffs
+5. T-013 tests have not started; wait for Ali's approval of the D45/PRD diffs and explicit authorization to begin
+
+## Receivables calculation clarifications (26 November 2026)
+
+- Updated D45 and the PRD with confirmed calculation rules and approved edge cases.
+- Synchronized T-013 in `docs/team/backlog.csv`, regenerated `docs/team/BACKLOG.md`, and updated GitHub Issue #27.
+- Opened follow-up Issue #84 for allowing `due_date == invoice_date` in the synthetic-data generator; added it to the task board Backlog.
+- Changed files: `docs/governance/Tahseel_AI_Decision_Log.md`, `docs/technical/Tahseel_AI_PRD.md`, `docs/team/backlog.csv`, `docs/team/BACKLOG.md`, `PROJECT_STATUS.md`.
+- No code or tests were started. The docs-only PR is not open yet.
 
 ## Open items
 
