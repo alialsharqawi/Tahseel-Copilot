@@ -41,6 +41,7 @@
 | Project Documentation Guidelines | We do not have a copy. We work from an assumed structure (`LMS_Requirements.md`, section 3). Ask the instructor for it if possible |
 | OpenRouter models | Choose after testing tool calling, structured output, and Arabic quality (D12) |
 | Embedding model | Choose after an Arabic and mixed-language retrieval test (D16) |
+| T-012 PostgreSQL integration run | The tenant-scoped layer and cross-tenant tests are added, but this environment has no PostgreSQL server or Docker; run the integration tests in CI before marking T-012 complete |
 | Strong independent reviewer | T-051 has no strong independent reviewer in the current skills matrix. Pair it or add a qualified reviewer before approval if it is built; otherwise cut it in the agreed order. |
 | T-092 milestone mismatch | GitHub places the presentation slides in P1, while the phase plan lists slides under P4. Confirm the intended phase before treating the issue due date as final. |
 | Business claims marked "To verify" | The VAT threshold, the Odoo job posting, and the cheque sources |
@@ -152,6 +153,6 @@ These came from a second AI critique (run against a stale `main`) and were re-ve
 - PR #73 merged T-022: 20 synthetic bilingual policy documents, conflict and missing-policy fixtures, and corpus validation tests. Issue #6 closed.
 - PR #74 merged T-004: backend and frontend lint/test jobs in the pull-request CI workflow. Issue #19 closed.
 - Live issue state is now 42 open and 11 closed across the 53 task issues. Open milestone counts are P1: 6, P2: 19, P3: 15, P4: 2.
-- Remaining P1 work should follow issue dependencies: data model and migrations, synthetic receivables data, authentication/RBAC, and the overdue/risk engine.
+- Remaining P1 work should follow issue dependencies: validate T-012 against PostgreSQL in CI, then continue with synthetic receivables data, authentication/RBAC, and the overdue/risk engine.
 - TEAM.md now records 21 merged pull requests and current contribution evidence across all five members.
 - SECURITY.md now distinguishes required security controls from controls that are not yet implemented or verified, including RBAC and tenant isolation.

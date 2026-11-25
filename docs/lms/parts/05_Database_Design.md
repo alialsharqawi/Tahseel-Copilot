@@ -4,7 +4,8 @@ This part describes the PostgreSQL schema of Tahseel AI. It is generated from th
 
 ## 1. Design principles
 
-- **One database, tenant-scoped.** Every table except `tenants` carries `tenant_id`. All access goes through a tenant-scoped layer, and every vector query filters by tenant inside the query. A cross-tenant test proves it.
+- **One database, tenant-scoped.** Every table except `tenants` carries `tenant_id`. Tenant-owned reads and writes are provided through a centralized tenant-scoped layer, and vector queries apply tenant filtering inside the query. Cross-tenant isolation tests are implemented; PostgreSQL integration results must be verified in CI.
+- **Tenant-safe relationships.** Foreign keys between business records include `tenant_id`, so a record cannot reference another tenant's customer, user, document, or other related row.
 - **Payments are the source of truth.** An invoice's `paid_amount` is a cached total that the engine recomputes from `payments`. "Overdue" is computed from the due date, never stored.
 - **Humans write customer memory.** Notes, call outcomes, and promises are written by people; promise status is derived by rule. The agent has no way to write them.
 - **Append-only audit.** The application's database role has no update or delete permission on `audit_logs`. Deleting a memory entry is a soft delete (`deleted_at`) and is itself audited.
@@ -400,6 +401,7 @@ Append-only record of every recommendation, approval, edit, rejection, tool call
 | `customer_notes`, `document_chunks` | btree index on `tenant_id` | Tenant filtering; the vector index is deferred until the embedding dimension and distance metric are chosen |
 | `audit_logs` | no UPDATE or DELETE grant for the application role | Append-only |
 | `tenant_settings` | the risk weights total 100 (checked by the typed settings schema) | The score arithmetic stays valid |
+| Tenant-scoped relationships | Composite foreign key (`tenant_id`, related ID) to the same pair on the referenced table | A row cannot reference another tenant's record, even when written outside the application access layer |
 | enumerated fields | CHECK constraint on the allowed values | Bad values are rejected by the database |
 
 ## 6. Open points
@@ -445,3 +447,13 @@ implemented. Tenant B-tree indexes are created for `customer_notes` and
 and distance metric remain undecided. Foreign keys do not cascade deletes.
 The database role's append-only permissions for `audit_logs` remain a
 deployment responsibility and are not granted by this schema migration.
+
+T-012 adds one `TenantScopedDataAccess` entry point for tenant-owned reads and
+writes. Each operation requires an explicit `TenantContext`; inserts take
+`tenant_id` from that context, while reads, updates, deletes, and vector searches
+include it in the SQL predicate. Composite foreign keys also enforce that
+related rows share the same tenant. Vector search applies this predicate in the
+query before distance ordering and limiting. The trusted context must be
+created from the authenticated principal when T-011 authentication is added.
+Customer notes cannot be arbitrarily updated or hard-deleted; the access layer
+provides an idempotent, tenant-scoped soft-delete operation for them.
