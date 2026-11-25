@@ -51,13 +51,13 @@ pip install -r requirements-dev.txt
 python -m pytest
 ```
 
- HEAD
 ## Synthetic receivables data
 
 Generate the canonical fixture from the repository root:
 
 ```bash
 python backend/scripts/generate_synthetic_data.py
+```
 
 
 The default seed is `2026`, and the default reference date is `2026-12-15`.
@@ -67,7 +67,6 @@ options. The fixture does not write to the database and is not a seed script.
 PostgreSQL integration tests use `TEST_DATABASE_URL`. It must point to a
 disposable PostgreSQL database with pgvector enabled; the migration integration
 test upgrades and downgrades its schema. CI provides an isolated database.
- origin/main
 
 ## Lint
 
