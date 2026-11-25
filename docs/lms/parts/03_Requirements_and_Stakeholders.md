@@ -63,8 +63,8 @@ From the specification, section 9, with the additions made by later decisions.
 | FR-01 | The user can upload a CSV or Excel file. The system proposes a column mapping from the headers and masked sample rows, the user confirms it, the system validates the records, and a preview is shown before anything is imported | Core | C1 | AC-001 |
 | FR-02 | The import creates or updates customers and invoices and records payments, including partial payments. Duplicate invoice numbers and missing due dates are reported with fix-or-skip choices | Core | C1 | AC-001 |
 | FR-03 | After the first upload the system shows a Receivables Health Report: aging, risk distribution, the top 20 accounts to chase, and expected cash | Should | S3 | Demo checklist |
-| FR-04 | The system computes outstanding amounts, days overdue, and aging per invoice and per customer. Overdue is computed from the due date and is never stored. Payments are the source of truth for what has been paid | Core | C2 | AC-002 |
-| FR-05 | The system computes portfolio KPIs: totals, the overdue ratio, average days beyond terms, and DSO | Core | C2 | AC-002 |
+| FR-04 | The system computes outstanding amounts and days overdue as of the report date, then assigns unpaid balances to Current, 1–30, 31–60, 61–90, or Over 90 (91+) aging buckets. Disputed unpaid balances are included and flagged separately. Overdue is computed, never stored; payments are the source of truth | Core | C2 | AC-002 |
+| FR-05 | The system computes portfolio KPIs: totals, the overdue ratio, average days beyond terms, and DSO as average opening/closing AR divided by credit sales for the same period, multiplied by days in that period. Zero credit sales returns N/A | Core | C2 | AC-015 |
 
 ### Risk, priority, and the queue
 
