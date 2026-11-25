@@ -29,9 +29,10 @@
 
 ## Next
 
-1. Continue P1 foundation tasks toward the 30 November gate, following issue dependencies; use `docs/team/team-now.html` for the recommended next task and blocker owners
-2. Build the Core vertical slice in wave order: data foundation, then the AI slice, then integration and guardrails
-3. Slides, demo video, and the evaluation results, with real numbers from the demo and the evaluation (updating the live Canva presentation link submitted on the LMS)
+1. Finish T-020 review and handoff: canonical fixture generated, focused tests passing, and Ruff checks passing
+2. Continue P1 foundation tasks toward the 30 November gate, following issue dependencies; use `docs/team/team-now.html` for the recommended next task and blocker owners
+3. Build the Core vertical slice in wave order: data foundation, then the AI slice, then integration and guardrails
+4. Slides, demo video, and the evaluation results, with real numbers from the demo and the evaluation (updating the live Canva presentation link submitted on the LMS)
 
 ## Open items
 
