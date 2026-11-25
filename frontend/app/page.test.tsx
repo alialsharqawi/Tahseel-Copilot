@@ -25,6 +25,9 @@ describe("Home localization", () => {
   it("renders English, switches to Arabic, and updates document direction", async () => {
     renderHome();
 
+    const main = screen.getByRole("main");
+    expect(main.getAttribute("lang")).toBe("en");
+    expect(main.getAttribute("dir")).toBe("ltr");
     expect(screen.getByRole("heading", { name: "Welcome to Tahseel" })).toBeTruthy();
     await waitFor(() => {
       expect(document.documentElement.lang).toBe("en");
@@ -34,6 +37,8 @@ describe("Home localization", () => {
 
     fireEvent.click(screen.getByRole("button", { name: "Switch language to Arabic" }));
 
+    expect(main.getAttribute("lang")).toBe("ar");
+    expect(main.getAttribute("dir")).toBe("rtl");
     expect(screen.getByRole("heading", { name: "مرحبًا بك في تحصيل" })).toBeTruthy();
     await waitFor(() => {
       expect(document.documentElement.lang).toBe("ar");
@@ -43,6 +48,8 @@ describe("Home localization", () => {
 
     fireEvent.click(screen.getByRole("button", { name: "تغيير اللغة إلى الإنجليزية" }));
 
+    expect(main.getAttribute("lang")).toBe("en");
+    expect(main.getAttribute("dir")).toBe("ltr");
     expect(screen.getByRole("heading", { name: "Welcome to Tahseel" })).toBeTruthy();
     await waitFor(() => {
       expect(document.documentElement.lang).toBe("en");
@@ -62,6 +69,7 @@ describe("Home localization", () => {
     await waitFor(() => {
       expect(document.documentElement.lang).toBe("ar");
       expect(document.documentElement.dir).toBe("rtl");
+      expect(document.title).toBe("تحصيل | مساعد إدارة الائتمان");
     });
 
     unmount();
