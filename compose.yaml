@@ -1,6 +1,9 @@
 services:
   db:
     image: pgvector/pgvector:0.8.7-pg17@sha256:b513c48566e4777cd3370451400000c78eda6a08131d68f4c31d4a76f27bd8fd
+    restart: unless-stopped
+    networks:
+      - database
     environment:
       POSTGRES_DB: ${POSTGRES_DB:-tahseel}
       POSTGRES_USER: ${POSTGRES_USER:-tahseel}
@@ -20,6 +23,10 @@ services:
   backend:
     build:
       context: ./backend
+    restart: unless-stopped
+    networks:
+      - database
+      - backend_proxy
     environment:
       TAHSEEL_APP_TITLE: "Tahseel API"
       DATABASE_URL: "postgresql+psycopg://${POSTGRES_USER:-tahseel}:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in the environment}@db:5432/${POSTGRES_DB:-tahseel}"
@@ -44,6 +51,9 @@ services:
   frontend:
     build:
       context: ./frontend
+    restart: unless-stopped
+    networks:
+      - frontend_proxy
     environment:
       NEXT_TELEMETRY_DISABLED: "1"
     ports:
@@ -64,5 +74,40 @@ services:
       retries: 5
       start_period: 30s
 
+  proxy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    networks:
+      - backend_proxy
+      - frontend_proxy
+    environment:
+      DOMAIN: ${DOMAIN:-localhost}
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      backend:
+        condition: service_healthy
+      frontend:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:2019/config/"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+
 volumes:
   postgres_data:
+  caddy_data:
+  caddy_config:
+
+networks:
+  database:
+  backend_proxy:
+  frontend_proxy:

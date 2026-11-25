@@ -1,6 +1,6 @@
 # Project Status
 
-**Last updated:** 24 November 2026
+**Last updated:** 25 November 2026
 **Phase:** Documentation baseline is complete. The repository skeleton is complete through PR #69 (T-002, Issue #16); PRs #72 (T-003), #73 (T-022), and #74 (T-004) are merged, and Issues #18, #6, and #19 are closed. The 53 task issues are on the project board (42 open, 11 closed), and open tasks are assigned to D40 phase milestones by wave. T-003 provides the backend, PostgreSQL/pgvector, frontend, and Docker Compose integration. **Current phase: P1 — Setup and data foundation (due 30 November 2026). Final defense: Tuesday, 15 December 2026.**
 
 ## Done
@@ -37,6 +37,7 @@
 
 | Item | Detail |
 |---|---|
+| T-080 public deployment | Compose/Caddy HTTPS routing and backup/restore documentation are prepared; public certificate and URL verification still require a configured domain, DNS, and VPS |
 | Project Documentation Guidelines | We do not have a copy. We work from an assumed structure (`LMS_Requirements.md`, section 3). Ask the instructor for it if possible |
 | OpenRouter models | Choose after testing tool calling, structured output, and Arabic quality (D12) |
 | Embedding model | Choose after an Arabic and mixed-language retrieval test (D16) |
