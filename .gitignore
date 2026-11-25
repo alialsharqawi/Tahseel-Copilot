@@ -28,3 +28,10 @@ Thumbs.db
 .env
 .env.*
 !.env.example
+
+# Deployment credentials, certificates, and database backups
+*.pem
+*.key
+*.p12
+*.pfx
+/backups/

@@ -168,9 +168,10 @@ The other database settings are optional. Their defaults are:
 | `POSTGRES_USER` | `tahseel` |
 | `POSTGRES_PORT` | `5432` |
 
-The remaining variables in `.env.example` are for future application configuration and
-are not required to start the current Docker Compose stack. This includes OpenRouter,
-embedding, application, and `NEXT_PUBLIC_API_URL` settings.
+Set `DOMAIN=localhost` for local use. For a public deployment, replace it with the
+public DNS name. The remaining variables in `.env.example` are for future application
+configuration and are not required to start the current Docker Compose stack. This
+includes OpenRouter, embedding, application, and `NEXT_PUBLIC_API_URL` settings.
 
 ### 3. Start the stack
 
@@ -184,21 +185,26 @@ docker compose ps
 Compose starts PostgreSQL with pgvector, the FastAPI backend, and the Next.js frontend.
 Database migrations are not required for the current starter application's health checks.
 Database-backed features may require migrations later; see `backend/README.md`.
+The Caddy reverse proxy exposes HTTP and HTTPS on ports 80 and 443. Locally, use
+`https://localhost` (Caddy's local certificate may not be trusted automatically).
+Public deployment prerequisites and routing are documented in `deploy/README.md`.
 
 ### 4. Verify the services
 
-In `docker compose ps`, the `db`, `backend`, and `frontend` services should become
-`healthy`.
+In `docker compose ps`, the `db`, `backend`, `frontend`, and `proxy` services should
+become `healthy`.
 
 Then open:
 
-- Frontend: http://127.0.0.1:3000
+- Frontend: https://localhost
 - Frontend health: http://127.0.0.1:3000/api/health
 - Backend health: http://127.0.0.1:8000/health
 - PostgreSQL: `127.0.0.1:5432` by default
 
-Both health URLs should return `{"status":"ok"}`. These endpoints verify only the current
-starter application, not unfinished collection, policy, memory, or agent features.
+The frontend and backend health URLs should return `{"status":"ok"}`. The public
+backend health check is https://localhost/api/health. These endpoints verify only the
+current starter application, not unfinished collection, policy, memory, or agent
+features.
 
 If a port is already in use, stop the conflicting local service before starting Compose.
 To use a different PostgreSQL host port, set `POSTGRES_PORT` in `.env`.
@@ -212,10 +218,46 @@ docker compose down
 ```
 
 This stops and removes the Compose containers while preserving the named PostgreSQL
-volume. Do not add `-v` unless you intentionally want to delete the database volume.
+volume. Do not add `-v` or manually remove/prune Docker volumes unless you intend to
+permanently delete the database and Caddy state after verifying a backup.
 
 More deployment details are in `deploy/README.md`. The frontend and backend can also be
 run separately using `frontend/README.md` and `backend/README.md`.
+
+### Database backup and restore
+
+Create a PostgreSQL custom-format backup from the running database. Keep backups
+outside version control, encrypt them at rest, and copy them to protected off-host
+storage:
+
+```bash
+mkdir -p backups
+docker compose exec -T db sh -c \
+  'pg_dump -Fc --no-owner -U "$POSTGRES_USER" "$POSTGRES_DB"' \
+  > "backups/tahseel-$(date -u +%Y%m%dT%H%M%SZ).dump"
+```
+
+For a full restore, restore into a new, empty database rather than over the live
+database. `pg_restore --clean --if-exists` only removes objects present in the archive;
+objects created after the backup but absent from it can remain. The following example
+uses `tahseel_restore`. Choose a name that does not already exist; `createdb` will fail
+rather than overwrite an existing database.
+
+```bash
+docker compose stop backend
+docker compose exec -T db sh -c \
+  'createdb -U "$POSTGRES_USER" tahseel_restore'
+docker compose exec -T db sh -c \
+  'pg_restore --no-owner --exit-on-error -U "$POSTGRES_USER" -d tahseel_restore' \
+  < backups/tahseel-YYYYMMDDTHHMMSSZ.dump
+```
+
+Replace the example dump filename with the backup to restore. Verify the restored
+database, then set `POSTGRES_DB=tahseel_restore` in `.env` and run
+`docker compose up -d --force-recreate db backend` to point the application at it.
+The existing database and PostgreSQL volume are left in place. Test restores against a
+non-production database regularly; do not treat a successful backup command as proof
+that a backup is restorable.
 
 ## Repository code layout
 
