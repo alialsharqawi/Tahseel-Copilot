@@ -30,6 +30,16 @@ def _normalize_name(value: str) -> str:
 class LoginRequest(BaseModel):
     """Credentials payload for POST /api/v1/auth/login."""
 
+    model_config = ConfigDict(
+        json_schema_extra={
+            "example": {
+                "email": "owner@example.test",
+                "password": "<password>",
+                "tenant_id": "11111111-1111-4111-8111-111111111111",
+            }
+        }
+    )
+
     email: str
     password: str = Field(min_length=1)
     tenant_id: UUID | None = None
@@ -43,7 +53,19 @@ class LoginRequest(BaseModel):
 class UserResponse(BaseModel):
     """Public user representation; never includes password_hash."""
 
-    model_config = ConfigDict(from_attributes=True)
+    model_config = ConfigDict(
+        from_attributes=True,
+        json_schema_extra={
+            "example": {
+                "id": "22222222-2222-4222-8222-222222222222",
+                "tenant_id": "11111111-1111-4111-8111-111111111111",
+                "name": "Example Owner",
+                "email": "owner@example.test",
+                "role": "OWNER",
+                "created_at": "2026-11-26T12:00:00Z",
+            }
+        },
+    )
 
     id: UUID
     tenant_id: UUID
@@ -56,6 +78,24 @@ class UserResponse(BaseModel):
 class TokenResponse(BaseModel):
     """Bearer token response returned on successful login."""
 
+    model_config = ConfigDict(
+        json_schema_extra={
+            "example": {
+                "access_token": "<signed-access-token>",
+                "token_type": "bearer",
+                "expires_in": 3600,
+                "user": {
+                    "id": "22222222-2222-4222-8222-222222222222",
+                    "tenant_id": "11111111-1111-4111-8111-111111111111",
+                    "name": "Example Owner",
+                    "email": "owner@example.test",
+                    "role": "OWNER",
+                    "created_at": "2026-11-26T12:00:00Z",
+                },
+            }
+        }
+    )
+
     access_token: str
     token_type: str = "bearer"
     expires_in: int
@@ -64,6 +104,17 @@ class TokenResponse(BaseModel):
 
 class UserCreateRequest(BaseModel):
     """Owner-only payload to create a user inside the current tenant."""
+
+    model_config = ConfigDict(
+        json_schema_extra={
+            "example": {
+                "name": "Example Collector",
+                "email": "collector@example.test",
+                "password": "<password>",
+                "role": "COLLECTOR",
+            }
+        }
+    )
 
     name: str
     email: str
@@ -89,6 +140,10 @@ class UserCreateRequest(BaseModel):
 
 class UserUpdateRequest(BaseModel):
     """Owner-only payload to update user attributes or role inside the current tenant."""
+
+    model_config = ConfigDict(
+        json_schema_extra={"example": {"role": "FINANCE_MANAGER"}}
+    )
 
     name: str | None = None
     email: str | None = None
@@ -116,6 +171,12 @@ class UserUpdateRequest(BaseModel):
             return None
         validate_password_strength(value)
         return value
+
+
+class ErrorResponse(BaseModel):
+    """Error body returned by authentication and user-management endpoints."""
+
+    detail: str
 
 
 class CustomerSummaryResponse(BaseModel):
