@@ -7,6 +7,7 @@
 
 - Docker Compose foundation for T-003: FastAPI health endpoint, bilingual frontend, and PostgreSQL/pgvector integration
 - T-010 database foundation: SQLAlchemy models and an initial Alembic migration for all 19 tables, with schema and migration tests
+- T-011 authentication, users, and the three roles: JWT login (Argon2id), Owner/Finance Manager/Collector RBAC enforced server-side, Collector assigned-only customer access, Owner-only user management, tests (PR #87), and documented Auth/Users endpoints with OpenAPI schemas (PR #88)
 - Synthetic bilingual policy corpus and validation fixtures for T-022
 - CI pipeline for T-004: backend and frontend lint/test jobs on pull requests to `main`, with required status checks configured
 - Repository skeleton for T-002: `backend/`, `frontend/`, `data/`, `evals/`, and `deploy/` directories; `.env.example`; `.pre-commit-config.yaml`; and expanded `.gitignore` protections
@@ -165,6 +166,6 @@ These came from a second AI critique (run against a stale `main`) and were re-ve
 - PR #73 merged T-022: 20 synthetic bilingual policy documents, conflict and missing-policy fixtures, and corpus validation tests. Issue #6 closed.
 - PR #74 merged T-004: backend and frontend lint/test jobs in the pull-request CI workflow. Issue #19 closed.
 - Live issue state is now 42 open and 11 closed across the 53 task issues. Open milestone counts are P1: 6, P2: 19, P3: 15, P4: 2.
-- Remaining P1 work should follow issue dependencies: validate T-012 against PostgreSQL in CI, then continue with synthetic receivables data, authentication/RBAC, and the overdue/risk engine.
+- Remaining P1 work should follow issue dependencies: validate T-012 against PostgreSQL in CI, then continue with synthetic receivables data and the overdue/risk engine.
 - TEAM.md now records 21 merged pull requests and current contribution evidence across all five members.
 - SECURITY.md now distinguishes required security controls from controls that are not yet implemented or verified, including RBAC and tenant isolation.

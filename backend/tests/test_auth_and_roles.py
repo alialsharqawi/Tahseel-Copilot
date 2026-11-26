@@ -600,6 +600,41 @@ def test_user_management_is_owner_only_and_tenant_scoped(
         client, "owner.b@example.synthetic", "OwnerBPass123!"
     )
 
+    # All user-management operations require authentication before role checks.
+    unauthenticated_create = {
+        "name": "Unauthorized User",
+        "email": "unauth@example.synthetic",
+        "password": "ValidPassword123!",
+        "role": "COLLECTOR",
+    }
+    assert client.get("/api/v1/users").status_code == 401
+    assert client.get(f"/api/v1/users/{data['collector_a1'].id}").status_code == 401
+    assert client.post("/api/v1/users", json=unauthenticated_create).status_code == 401
+    assert (
+        client.patch(
+            f"/api/v1/users/{data['collector_a1'].id}",
+            json={"name": "Unauthorized Update"},
+        ).status_code
+        == 401
+    )
+
+    # Owner can list and retrieve only users in their tenant; responses omit hashes.
+    owner_list = client.get("/api/v1/users", headers=owner_headers)
+    assert owner_list.status_code == 200
+    assert {user["id"] for user in owner_list.json()} == {
+        str(data[key].id)
+        for key in ("owner_a", "manager_a", "collector_a1", "collector_a2")
+    }
+    owner_user = client.get(
+        f"/api/v1/users/{data['collector_a1'].id}", headers=owner_headers
+    )
+    assert owner_user.status_code == 200
+    assert owner_user.json()["id"] == str(data["collector_a1"].id)
+    assert "password_hash" not in owner_user.json()
+    assert (
+        client.get(f"/api/v1/users/{uuid4()}", headers=owner_headers).status_code == 404
+    )
+
     # Non-owners cannot list, view, create, or update users.
     for headers in (manager_headers, collector_headers):
         assert client.get("/api/v1/users", headers=headers).status_code == 403
@@ -770,6 +805,82 @@ def test_user_management_is_owner_only_and_tenant_scoped(
     for entry in user_audits:
         assert "password_hash" not in (entry.after or {})
         assert "password" not in (entry.after or {})
+
+
+def test_auth_and_user_management_openapi_contract(client: TestClient) -> None:
+    schema = client.get("/openapi.json").json()
+    paths = schema["paths"]
+    expected_responses = {
+        ("/api/v1/auth/login", "post"): {"200", "401", "409", "422", "500"},
+        ("/api/v1/auth/me", "get"): {"200", "401"},
+        ("/api/v1/users", "get"): {"200", "401", "403"},
+        ("/api/v1/users", "post"): {"201", "401", "403", "409", "422"},
+        ("/api/v1/users/{user_id}", "get"): {
+            "200",
+            "401",
+            "403",
+            "404",
+            "422",
+        },
+        ("/api/v1/users/{user_id}", "patch"): {
+            "200",
+            "401",
+            "403",
+            "404",
+            "409",
+            "422",
+        },
+    }
+
+    for (path, method), response_codes in expected_responses.items():
+        operation = paths[path][method]
+        assert set(operation["responses"]) == response_codes
+        assert operation["summary"]
+
+    assert "security" not in paths["/api/v1/auth/login"]["post"]
+    for path, method in (
+        ("/api/v1/auth/me", "get"),
+        ("/api/v1/users", "get"),
+        ("/api/v1/users", "post"),
+        ("/api/v1/users/{user_id}", "get"),
+        ("/api/v1/users/{user_id}", "patch"),
+    ):
+        assert paths[path][method]["security"] == [{"HTTPBearer": []}]
+
+    schemas = schema["components"]["schemas"]
+    assert set(schemas["UserResponse"]["properties"]) == {
+        "id",
+        "tenant_id",
+        "name",
+        "email",
+        "role",
+        "created_at",
+    }
+    assert "example" in schemas["TokenResponse"]
+    assert "example" in schemas["UserCreateRequest"]
+    assert schemas["ErrorResponse"]["properties"]["detail"]["type"] == "string"
+    assert (
+        paths["/api/v1/auth/login"]["post"]["requestBody"]["content"][
+            "application/json"
+        ]["schema"]["$ref"]
+        == "#/components/schemas/LoginRequest"
+    )
+    assert (
+        paths["/api/v1/users"]["post"]["requestBody"]["content"]["application/json"][
+            "schema"
+        ]["$ref"]
+        == "#/components/schemas/UserCreateRequest"
+    )
+    assert (
+        paths["/api/v1/users/{user_id}"]["patch"]["requestBody"]["content"][
+            "application/json"
+        ]["schema"]["$ref"]
+        == "#/components/schemas/UserUpdateRequest"
+    )
+    user_id_parameter = paths["/api/v1/users/{user_id}"]["get"]["parameters"][0]
+    assert user_id_parameter["name"] == "user_id"
+    assert user_id_parameter["required"] is True
+    assert user_id_parameter["schema"]["format"] == "uuid"
 
 
 def test_role_change_in_db_takes_effect_immediately_on_existing_token(

@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
-from api.v1.schemas import LoginRequest, TokenResponse, UserResponse
+from api.v1.schemas import ErrorResponse, LoginRequest, TokenResponse, UserResponse
 from auth.dependencies import AuthenticatedUser, get_current_user, get_tenant_access
 from auth.permissions import Role
 from auth.security import (
@@ -19,7 +19,49 @@ from db.tenant_access import TenantContext, TenantScopedDataAccess
 router = APIRouter(prefix="/auth", tags=["auth"])
 
 
-@router.post("/login", response_model=TokenResponse)
+@router.post(
+    "/login",
+    response_model=TokenResponse,
+    summary="Sign in",
+    description=(
+        "Authenticate with an email and password. Include tenant_id when the same "
+        "email and password identify accounts in multiple tenants. The returned "
+        "bearer token is required by protected endpoints."
+    ),
+    responses={
+        401: {
+            "model": ErrorResponse,
+            "description": "Email or password is invalid.",
+            "content": {
+                "application/json": {
+                    "example": {"detail": "Invalid email or password."}
+                }
+            },
+        },
+        409: {
+            "model": ErrorResponse,
+            "description": "Matching credentials exist in multiple tenants.",
+            "content": {
+                "application/json": {
+                    "example": {
+                        "detail": "Multiple tenants match this account; specify tenant_id."
+                    }
+                }
+            },
+        },
+        500: {
+            "model": ErrorResponse,
+            "description": "Application authentication configuration is invalid.",
+            "content": {
+                "application/json": {
+                    "example": {
+                        "detail": "Application configuration is invalid or incomplete."
+                    }
+                }
+            },
+        },
+    },
+)
 def login(
     payload: LoginRequest,
     db: Session = Depends(get_db),
@@ -84,7 +126,21 @@ def login(
     )
 
 
-@router.get("/me", response_model=UserResponse)
+@router.get(
+    "/me",
+    response_model=UserResponse,
+    summary="Get the current user",
+    description="Return the database-backed profile for the authenticated bearer token.",
+    responses={
+        401: {
+            "model": ErrorResponse,
+            "description": "Bearer token is missing, invalid, expired, or inactive.",
+            "content": {
+                "application/json": {"example": {"detail": "Authentication required."}}
+            },
+        }
+    },
+)
 def read_current_user(
     current_user: AuthenticatedUser = Depends(get_current_user),
     access: TenantScopedDataAccess = Depends(get_tenant_access),
