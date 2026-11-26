@@ -73,6 +73,37 @@ dimension are selected. No approximate-nearest-neighbor index is created.
 Downgrading to `base` drops these tables, so only use it on a disposable database
 or when intentionally removing the schema.
 
+## Tenant settings and policy rules
+
+The tenant configuration endpoints are available to Owners and Finance Managers:
+
+| Method and path | Purpose |
+|---|---|
+| `GET /api/v1/settings` | Read the authenticated tenant's validated settings |
+| `PUT /api/v1/settings` | Replace settings; the change and its before/after values are audited |
+| `GET /api/v1/policy-rules` | List rules in the authenticated tenant |
+| `POST /api/v1/policy-rules` | Add a rule with a tenant-owned source document and section |
+| `PATCH /api/v1/policy-rules/{rule_id}` | Change a rule; clears any previous confirmation |
+| `POST /api/v1/policy-rules/{rule_id}/confirm` | Confirm a rule as a manager |
+
+These endpoints manage configuration; they do not execute policy rules or block
+shipping or credit.
+
+Settings are validated by a typed Pydantic schema. Defaults explicitly specified in
+PRD sections 11 and 12 are seeded by the following command, run from `backend/`:
+
+```bash
+python -m scripts.seed_defaults --tenant-id <tenant-uuid> --actor-id <manager-uuid>
+```
+
+The tenant and manager must already exist. Seeding is idempotent and does not
+overwrite existing settings. Each settings or rule change uses the existing
+append-only, tenant-scoped `audit_logs` table and the same database transaction.
+Policy-rule default seeding is intentionally deferred until T-021 supplies approved
+tenant policy sources: the current synthetic policy corpus contains deliberate
+conflicts and is not authority for default tenant rules. No default rule values are
+seeded from those fixtures.
+
 ## Tests
 
 Install the development dependencies and run the backend tests:
