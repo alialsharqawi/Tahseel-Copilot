@@ -35,6 +35,7 @@ T-062,Executive dashboard,6,Core,L,Mariam,Ali Al-Sharqawi,0.53,stretch: the assi
 T-064,"Customer Profile screen with the note, call result, and promise form",6,Core,L,Mariam,Ali Al-Sharqawi,0.5,stretch: the assignee is still learning a primary skill; pair with the reviewer,
 T-017,"Cash forecast with range and confidence, plus the backtest harness",6,Should,L,Alaa,Mariam,0.53,,
 T-066,"Settings, policy rules, and documents screens",6,Should,M,Ali Al-Sharqawi,Mariam,1.0,,
+T-098,"Synthetic data generator: allow same-day due dates",6,Core,S,Alaa,Fatma Eissa,0.53,,Assigned to Alaa as a focused follow-up to completed T-020; Fatma reviews the generator boundary and test.
 T-015,"Priority, urgency, and the suggested-action rules",7,Core,M,Mariam,Ali Al-Sharqawi,0.5,stretch: the assignee is still learning a primary skill; pair with the reviewer,
 T-031,LLM-assisted column mapping from headers and masked sample rows,7,Core,M,Fatma Eissa,Ali Al-Sharqawi,0.67,,
 T-044,"Agent tools: receivables, risk, priority, history, KPIs, forecast",7,Core,M,Fatma Eissa,Ali Al-Sharqawi,0.6,,

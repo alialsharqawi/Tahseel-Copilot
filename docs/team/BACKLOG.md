@@ -10,7 +10,7 @@ Generated from `backlog.csv` by `python tools/team_tools.py backlog`. Edit the C
 
 **Participation** (D41): every member is expected to take a meaningful share of the plan and work across waves. No weekly-hours or capacity model is used.
 
-**53 tasks:** 42 Core, 9 Should, 2 Delivery.
+**54 tasks:** 43 Core, 9 Should, 2 Delivery.
 
 ## Setup
 
@@ -42,6 +42,7 @@ Generated from `backlog.csv` by `python tools/team_tools.py backlog`. Edit the C
 | T-020 | Synthetic data generator with realistic patterns | Core | DATA, PY (also BIZ) | L | 5 | T-010 |
 | T-021 | Seed script: tenants, users, settings, rules, sample policies | Core | PY, DATA (also DB) | M | 6 | T-016, T-020 |
 | T-022 | Sample policy documents (about 20), including conflicting and missing cases | Core | DOC, AR (also BIZ) | M | 1 | - |
+| T-098 | Synthetic data generator: allow same-day due dates | Core | DATA, PY | S | 6 | T-020 |
 
 ## Import
 
