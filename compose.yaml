@@ -30,6 +30,8 @@ services:
     environment:
       TAHSEEL_APP_TITLE: "Tahseel API"
       DATABASE_URL: "postgresql+psycopg://${POSTGRES_USER:-tahseel}:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in the environment}@db:5432/${POSTGRES_DB:-tahseel}"
+      APP_SECRET_KEY: "${APP_SECRET_KEY:-}"
+      ACCESS_TOKEN_TTL_MINUTES: "${ACCESS_TOKEN_TTL_MINUTES:-60}"
     ports:
       - "127.0.0.1:8000:8000"
     depends_on:

@@ -17,6 +17,24 @@ uvicorn main:app --reload
 The API listens on `http://localhost:8000`. Its `GET /health` endpoint returns
 `{"status":"ok"}`. Set `TAHSEEL_APP_TITLE` in the environment to change the API title.
 
+## Authentication, roles, and users (T-011)
+
+The `/api/v1` router provides bearer JWT authentication, Owner-only user management,
+and tenant- and role-scoped customer access:
+
+- `POST /api/v1/auth/login` — verifies email/password (Argon2id) and issues an HS256
+  bearer token (`APP_SECRET_KEY` must be at least 32 bytes; `ACCESS_TOKEN_TTL_MINUTES`
+  defaults to `60`).
+- `GET /api/v1/auth/me` — returns the authenticated user's profile loaded from the database.
+- `GET /api/v1/users`, `GET /api/v1/users/{id}`, `POST /api/v1/users`,
+  `PATCH /api/v1/users/{id}` — restricted to `OWNER` within the caller's tenant.
+- `GET /api/v1/customers`, `GET /api/v1/customers/{id}` — `OWNER` and `FINANCE_MANAGER`
+  see all customers in their tenant; `COLLECTOR` sees only customers where
+  `assigned_collector` matches their user ID.
+
+Role enforcement and the D15/D30 permissions matrix live in `backend/auth/` and are
+checked on the server for every request.
+
 ## Database migrations
 
 The SQLAlchemy models and Alembic migration target PostgreSQL with pgvector. From

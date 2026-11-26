@@ -100,6 +100,14 @@ class User(UUIDPrimaryKey, TenantScoped, CreatedAt, Base):
     role: Mapped[str] = mapped_column(Text, nullable=False)
 
 
+Index(
+    "uq_users_tenant_lower_email",
+    User.tenant_id,
+    func.lower(User.email),
+    unique=True,
+)
+
+
 class Customer(UUIDPrimaryKey, TenantScoped, CreatedAt, Base):
     __tablename__ = "customers"
     __table_args__ = (
