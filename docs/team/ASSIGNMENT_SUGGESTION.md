@@ -8,17 +8,17 @@ Parameters: growth bonus on. Fit is a number from 0 to 1 built from each member'
 
 **Review load (D42):** Ali accepts a higher review share as team leader. Skill fit takes priority over equal review counts; manual decisions are recorded in `assignments.csv`.
 
-**Plan shape:** 53 tasks, 121 complexity points. Target per member: about 10.6 tasks / 24.2 points.
+**Plan shape:** 54 tasks, 122 complexity points. Target per member: about 10.8 tasks / 24.4 points.
 
 ## Wave 1
 
 | Task | Title | Tier | Size | Assignee | Reviewer | Fit | Notes |
 |---|---|---|---|---|---|---|---|
-| T-001 | Protect main, add the team as collaborators, create the project board, and load the labels | Core | S | Zainab Hazem | Ali Al-Sharqawi | 0.33 | stretch: the assignee is still learning a primary skill; pair with the reviewer |
-| T-022 | Sample policy documents (about 20), including conflicting and missing cases | Core | M | Alaa | Fatma Eissa | 0.53 | stretch: the assignee is still learning a primary skill; pair with the reviewer |
+| T-001 | Protect main, add the team as collaborators, create the project board, and load the labels | Core | S | Alaa | Ali Al-Sharqawi | 0.33 | stretch: the assignee is still learning a primary skill; pair with the reviewer |
+| T-022 | Sample policy documents (about 20), including conflicting and missing cases | Core | M | Zainab Hazem | Fatma Eissa | 0.53 | stretch: the assignee is still learning a primary skill; pair with the reviewer |
 | T-090 | LMS part: Project Planning and Management | Core | M | Ali Al-Sharqawi | Fatma Eissa | 1.0 |  |
-| T-092 | Presentation slides (PDF) from the pitch skeleton | Core | L | Zainab Hazem | Fatma Eissa | 0.5 | stretch: the assignee is still learning a primary skill; pair with the reviewer |
-| T-095 | December team assignment tooling and records | Core | L | Alaa | Fatma Eissa | 0.47 | stretch: the assignee is still learning a primary skill; pair with the reviewer |
+| T-092 | Presentation slides (PDF) from the pitch skeleton | Core | L | Alaa | Fatma Eissa | 0.5 | stretch: the assignee is still learning a primary skill; pair with the reviewer |
+| T-095 | December team assignment tooling and records | Core | L | Zainab Hazem | Fatma Eissa | 0.47 | stretch: the assignee is still learning a primary skill; pair with the reviewer |
 | T-094 | Local-competitor scan (assumption A9) | Should | M | Fatma Eissa | Ali Al-Sharqawi | 0.67 |  |
 | T-097 | AI coding-agent guide for team contributors | Should | M | Zainab Hazem | Fatma Eissa | 0.22 | stretch: the assignee is still learning a primary skill; pair with the reviewer |
 
@@ -27,7 +27,7 @@ Parameters: growth bonus on. Fit is a number from 0 to 1 built from each member'
 | Task | Title | Tier | Size | Assignee | Reviewer | Fit | Notes |
 |---|---|---|---|---|---|---|---|
 | T-002 | Create the repository skeleton: folders, .gitignore, .env.example, pre-commit hooks | Core | S | Fatma Eissa | Ali Al-Sharqawi | 0.33 | stretch: the assignee is still learning a primary skill; pair with the reviewer; paired with Ali Al-Sharqawi on the primary skill; Ali Al-Sharqawi reviews and can do it alone |
-| T-091 | Assemble the documentation PDF | Core | M | Zainab Hazem | Fatma Eissa | 0.33 | stretch: the assignee is still learning a primary skill; pair with the reviewer |
+| T-091 | Assemble the documentation PDF | Core | M | Alaa | Fatma Eissa | 0.33 | stretch: the assignee is still learning a primary skill; pair with the reviewer |
 | T-096 | WhatsApp team brief for the execution plan | Should | L | Alaa | Fatma Eissa | 0.22 | stretch: the assignee is still learning a primary skill; pair with the reviewer |
 
 ## Wave 3
@@ -73,6 +73,7 @@ Parameters: growth bonus on. Fit is a number from 0 to 1 built from each member'
 | T-048 | Draft generator: Arabic, tones, tier defaults | Core | L | Mariam | Fatma Eissa | 0.67 | learning task: pair with the reviewer; stretch: the assignee is still learning a primary skill; pair with the reviewer |
 | T-062 | Executive dashboard | Core | L | Ali Al-Sharqawi | Mariam | 1.0 | no strong reviewer: ask someone outside the team or pair on the review |
 | T-064 | Customer Profile screen with the note, call result, and promise form | Core | L | Mariam | Ali Al-Sharqawi | 0.5 | stretch: the assignee is still learning a primary skill; pair with the reviewer |
+| T-098 | Synthetic data generator: allow same-day due dates | Core | S | Zainab Hazem | Alaa | 0.67 |  |
 | T-017 | Cash forecast with range and confidence, plus the backtest harness | Should | L | Zainab Hazem | Alaa | 0.53 |  |
 | T-066 | Settings, policy rules, and documents screens | Should | M | Mariam | Ali Al-Sharqawi | 0.56 |  |
 
@@ -86,7 +87,7 @@ Parameters: growth bonus on. Fit is a number from 0 to 1 built from each member'
 | T-047 | Conversation memory: threads, last N turns, labeled summary | Core | M | Ali Al-Sharqawi | Mariam | 1.0 | no strong reviewer: ask someone outside the team or pair on the review |
 | T-049 | Recommendations and the approval gate | Core | L | Fatma Eissa | Ali Al-Sharqawi | 0.27 | paired with Ali Al-Sharqawi on SEC; Ali Al-Sharqawi reviews and can do it alone |
 | T-061 | Import screen | Core | M | Mariam | Ali Al-Sharqawi | 0.56 |  |
-| T-070 | Evaluation harness and the basic eval sets | Core | L | Zainab Hazem | Fatma Eissa | 0.4 | stretch: the assignee is still learning a primary skill; pair with the reviewer |
+| T-070 | Evaluation harness and the basic eval sets | Core | L | Alaa | Fatma Eissa | 0.4 | stretch: the assignee is still learning a primary skill; pair with the reviewer |
 | T-032 | Receivables Health Report endpoint | Should | M | Fatma Eissa | Ali Al-Sharqawi | 0.5 | stretch: the assignee is still learning a primary skill; pair with the reviewer |
 
 ## Wave 8
@@ -96,7 +97,7 @@ Parameters: growth bonus on. Fit is a number from 0 to 1 built from each member'
 | T-050 | Tasks and the append-only audit log | Core | M | Fatma Eissa | Ali Al-Sharqawi | 0.27 | stretch: the assignee is still learning a primary skill; pair with the reviewer; paired with Ali Al-Sharqawi on SEC; Ali Al-Sharqawi reviews and can do it alone |
 | T-063 | Collection Queue screen | Core | M | Mariam | Ali Al-Sharqawi | 0.56 |  |
 | T-065 | AI recommendation panel with all states | Core | L | Mariam | Ali Al-Sharqawi | 0.5 | stretch: the assignee is still learning a primary skill; pair with the reviewer |
-| T-071 | Ablation: LLM with the raw file versus the tool-grounded system | Core | M | Alaa | Fatma Eissa | 0.47 | stretch: the assignee is still learning a primary skill; pair with the reviewer |
+| T-071 | Ablation: LLM with the raw file versus the tool-grounded system | Core | M | Zainab Hazem | Fatma Eissa | 0.47 | stretch: the assignee is still learning a primary skill; pair with the reviewer |
 | T-072 | Safety tests: injection, cross-tenant, no send without approval | Core | M | Mariam | Ali Al-Sharqawi | 0.17 | paired with Ali Al-Sharqawi on SEC; Ali Al-Sharqawi reviews and can do it alone |
 | T-051 | Guardrails: dispute status, the reminder cap, and the rule-based draft check | Should | M | Ali Al-Sharqawi | Zainab Hazem | 1.0 | no strong reviewer: ask someone outside the team or pair on the review |
 | T-052 | Relationship-aware recommendation for strategic accounts | Should | S | Alaa | Zainab Hazem | 0.67 |  |
@@ -117,11 +118,11 @@ Parameters: growth bonus on. Fit is a number from 0 to 1 built from each member'
 
 | Member | Tasks | S | M | L | Complexity | Share | Waves covered | Reviews |
 |---|---|---|---|---|---|---|---|---|
-| Ali Al-Sharqawi | 9 | 1 | 6 | 2 | 19 | 15.7% | 7 | 30 |
-| Fatma Eissa | 14 | 1 | 8 | 5 | 32 | 26.4% | 7 | 13 |
-| Mariam | 12 | 0 | 6 | 6 | 30 | 24.8% | 5 | 4 |
-| Zainab Hazem | 9 | 1 | 4 | 4 | 21 | 17.4% | 6 | 4 |
-| Alaa | 9 | 2 | 4 | 3 | 19 | 15.7% | 7 | 2 |
+| Ali Al-Sharqawi | 9 | 1 | 6 | 2 | 19 | 15.6% | 7 | 30 |
+| Fatma Eissa | 14 | 1 | 8 | 5 | 32 | 26.2% | 7 | 13 |
+| Mariam | 12 | 0 | 6 | 6 | 30 | 24.6% | 5 | 4 |
+| Zainab Hazem | 9 | 1 | 5 | 3 | 20 | 16.4% | 5 | 4 |
+| Alaa | 10 | 3 | 3 | 4 | 21 | 17.2% | 8 | 3 |
 
 Complexity points are relative (S=1, M=2, L=3). They are not hours.
 
@@ -136,7 +137,7 @@ A skill that only one person can do alone is a risk: that person becomes a bottl
 | Skill | Members at level 2 or more | Members at level 3 | Tasks needing it (primary) | Note |
 |---|---|---|---|---|
 | GIT | 1 | 1 | 3 | one person only: pair someone with them |
-| PY | 5 | 1 | 20 |  |
+| PY | 5 | 1 | 21 |  |
 | API | 1 | 1 | 8 | one person only: pair someone with them |
 | DB | 1 | 1 | 5 | one person only: pair someone with them |
 | LLM | 2 | 1 | 7 |  |
@@ -144,7 +145,7 @@ A skill that only one person can do alone is a risk: that person becomes a bottl
 | EVAL | 2 | 1 | 2 |  |
 | FE | 2 | 1 | 7 |  |
 | UX | 2 | 1 | 5 |  |
-| DATA | 5 | 1 | 4 |  |
+| DATA | 5 | 1 | 5 |  |
 | QA | 1 | 1 | 5 | one person only: pair someone with them |
 | SEC | 1 | 1 | 5 | one person only: pair someone with them |
 | DEVOPS | 1 | 1 | 3 | one person only: pair someone with them |

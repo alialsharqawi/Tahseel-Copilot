@@ -1,7 +1,7 @@
 # Project Status
 
 **Last updated:** 26 November 2026
-**Phase:** Documentation baseline is complete. The repository skeleton is complete through PR #69 (T-002, Issue #16); PRs #72 (T-003), #73 (T-022), and #74 (T-004) are merged, and Issues #18, #6, and #19 are closed. The 53 task issues are on the project board (42 open, 11 closed), and open tasks are assigned to D40 phase milestones by wave. T-003 provides the backend, PostgreSQL/pgvector, frontend, and Docker Compose integration. **Current phase: P1 — Setup and data foundation (due 30 November 2026). Final defense: Tuesday, 15 December 2026.**
+**Phase:** Documentation baseline is complete. The repository skeleton is complete through PR #69 (T-002, Issue #16); PRs #72 (T-003), #73 (T-022), and #74 (T-004) are merged, and Issues #18, #6, and #19 are closed. The 54 task issues are on the project board (43 open, 11 closed), and open tasks are assigned to D40 phase milestones by wave. T-003 provides the backend, PostgreSQL/pgvector, frontend, and Docker Compose integration. **Current phase: P1 — Setup and data foundation (due 30 November 2026). Final defense: Tuesday, 15 December 2026.**
 
 ## Done
 
@@ -23,11 +23,11 @@
 - Full review and audit of repository consistency (`docs/governance/Tahseel_AI_Consistency_Ledger.md`: 81 Done, 2 Deferred, 2 Open)
 - Six parts of the LMS documentation in `docs/lms/parts/`, including Project Planning and Management
 - Diagrams in `docs/diagrams/`: the ERD, the architecture, the request flow, the deployment, the navigation flow, the stakeholder map, and ten wireframes in English and Arabic
-- The team system: `CONTRIBUTING.md`, the guides and the 53-task backlog in `docs/team/`, the GitHub forms and labels in `.github/`, and `tools/team_tools.py`
+- The team system: `CONTRIBUTING.md`, the guides and the 54-task backlog in `docs/team/`, the GitHub forms and labels in `.github/`, and `tools/team_tools.py`
 - The team action dashboard (`docs/team/team-now.html`): refreshes public GitHub issue data and shows task readiness and open dependency owners without credentials
 - The team brief (`docs/team/team-brief-whatsapp.html`): evergreen project and workflow guide; live task status now points to the dashboard
 - The filled skills matrix (`docs/team/skills.csv`) and the skill-weighted assignment suggestion (`docs/team/ASSIGNMENT_SUGGESTION.md`, `docs/team/assignments.csv`)
-- GitHub setup: branch protection on `main`, all five collaborators, the project board, the labels, and one issue per backlog task (53 issues; 42 open and 11 closed); all 53 task issues are on the board, with open tasks assigned to D40 phase milestones by wave
+- GitHub setup: branch protection on `main`, all five collaborators, the project board, the labels, and one issue per backlog task (54 issues; 43 open and 11 closed); all 54 task issues are on the board, with open tasks assigned to D40 phase milestones by wave
 - Legal and security infrastructure: proprietary academic license (`LICENSE`) and vulnerability policy (`.github/SECURITY.md`)
 
 ## Next
@@ -36,15 +36,15 @@
 2. Continue P1 foundation tasks toward the 30 November gate, following issue dependencies; use `docs/team/team-now.html` for the recommended next task and blocker owners
 3. Build the Core vertical slice in wave order: data foundation, then the AI slice, then integration and guardrails
 4. Slides, demo video, and the evaluation results, with real numbers from the demo and the evaluation (updating the live Canva presentation link submitted on the LMS)
-5. T-013 tests have not started; wait for Ali's approval of the D45/PRD diffs and explicit authorization to begin
+5. T-013 tests have not started; its documentation PR #85 is merged, but implementation/tests still require Ali's explicit authorization
 
 ## Receivables calculation clarifications (26 November 2026)
 
-- Updated D45 and the PRD with confirmed calculation rules and approved edge cases.
+- Updated D45 and the PRD with confirmed calculation rules and approved edge cases; merged in PR #85.
 - Synchronized T-013 in `docs/team/backlog.csv`, regenerated `docs/team/BACKLOG.md`, and updated GitHub Issue #27.
-- Opened follow-up Issue #84 for allowing `due_date == invoice_date` in the synthetic-data generator; added it to the task board Backlog.
+- Opened follow-up Issue #84 for allowing `due_date == invoice_date` in the synthetic-data generator.
 - Changed files: `docs/governance/Tahseel_AI_Decision_Log.md`, `docs/technical/Tahseel_AI_PRD.md`, `docs/team/backlog.csv`, `docs/team/BACKLOG.md`, `PROJECT_STATUS.md`.
-- No code or tests were started. The docs-only PR is open (#90), linking issue #27 without closing it.
+
 
 ## Open items
 
