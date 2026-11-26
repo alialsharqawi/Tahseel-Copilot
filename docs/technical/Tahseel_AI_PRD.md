@@ -1290,23 +1290,93 @@ Base:
 /api/v1
 ```
 
-Every endpoint is tenant-scoped and role-checked on the server. An endpoint that executes something (creating a task, marking a draft as approved) rejects any recommendation that is not approved (AC-005).
+Business-data endpoints are tenant-scoped and role-checked on the server. Login is
+public; authentication and authorization requirements for the other endpoints are
+specified below and by each feature. An endpoint that executes something (creating a
+task, marking a draft as approved) rejects any recommendation that is not approved
+(AC-005).
 
 ### Auth
 
-```http
-POST /auth/login                 verify email/password, issue HS256 bearer JWT
-GET /auth/me                     return the authenticated user's profile (tenant-scoped)
+| Method | Path | Authentication | Success | Other responses |
+|---|---|---|---|---|
+| POST | `/auth/login` | Public | `200` `TokenResponse` | `401` invalid credentials; `409` same credentials match multiple tenants; `422` invalid request; `500` invalid application auth configuration |
+| GET | `/auth/me` | Bearer token | `200` `UserResponse` | `401` missing, invalid, expired, or inactive token |
+
+`POST /auth/login` accepts `email` and `password`; `tenant_id` is optional and is
+required only when the same email and password match users in multiple tenants.
+Email is trimmed and lowercased. On success, the response contains an HS256 access
+token, `token_type`, `expires_in` seconds, and the public user profile.
+
+```json
+{
+  "email": "owner@example.test",
+  "password": "<password>",
+  "tenant_id": "11111111-1111-4111-8111-111111111111"
+}
 ```
 
-### Users (Owner-only, within the caller's tenant)
-
-```http
-GET /users                       list users in the Owner's tenant
-GET /users/{id}                  fetch a single user
-POST /users                      create a user (role: OWNER, FINANCE_MANAGER, or COLLECTOR)
-PATCH /users/{id}                update name, email, role, or password
+```json
+{
+  "access_token": "<signed-access-token>",
+  "token_type": "bearer",
+  "expires_in": 3600,
+  "user": {
+    "id": "22222222-2222-4222-8222-222222222222",
+    "tenant_id": "11111111-1111-4111-8111-111111111111",
+    "name": "Example Owner",
+    "email": "owner@example.test",
+    "role": "OWNER",
+    "created_at": "2026-11-26T12:00:00Z"
+  }
+}
 ```
+
+The `UserResponse` object contains `id`, `tenant_id`, `name`, `email`, `role`, and
+`created_at`; it never includes the password or password hash.
+
+### Users (Owner-only, within the authenticated user's tenant)
+
+| Method | Path | Success | Other responses |
+|---|---|---|---|
+| GET | `/users` | `200` list of `UserResponse` | `401` unauthenticated; `403` not an Owner |
+| GET | `/users/{user_id}` | `200` `UserResponse` | `401` unauthenticated; `403` not an Owner; `404` not found in the Owner's tenant; `422` invalid UUID |
+| POST | `/users` | `201` `UserResponse` | `401` unauthenticated; `403` not an Owner; `409` duplicate email in tenant; `422` invalid request |
+| PATCH | `/users/{user_id}` | `200` `UserResponse` | `401` unauthenticated; `403` not an Owner; `404` not found in the Owner's tenant; `409` duplicate email or attempted demotion of the last Owner; `422` invalid UUID or request |
+
+The create request requires `name`, `email`, `password`, and `role`. The role is
+`OWNER`, `FINANCE_MANAGER`, or `COLLECTOR`. The server assigns `tenant_id` from the
+authenticated Owner; a client-supplied tenant ID is not used. Names and emails are
+trimmed, emails are lowercased, and passwords must be at least eight characters with
+no leading or trailing whitespace. Passwords are stored as Argon2id hashes.
+
+The patch request accepts any non-empty subset of `name`, `email`, `role`, and
+`password`; `null` values do not update a field. Only an Owner can change users or
+roles. Role changes take effect immediately because the server reloads the user's
+role from the database for each request. The last Owner in a tenant cannot be
+demoted. A password change updates the hash, but does not revoke already-issued
+access tokens; they remain valid until they expire. Email uniqueness is
+case-insensitive within a tenant; different tenants may use the same email.
+
+```json
+{
+  "name": "Example Collector",
+  "email": "collector@example.test",
+  "password": "<password>",
+  "role": "COLLECTOR"
+}
+```
+
+```json
+{
+  "role": "FINANCE_MANAGER"
+}
+```
+
+The documented error responses use `{"detail": "..."}`. FastAPI validation failures
+use `422` with its standard `detail` array. The live OpenAPI document, including the
+request/response schemas and examples, is available at `/openapi.json`; Swagger UI is
+available at `/docs`. The registered route prefix for all paths above is `/api/v1`.
 
 ### Customers
 
@@ -2045,10 +2115,10 @@ Core items must be checked. Should and Delivery items follow the tiers in `Tahse
 - [ ] Backend deployed.
 - [ ] Frontend deployed.
 - [ ] PostgreSQL database working.
-- [ ] Authentication implemented.
-- [ ] RBAC implemented.
+- [x] Authentication implemented (T-011).
+- [x] RBAC implemented (T-011).
 - [ ] Tenant isolation tested.
-- [ ] Three roles enforced on the server.
+- [x] Three roles enforced on the server (T-011).
 - [ ] Customer memory can be written (notes, call results, promises) and is used by the agent.
 - [ ] Policy rules are evaluated by code and cited with their source.
 - [ ] Excel/CSV import works.

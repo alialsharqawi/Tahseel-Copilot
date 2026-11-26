@@ -7,7 +7,7 @@
 
 - Docker Compose foundation for T-003: FastAPI health endpoint, bilingual frontend, and PostgreSQL/pgvector integration
 - T-010 database foundation: SQLAlchemy models and an initial Alembic migration for all 19 tables, with schema and migration tests
-- T-011 authentication, users, and the three roles: JWT login (Argon2id), Owner/Finance Manager/Collector RBAC enforced server-side, Collector assigned-only customer access, Owner-only user management, with tests (PR #87)
+- T-011 authentication, users, and the three roles: JWT login (Argon2id), Owner/Finance Manager/Collector RBAC enforced server-side, Collector assigned-only customer access, Owner-only user management, tests (PR #87), and documented Auth/Users endpoints with OpenAPI schemas (PR #88)
 - Synthetic bilingual policy corpus and validation fixtures for T-022
 - CI pipeline for T-004: backend and frontend lint/test jobs on pull requests to `main`, with required status checks configured
 - Repository skeleton for T-002: `backend/`, `frontend/`, `data/`, `evals/`, and `deploy/` directories; `.env.example`; `.pre-commit-config.yaml`; and expanded `.gitignore` protections
