@@ -51,7 +51,7 @@ The screens are in `docs/diagrams/wireframes/` (English and Arabic).
 - The slides, the demo video, and the evaluation results.
 - Any contact with real distributors. Everything about users is still a hypothesis.
 
-**The date is fixed: Tuesday, 15 December 2026.** The backlog (`docs/team/BACKLOG.md`) is 53 tasks. The plan is sequenced backwards from the defense, and every phase ends with a demoable gate. If a gate slips we cut in a fixed order (Decision Log, section E); the Core tier is never cut.
+**The date is fixed: Tuesday, 15 December 2026.** The backlog (`docs/team/BACKLOG.md`) is 54 tasks. The plan is sequenced backwards from the defense, and every phase ends with a demoable gate. If a gate slips we cut in a fixed order (Decision Log, section E); the Core tier is never cut.
 
 ## 4. How we work together
 

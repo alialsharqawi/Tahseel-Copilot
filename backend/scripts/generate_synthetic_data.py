@@ -480,8 +480,8 @@ def validate_synthetic_data(fixture: dict[str, Any]) -> None:
         if invoice["customer_id"] not in customer_by_id:
             raise ValueError("Invoice references an unknown customer")
         invoice_date = date.fromisoformat(invoice["invoice_date"])
-        if date.fromisoformat(invoice["due_date"]) <= invoice_date:
-            raise ValueError("Invoice due date must follow its invoice date")
+        if date.fromisoformat(invoice["due_date"]) < invoice_date:
+            raise ValueError("Invoice due date cannot precede its invoice date")
         if invoice["status"] == "disputed":
             if (
                 not invoice["dispute_reason"]

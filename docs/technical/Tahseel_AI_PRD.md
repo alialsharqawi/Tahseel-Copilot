@@ -354,7 +354,7 @@ Import rules:
 
 ### 10.2 Receivables Analysis
 
-`report_date` is supplied to the calculation; the engine does not read the system clock. Before validating input, ignore invoices dated after `report_date` and payments dated after `report_date` entirely. These records do not participate in amount, date, reference, or duplicate-invoice-number validation. For each remaining invoice dated on or before `report_date`:
+`report_date` is supplied to the calculation; the engine does not read the system clock. Before validating input, ignore invoices dated after `report_date` and payments dated after `report_date` entirely. They do not participate in amount, date, reference, or duplicate-invoice-number validation. For each remaining invoice dated on or before `report_date`:
 
 ```text
 Paid Amount = sum of payments with payment_date <= report_date
@@ -367,7 +367,7 @@ Payments are the source of truth; any stored `paid_amount` is a cache that is re
 
 Use `Decimal` for all money and do not round inside the calculation engine. A zero or negative invoice amount, a zero or negative payment amount, or an amount provided with more than two fractional digits raises `ValidationError`. For example, `Decimal("1.230")` is rejected as provided even though it is numerically equivalent to `1.23`; callers/importers must normalize it before calculation. A payment dated before its invoice date also raises `ValidationError`.
 
-The database enforces unique invoice numbers within a tenant; duplicate invoice numbers among the remaining eligible invoices must be surfaced as a `ValidationError` at the application/import boundary. Future-dated invoices are ignored before this duplicate check. An invoice due date may equal its invoice date; an earlier due date raises `ValidationError`. The synthetic-data generator must be updated separately to permit same-day due dates.
+The database enforces unique invoice numbers within a tenant on `(tenant_id, invoice_number)`; duplicate invoice numbers among the remaining eligible invoices must also be surfaced as a `ValidationError` at the application/import boundary. Future-dated invoices are ignored before this duplicate check. An invoice due date may equal its invoice date; an earlier due date raises `ValidationError`. The synthetic-data generator must be updated separately to permit same-day due dates.
 
 The pure engine may use a receivables-specific `ValidationError` subclassing `ValueError` (implementation note).
 
@@ -747,7 +747,8 @@ Average Accounts Receivable = (Opening AR + Closing AR as of report_date) / 2
 Opening AR                  = balance immediately before the period starts
 Closing AR                  = balance at report_date
 Credit Sales                = sum of invoice amounts with period_start <= invoice_date <= report_date
-Number of Days              = calendar days from period_start through report_date, inclusive
+Number of Days              = calendar days from period_start through report_date, inclusive,
+                              when report_date < period_end; otherwise through period_end
 ```
 
 Opening AR is `Decimal | None` and is derived from invoice and payment history when possible. If it is `None`, use zero and return `opening_ar_assumed=true`; an explicit `Decimal(0)` is a genuine zero and does not set the flag. If credit sales are zero, return DSO as null/N/A, not zero or infinity. Total-sales DSO is out of scope; the receivables data does not contain a complete sales ledger. Disputed unpaid balances remain receivables and are included in DSO AR.
@@ -1292,13 +1293,93 @@ Base:
 /api/v1
 ```
 
-Every endpoint is tenant-scoped and role-checked on the server. An endpoint that executes something (creating a task, marking a draft as approved) rejects any recommendation that is not approved (AC-005).
+Business-data endpoints are tenant-scoped and role-checked on the server. Login is
+public; authentication and authorization requirements for the other endpoints are
+specified below and by each feature. An endpoint that executes something (creating a
+task, marking a draft as approved) rejects any recommendation that is not approved
+(AC-005).
 
 ### Auth
 
-```http
-POST /auth/login
+| Method | Path | Authentication | Success | Other responses |
+|---|---|---|---|---|
+| POST | `/auth/login` | Public | `200` `TokenResponse` | `401` invalid credentials; `409` same credentials match multiple tenants; `422` invalid request; `500` invalid application auth configuration |
+| GET | `/auth/me` | Bearer token | `200` `UserResponse` | `401` missing, invalid, expired, or inactive token |
+
+`POST /auth/login` accepts `email` and `password`; `tenant_id` is optional and is
+required only when the same email and password match users in multiple tenants.
+Email is trimmed and lowercased. On success, the response contains an HS256 access
+token, `token_type`, `expires_in` seconds, and the public user profile.
+
+```json
+{
+  "email": "owner@example.test",
+  "password": "<password>",
+  "tenant_id": "11111111-1111-4111-8111-111111111111"
+}
 ```
+
+```json
+{
+  "access_token": "<signed-access-token>",
+  "token_type": "bearer",
+  "expires_in": 3600,
+  "user": {
+    "id": "22222222-2222-4222-8222-222222222222",
+    "tenant_id": "11111111-1111-4111-8111-111111111111",
+    "name": "Example Owner",
+    "email": "owner@example.test",
+    "role": "OWNER",
+    "created_at": "2026-11-26T12:00:00Z"
+  }
+}
+```
+
+The `UserResponse` object contains `id`, `tenant_id`, `name`, `email`, `role`, and
+`created_at`; it never includes the password or password hash.
+
+### Users (Owner-only, within the authenticated user's tenant)
+
+| Method | Path | Success | Other responses |
+|---|---|---|---|
+| GET | `/users` | `200` list of `UserResponse` | `401` unauthenticated; `403` not an Owner |
+| GET | `/users/{user_id}` | `200` `UserResponse` | `401` unauthenticated; `403` not an Owner; `404` not found in the Owner's tenant; `422` invalid UUID |
+| POST | `/users` | `201` `UserResponse` | `401` unauthenticated; `403` not an Owner; `409` duplicate email in tenant; `422` invalid request |
+| PATCH | `/users/{user_id}` | `200` `UserResponse` | `401` unauthenticated; `403` not an Owner; `404` not found in the Owner's tenant; `409` duplicate email or attempted demotion of the last Owner; `422` invalid UUID or request |
+
+The create request requires `name`, `email`, `password`, and `role`. The role is
+`OWNER`, `FINANCE_MANAGER`, or `COLLECTOR`. The server assigns `tenant_id` from the
+authenticated Owner; a client-supplied tenant ID is not used. Names and emails are
+trimmed, emails are lowercased, and passwords must be at least eight characters with
+no leading or trailing whitespace. Passwords are stored as Argon2id hashes.
+
+The patch request accepts any non-empty subset of `name`, `email`, `role`, and
+`password`; `null` values do not update a field. Only an Owner can change users or
+roles. Role changes take effect immediately because the server reloads the user's
+role from the database for each request. The last Owner in a tenant cannot be
+demoted. A password change updates the hash, but does not revoke already-issued
+access tokens; they remain valid until they expire. Email uniqueness is
+case-insensitive within a tenant; different tenants may use the same email.
+
+```json
+{
+  "name": "Example Collector",
+  "email": "collector@example.test",
+  "password": "<password>",
+  "role": "COLLECTOR"
+}
+```
+
+```json
+{
+  "role": "FINANCE_MANAGER"
+}
+```
+
+The documented error responses use `{"detail": "..."}`. FastAPI validation failures
+use `422` with its standard `detail` array. The live OpenAPI document, including the
+request/response schemas and examples, is available at `/openapi.json`; Swagger UI is
+available at `/docs`. The registered route prefix for all paths above is `/api/v1`.
 
 ### Customers
 
@@ -1715,11 +1796,13 @@ A Collector cannot see unassigned customers and cannot approve a recommendation 
 
 ### AC-015 Portfolio KPI Arithmetic
 
-For the effective inclusive reporting period from `period_start` through `report_date`, DSO is `(Average AR / Credit Sales) x Days in Period`, where `Average AR = (Opening AR + Closing AR as of report_date) / 2`. Opening AR is `Decimal | None`; `None` is treated as zero and returns `opening_ar_assumed=true`, while an explicit zero does not set the flag. Zero credit sales returns null/N/A. Credit sales are invoice amounts dated from `period_start` through `report_date`. Disputed balances are included in AR for DSO.
+For the requested inclusive reporting period, DSO is `(Average AR / Credit Sales) x Days in Period`, where `Average AR = (Opening AR + Closing AR as of report_date) / 2`. Credit sales include invoice amounts dated from `period_start` through `report_date`. If `report_date < period_end`, Days in Period is the inclusive count from `period_start` through `report_date`; when `report_date == period_end`, use the full requested period. Opening AR is `Decimal | None`; `None` is treated as zero and returns `opening_ar_assumed=true`, while an explicit zero does not set the flag. Zero credit sales returns null/N/A. Disputed balances are included in AR for DSO.
 
-`overdue_ratio = overdue_amount / total_outstanding`, stored and returned as a fraction; disputed balances are included in both amounts. Return null if total outstanding is zero. ADBT is the average of `final_settlement_date - due_date` for fully settled invoices with `period_start <= final_settlement_date <= report_date`. The final settlement date is the earliest date on which cumulative payments, ordered by payment date with same-day payments summed first, reach or exceed the invoice amount; later excess payments do not change it. Partially paid invoices are ineligible. Retain negative values for early payment; display ADBT next to `overdue_ratio`; return null if none qualify. Invoices and payments after `report_date` are excluded before validation. For DSO, if `report_date < period_end`, use only data through `report_date` and count days inclusively from `period_start` through `report_date`. A one-day inclusive period is valid; raise `ValidationError` if the start is after the end or `report_date` is outside the period.
+`overdue_ratio = overdue_amount / total_outstanding`, stored and returned as a fraction; disputed balances are included in both amounts. Return null if total outstanding is zero. ADBT is the average of `final_settlement_date - due_date` for fully settled invoices with `period_start <= final_settlement_date <= report_date`. For multiple payments, the final settlement date is the earliest date cumulative payments ordered by date, with same-day payments summed first, reach or exceed the invoice amount; later excess payments do not change that date. Partially paid invoices are ineligible. Retain negative values for early payment and return null if none qualify.
 
-Zero or negative invoice/payment amounts, amounts provided with more than two fractional digits (including `Decimal("1.230")`), payments dated before their invoice date, and duplicate invoice numbers among eligible invoices within a tenant raise `ValidationError`; records dated after `report_date` are ignored before these validations. Tenant-scoped invoice-number uniqueness is also enforced in the database. An invoice due date may equal its invoice date, but may not be earlier; update the synthetic-data generator separately to allow equality. **Credit balance:** For each overpaid invoice, `credit_balance = excess`; do not apply it to another invoice. Any customer-level aggregation is display-only, and `credit_balance` is excluded from `total_outstanding`. Use `Decimal` with no engine-level rounding.
+Invoices and payments dated after `report_date` are ignored entirely before validation, including amount, date, reference, and duplicate-number checks. A one-day inclusive period is valid; raise `ValidationError` if the start is after the end or `report_date` is outside the period. Reject zero or negative invoice/payment amounts, amounts provided with more than two fractional digits (including `Decimal("1.230")`), payments before invoice dates, and duplicate eligible invoice numbers within a tenant. Enforce tenant-scoped invoice-number uniqueness in the database on `(tenant_id, invoice_number)` and validate eligible duplicates at the application/import boundary. Invoice due dates may equal invoice dates but may not be earlier; update the synthetic-data generator separately to allow equality.
+
+Overpayments yield zero invoice balance and a per-invoice `credit_balance = excess`; do not apply excess to another invoice. Customer-level credit aggregation is display-only and excluded from `total_outstanding`. Use `Decimal` with no engine-level rounding.
 
 **Currency assumption:** One currency per tenant. Do not validate or reject currencies in code yet because the invoice model has no currency field. Other approved edge-case rules are recorded in Decision Log D45.
 
@@ -2037,10 +2120,10 @@ Core items must be checked. Should and Delivery items follow the tiers in `Tahse
 - [ ] Backend deployed.
 - [ ] Frontend deployed.
 - [ ] PostgreSQL database working.
-- [ ] Authentication implemented.
-- [ ] RBAC implemented.
+- [x] Authentication implemented (T-011).
+- [x] RBAC implemented (T-011).
 - [ ] Tenant isolation tested.
-- [ ] Three roles enforced on the server.
+- [x] Three roles enforced on the server (T-011).
 - [ ] Customer memory can be written (notes, call results, promises) and is used by the agent.
 - [ ] Policy rules are evaluated by code and cited with their source.
 - [ ] Excel/CSV import works.

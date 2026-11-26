@@ -19,21 +19,34 @@ The API listens on `http://localhost:8000`. Its `GET /health` endpoint returns
 
 ## Authentication, roles, and users (T-011)
 
-The `/api/v1` router provides bearer JWT authentication, Owner-only user management,
-and tenant- and role-scoped customer access:
+The authentication and user-management endpoints are:
 
-- `POST /api/v1/auth/login` — verifies email/password (Argon2id) and issues an HS256
-  bearer token (`APP_SECRET_KEY` must be at least 32 bytes; `ACCESS_TOKEN_TTL_MINUTES`
-  defaults to `60`).
-- `GET /api/v1/auth/me` — returns the authenticated user's profile loaded from the database.
-- `GET /api/v1/users`, `GET /api/v1/users/{id}`, `POST /api/v1/users`,
-  `PATCH /api/v1/users/{id}` — restricted to `OWNER` within the caller's tenant.
-- `GET /api/v1/customers`, `GET /api/v1/customers/{id}` — `OWNER` and `FINANCE_MANAGER`
-  see all customers in their tenant; `COLLECTOR` sees only customers where
-  `assigned_collector` matches their user ID.
+| Method and path | Access | Purpose |
+|---|---|---|
+| `POST /api/v1/auth/login` | Public | Verify email/password and issue an HS256 bearer token |
+| `GET /api/v1/auth/me` | Authenticated | Return the current database-backed user profile |
+| `GET /api/v1/users` | Owner only | List users in the Owner's tenant |
+| `GET /api/v1/users/{user_id}` | Owner only | Retrieve a user in the Owner's tenant |
+| `POST /api/v1/users` | Owner only | Create a user in the Owner's tenant |
+| `PATCH /api/v1/users/{user_id}` | Owner only | Update a user's name, email, role, or password |
 
-Role enforcement and the D15/D30 permissions matrix live in `backend/auth/` and are
-checked on the server for every request.
+Send protected requests with `Authorization: Bearer <access_token>`. Tokens are
+signed with `APP_SECRET_KEY` (at least 32 bytes); `ACCESS_TOKEN_TTL_MINUTES` defaults
+to `60`. Login accepts an optional `tenant_id` to disambiguate matching credentials
+across tenants. The server assigns a new user's tenant from the authenticated Owner,
+stores passwords as Argon2id hashes, and never returns password hashes. Email
+uniqueness is case-insensitive within a tenant. User updates are Owner-only, and the
+last Owner in a tenant cannot be demoted.
+
+The `OWNER`, `FINANCE_MANAGER`, and `COLLECTOR` permissions are enforced server-side.
+Owners and Finance Managers see all customers in their tenant; Collectors see only
+customers where `assigned_collector` matches their user ID. The permission matrix is
+defined in Decision Log D15/D30 and implemented in `backend/auth/`.
+
+Request/response schemas, examples, and status codes are specified in
+[PRD section 21](../docs/technical/Tahseel_AI_PRD.md#21-api). FastAPI exposes the
+generated OpenAPI document at `http://localhost:8000/openapi.json` and Swagger UI at
+`http://localhost:8000/docs`.
 
 ## Database migrations
 

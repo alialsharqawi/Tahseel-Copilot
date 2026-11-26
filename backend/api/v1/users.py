@@ -7,7 +7,12 @@ from sqlalchemy import func
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
-from api.v1.schemas import UserCreateRequest, UserResponse, UserUpdateRequest
+from api.v1.schemas import (
+    ErrorResponse,
+    UserCreateRequest,
+    UserResponse,
+    UserUpdateRequest,
+)
 from auth.dependencies import AuthenticatedUser, get_tenant_access, require_roles
 from auth.permissions import Role
 from auth.security import hash_password
@@ -18,7 +23,27 @@ from db.tenant_access import TenantScopedDataAccess
 router = APIRouter(prefix="/users", tags=["users"])
 
 
-@router.get("", response_model=list[UserResponse])
+@router.get(
+    "",
+    response_model=list[UserResponse],
+    summary="List users",
+    description="List users in the authenticated Owner's tenant. Owner-only.",
+    responses={
+        401: {
+            "model": ErrorResponse,
+            "description": "Bearer token is missing, invalid, expired, or inactive.",
+        },
+        403: {
+            "model": ErrorResponse,
+            "description": "The authenticated user is not an Owner.",
+            "content": {
+                "application/json": {
+                    "example": {"detail": "Insufficient role permissions."}
+                }
+            },
+        },
+    },
+)
 def list_users(
     _owner: AuthenticatedUser = Depends(require_roles(Role.OWNER)),
     access: TenantScopedDataAccess = Depends(get_tenant_access),
@@ -28,7 +53,27 @@ def list_users(
     return [UserResponse.model_validate(user) for user in users]
 
 
-@router.get("/{user_id}", response_model=UserResponse)
+@router.get(
+    "/{user_id}",
+    response_model=UserResponse,
+    summary="Get a user",
+    description="Fetch one user from the authenticated Owner's tenant. Owner-only.",
+    responses={
+        401: {
+            "model": ErrorResponse,
+            "description": "Bearer token is missing, invalid, expired, or inactive.",
+        },
+        403: {
+            "model": ErrorResponse,
+            "description": "The authenticated user is not an Owner.",
+        },
+        404: {
+            "model": ErrorResponse,
+            "description": "No user with this ID exists in the Owner's tenant.",
+            "content": {"application/json": {"example": {"detail": "User not found."}}},
+        },
+    },
+)
 def get_user(
     user_id: UUID,
     _owner: AuthenticatedUser = Depends(require_roles(Role.OWNER)),
@@ -44,7 +89,37 @@ def get_user(
     return UserResponse.model_validate(user)
 
 
-@router.post("", response_model=UserResponse, status_code=status.HTTP_201_CREATED)
+@router.post(
+    "",
+    response_model=UserResponse,
+    status_code=status.HTTP_201_CREATED,
+    summary="Create a user",
+    description=(
+        "Create a user in the authenticated Owner's tenant. The tenant_id is "
+        "assigned by the server; clients cannot choose another tenant. Owner-only."
+    ),
+    responses={
+        401: {
+            "model": ErrorResponse,
+            "description": "Bearer token is missing, invalid, expired, or inactive.",
+        },
+        403: {
+            "model": ErrorResponse,
+            "description": "The authenticated user is not an Owner.",
+        },
+        409: {
+            "model": ErrorResponse,
+            "description": "A user with this email already exists in the tenant.",
+            "content": {
+                "application/json": {
+                    "example": {
+                        "detail": "A user with this email already exists in the tenant."
+                    }
+                }
+            },
+        },
+    },
+)
 def create_user(
     payload: UserCreateRequest,
     owner: AuthenticatedUser = Depends(require_roles(Role.OWNER)),
@@ -95,7 +170,39 @@ def create_user(
     return UserResponse.model_validate(created)
 
 
-@router.patch("/{user_id}", response_model=UserResponse)
+@router.patch(
+    "/{user_id}",
+    response_model=UserResponse,
+    summary="Update a user",
+    description=(
+        "Update one or more of name, email, role, or password in the Owner's tenant. "
+        "At least one field is required. The last Owner cannot be demoted. Owner-only."
+    ),
+    responses={
+        401: {
+            "model": ErrorResponse,
+            "description": "Bearer token is missing, invalid, expired, or inactive.",
+        },
+        403: {
+            "model": ErrorResponse,
+            "description": "The authenticated user is not an Owner.",
+        },
+        404: {
+            "model": ErrorResponse,
+            "description": "No user with this ID exists in the Owner's tenant.",
+            "content": {"application/json": {"example": {"detail": "User not found."}}},
+        },
+        409: {
+            "model": ErrorResponse,
+            "description": "Email conflicts with another user or this is the last Owner.",
+            "content": {
+                "application/json": {
+                    "example": {"detail": "Cannot demote the last Owner in the tenant."}
+                }
+            },
+        },
+    },
+)
 def update_user(
     user_id: UUID,
     payload: UserUpdateRequest,
