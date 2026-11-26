@@ -354,7 +354,7 @@ Import rules:
 
 ### 10.2 Receivables Analysis
 
-`report_date` is supplied to the calculation; the engine does not read the system clock. Invoices and payments dated after it are ignored. For each invoice dated on or before `report_date`:
+`report_date` is supplied to the calculation; the engine does not read the system clock. Invoices and payments dated after it are ignored. Records dated after `report_date` are ignored entirely before validation, including duplicate-number checks. Duplicate invoice numbers within a tenant are enforced at the database storage level on `(tenant_id, invoice_number)`. For each invoice dated on or before `report_date`:
 
 ```text
 Paid Amount = sum of payments with payment_date <= report_date
@@ -365,9 +365,9 @@ Payments are the source of truth; any stored `paid_amount` is a cache that is re
 
 **Credit balance:** For each overpaid invoice, `credit_balance = excess`; do not apply it to another invoice. Any customer-level aggregation is display-only, and `credit_balance` is excluded from `total_outstanding`.
 
-Use `Decimal` for all money and do not round inside the calculation engine. A zero or negative invoice amount, a zero or negative payment amount, or an amount with more than two fractional digits raises `ValidationError`. A payment dated before its invoice date also raises `ValidationError`.
+Use `Decimal` for all money and do not round inside the calculation engine. A zero or negative invoice amount, a zero or negative payment amount, or an amount with more than two fractional digits raises `ValidationError`. Amount validation applies to the value as provided (before normalization): `Decimal("1.230")` is rejected because it carries more than two fractional digits, even though its numeric value equals `1.23`. Callers and importers must normalize amounts before submission. A payment dated before its invoice date also raises `ValidationError`.
 
-The database enforces unique invoice numbers within a tenant; duplicate invoice numbers must be surfaced as a `ValidationError` at the application/import boundary. An invoice due date may equal its invoice date; an earlier due date raises `ValidationError`. The synthetic-data generator must be updated separately to permit same-day due dates.
+The database enforces unique invoice numbers within a tenant; duplicate invoice numbers must be surfaced as a `ValidationError` at the application/import boundary for records dated on or before `report_date` (records dated after `report_date` are ignored entirely before validation, including duplicate-number checks). An invoice due date may equal its invoice date; an earlier due date raises `ValidationError`. The synthetic-data generator must be updated separately to permit same-day due dates.
 
 **Currency assumption:** One currency per tenant. Do not validate or reject currencies in code yet because the invoice model has no currency field.
 
@@ -727,7 +727,7 @@ Returns total outstanding, overdue amount and ratio, average days beyond terms, 
 
 ADBT is the average of `final_settlement_date - due_date` for fully settled invoices with `period_start <= final_settlement_date <= report_date`. Retain negative values for early payment; display ADBT next to `overdue_ratio`; return null if none qualify.
 
-For invoices with multiple payments, `final_settlement_date` is the date the payment that closes the invoice is applied. A partially paid invoice is not eligible. Report unpaid overdue invoices separately, including their count and average days overdue as of `report_date`.
+For invoices with multiple payments, `final_settlement_date` is the earliest date on which cumulative payments (sorted by date, same-day payments summed first) reach or exceed the invoice amount. Later excess payments don't change it. A partially paid invoice is not eligible. Report unpaid overdue invoices separately, including their count and average days overdue as of `report_date`.
 
 ```text
 DSO =
@@ -745,7 +745,7 @@ Average Accounts Receivable = (Opening AR + Closing AR) / 2
 Opening AR                  = balance immediately before the period starts
 Closing AR                  = balance at the end of the period
 Credit Sales                = sum of invoice amounts with invoice_date in the period
-Number of Days              = calendar days from period start through period end
+Number of Days              = calendar days from period start through `report_date` inclusive (when `report_date` < `period_end`, the effective period end is `report_date`; otherwise `period_end`)
 ```
 
 Opening AR is `Decimal | None` and is derived from invoice and payment history when possible. If it is `None`, use zero and return `opening_ar_assumed=true`; an explicit `Decimal(0)` is a genuine zero and does not set the flag. If credit sales are zero, return DSO as null/N/A, not zero or infinity. Total-sales DSO is out of scope; the receivables data does not contain a complete sales ledger. Disputed unpaid balances remain receivables and are included in DSO AR.
@@ -1713,11 +1713,11 @@ A Collector cannot see unassigned customers and cannot approve a recommendation 
 
 ### AC-015 Portfolio KPI Arithmetic
 
-For an inclusive reporting period, DSO is `(Average AR / Credit Sales) x Days in Period`, where `Average AR = (Opening AR + Closing AR) / 2`. Opening AR is `Decimal | None`; `None` is treated as zero and returns `opening_ar_assumed=true`, while an explicit zero does not set the flag. Zero credit sales returns null/N/A. Credit sales are invoice amounts dated within the period. Disputed balances are included in AR for DSO.
+For an inclusive reporting period, DSO is `(Average AR / Credit Sales) x Days in Period`, where `Average AR = (Opening AR + Closing AR) / 2`. Opening AR is `Decimal | None`; `None` is treated as zero and returns `opening_ar_assumed=true`, while an explicit zero does not set the flag. Zero credit sales returns null/N/A. Credit sales are invoice amounts dated within the period and on or before `report_date`. Days in Period = `period_start`..`report_date` inclusive when `report_date` < `period_end`; otherwise `period_start`..`period_end`. Disputed balances are included in AR for DSO.
 
-`overdue_ratio = overdue_amount / total_outstanding`, stored and returned as a fraction; disputed balances are included in both amounts. Return null if total outstanding is zero. ADBT is the average of `final_settlement_date - due_date` for fully settled invoices with `period_start <= final_settlement_date <= report_date`. Retain negative values for early payment; display ADBT next to `overdue_ratio`; return null if none qualify. Invoices and payments after `report_date` are excluded from balances. A one-day inclusive period is valid; raise `ValidationError` if the start is after the end or `report_date` is outside the period.
+`overdue_ratio = overdue_amount / total_outstanding`, stored and returned as a fraction; disputed balances are included in both amounts. Return null if total outstanding is zero. ADBT is the average of `final_settlement_date - due_date` for fully settled invoices with `period_start <= final_settlement_date <= report_date`. Retain negative values for early payment; display ADBT next to `overdue_ratio`; return null if none qualify. Invoices and payments after `report_date` are excluded from balances. Records dated after `report_date` are ignored entirely before validation, including duplicate-number checks. A one-day inclusive period is valid; raise `ValidationError` if the start is after the end or `report_date` is outside the period.
 
-Zero or negative invoice/payment amounts, amounts with more than two fractional digits, payments dated before their invoice date, and duplicate invoice numbers within a tenant raise `ValidationError`; tenant-scoped invoice-number uniqueness is also enforced in the database. An invoice due date may equal its invoice date, but may not be earlier; update the synthetic-data generator separately to allow equality. **Credit balance:** For each overpaid invoice, `credit_balance = excess`; do not apply it to another invoice. Any customer-level aggregation is display-only, and `credit_balance` is excluded from `total_outstanding`. Use `Decimal` with no engine-level rounding.
+Zero or negative invoice/payment amounts, amounts with more than two fractional digits, payments dated before their invoice date, and duplicate invoice numbers within a tenant raise `ValidationError` for records dated on or before `report_date` (records dated after `report_date` are ignored entirely before validation, including duplicate-number checks). Amount validation applies to the value as provided (before normalization): `Decimal("1.230")` is rejected because it carries more than two fractional digits, even though its numeric value equals `1.23`. Callers and importers must normalize amounts before submission. Tenant-scoped invoice-number uniqueness is also enforced in the database. An invoice due date may equal its invoice date, but may not be earlier; update the synthetic-data generator separately to allow equality. **Credit balance:** For each overpaid invoice, `credit_balance = excess`; do not apply it to another invoice. Any customer-level aggregation is display-only, and `credit_balance` is excluded from `total_outstanding`. Use `Decimal` with no engine-level rounding.
 
 **Currency assumption:** One currency per tenant. Do not validate or reject currencies in code yet because the invoice model has no currency field. Other approved edge-case rules are recorded in Decision Log D45.
 
