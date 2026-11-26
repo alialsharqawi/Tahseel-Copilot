@@ -16,6 +16,7 @@
 - Detailed specification: scoring formulas, a 19-table data model, API, and acceptance criteria (`docs/technical/Tahseel_AI_PRD.md`, version 1.3)
 - D43/D44 fix the MVP aging and DSO formulas and defer tenant-level reporting customization; T-013 remains independent of the settings service
 - D45 records the confirmed T-013 calculation rules and approved edge cases; currency remains an unenforced one-currency-per-tenant assumption, and D34 is unchanged
+- T-013 receivables engine: pure Decimal calculations for balances, aging, overdue KPIs, ADBT, and DSO, with focused tests
 - Technical strength case, memory design, evaluation plan, and security (`docs/technical/Tahseel_AI_Technical_Strength.md`)
 - Business case with evidence labels, verified sources, competitors, stakeholder analysis, ROI model, and validation plan (`docs/business/Tahseel_AI_Business_Strength.md`)
 - Multi-sector design (`docs/architecture/Tahseel_AI_Adaptability_Strategy.md`)
@@ -36,7 +37,6 @@
 2. Continue P1 foundation tasks toward the 30 November gate, following issue dependencies; use `docs/team/team-now.html` for the recommended next task and blocker owners
 3. Build the Core vertical slice in wave order: data foundation, then the AI slice, then integration and guardrails
 4. Slides, demo video, and the evaluation results, with real numbers from the demo and the evaluation (updating the live Canva presentation link submitted on the LMS)
-5. T-013 tests have not started; its documentation PR #85 is merged, but implementation/tests still require Ali's explicit authorization
 
 ## Receivables calculation clarifications (26 November 2026)
 
@@ -44,6 +44,13 @@
 - Synchronized T-013 in `docs/team/backlog.csv`, regenerated `docs/team/BACKLOG.md`, and updated GitHub Issue #27.
 - Opened follow-up Issue #84 for allowing `due_date == invoice_date` in the synthetic-data generator.
 - Changed files: `docs/governance/Tahseel_AI_Decision_Log.md`, `docs/technical/Tahseel_AI_PRD.md`, `docs/team/backlog.csv`, `docs/team/BACKLOG.md`, `PROJECT_STATUS.md`.
+
+## T-013 receivables engine (26 November 2026)
+
+- Implemented the pure, database-independent engine using `Decimal`, explicit `report_date`, D43 aging buckets, and D45 validation and cutoff semantics.
+- Added focused tests for balances, disputed amounts, payment association, aging, ADBT, DSO, and validation.
+- Validation passed: `python -m pytest tests/test_receivables_engine.py -q` (47 passed); `python -m pytest` (80 passed, 6 skipped); `ruff check backend`; and `ruff format --check backend`.
+- Changed files: `backend/core/receivables.py`, `backend/tests/test_receivables_engine.py`, `PROJECT_STATUS.md`.
 
 
 ## Open items
