@@ -1295,7 +1295,17 @@ Every endpoint is tenant-scoped and role-checked on the server. An endpoint that
 ### Auth
 
 ```http
-POST /auth/login
+POST /auth/login                 verify email/password, issue HS256 bearer JWT
+GET /auth/me                     return the authenticated user's profile (tenant-scoped)
+```
+
+### Users (Owner-only, within the caller's tenant)
+
+```http
+GET /users                       list users in the Owner's tenant
+GET /users/{id}                  fetch a single user
+POST /users                      create a user (role: OWNER, FINANCE_MANAGER, or COLLECTOR)
+PATCH /users/{id}                update name, email, role, or password
 ```
 
 ### Customers
