@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import uuid
+from datetime import date, timedelta
 from decimal import Decimal
 from pathlib import Path
 
@@ -130,6 +131,27 @@ def test_generator_is_reproducible_for_default_inputs() -> None:
     )
 
     assert first == second
+
+
+def test_validator_accepts_same_day_due_date() -> None:
+    fixture = generate_synthetic_data()
+    invoice = fixture["invoices"][0]
+    invoice["due_date"] = invoice["invoice_date"]
+
+    validate_synthetic_data(fixture)
+
+
+def test_validator_rejects_due_date_before_invoice_date() -> None:
+    fixture = generate_synthetic_data()
+    invoice = fixture["invoices"][0]
+    invoice_date = date.fromisoformat(invoice["invoice_date"])
+    invoice["due_date"] = (invoice_date - timedelta(days=1)).isoformat()
+
+    with pytest.raises(
+        ValueError,
+        match="cannot precede its invoice date",
+    ):
+        validate_synthetic_data(fixture)
 
 
 def test_seed_reference_date_and_tenant_id_are_configurable() -> None:

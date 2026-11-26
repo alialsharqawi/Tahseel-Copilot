@@ -43,13 +43,7 @@
 - Synchronized T-013 in `docs/team/backlog.csv`, regenerated `docs/team/BACKLOG.md`, and updated GitHub Issue #27.
 - Opened follow-up Issue #84 for allowing `due_date == invoice_date` in the synthetic-data generator.
 - Changed files: `docs/governance/Tahseel_AI_Decision_Log.md`, `docs/technical/Tahseel_AI_PRD.md`, `docs/team/backlog.csv`, `docs/team/BACKLOG.md`, `PROJECT_STATUS.md`.
-- No T-013 code or tests were started.
 
-## Synthetic-data same-day due-date follow-up (26 November 2026)
-
-- Added T-098 / Issue #84 as a small follow-up to completed T-020, assigned to Alaa with Fatma reviewing.
-- T-098 is represented in `backlog.csv` and `assignments.csv`; the `team-now.html` dashboard reads those files and GitHub issue assignments dynamically, so no hard-coded HTML task entry is needed.
-- The task will appear on the published dashboard after these backlog and assignment changes are merged. This assignment does not authorize or start T-013 work.
 
 ## Open items
 
