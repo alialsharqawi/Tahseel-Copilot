@@ -570,6 +570,7 @@ EXPECTED_ENUMS = {
 }
 
 EXPECTED_INDEXES = {
+    "users": {"uq_users_tenant_lower_email": ("tenant_id", "email")},
     "invoices": {
         "ix_invoices_tenant_customer_due": ("tenant_id", "customer_id", "due_date")
     },
@@ -946,8 +947,39 @@ def test_initial_migration_renders_all_tables_and_unbounded_vectors() -> None:
         assert f"CONSTRAINT {constraint_name}" in result.stdout
     for indexes in EXPECTED_INDEXES.values():
         for index_name in indexes:
-            assert f"CREATE INDEX {index_name}" in result.stdout
+            assert (
+                f"CREATE INDEX {index_name}" in result.stdout
+                or f"CREATE UNIQUE INDEX {index_name}" in result.stdout
+            )
+    assert (
+        "CREATE UNIQUE INDEX uq_users_tenant_lower_email ON users (tenant_id, lower(email))"
+        in result.stdout
+    )
+    users_unique_index = next(
+        idx
+        for idx in Base.metadata.tables["users"].indexes
+        if idx.name == "uq_users_tenant_lower_email"
+    )
+    assert users_unique_index.unique is True
     assert "CONSTRAINT uq_invoices_tenant_invoice_number" in result.stdout
+
+    downgrade = subprocess.run(
+        [
+            sys.executable,
+            "-m",
+            "alembic",
+            "downgrade",
+            "0003_unique_tenant_user_email:0002_tenant_scoped_foreign_keys",
+            "--sql",
+        ],
+        cwd=BACKEND_DIR,
+        env=environment,
+        capture_output=True,
+        check=False,
+        text=True,
+    )
+    assert downgrade.returncode == 0, downgrade.stderr
+    assert "DROP INDEX uq_users_tenant_lower_email" in downgrade.stdout
 
 
 @pytest.mark.skipif(

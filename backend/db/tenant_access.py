@@ -49,6 +49,7 @@ class TenantScopedDataAccess:
         model: type[TenantModel],
         *conditions: Any,
         limit: int | None = None,
+        for_update: bool = False,
     ) -> list[TenantModel]:
         model = self._tenant_model(model)
         if limit is not None and limit < 1:
@@ -58,6 +59,8 @@ class TenantScopedDataAccess:
             *self._active_record_conditions(model),
             *conditions,
         )
+        if for_update:
+            statement = statement.with_for_update()
         if limit is not None:
             statement = statement.limit(limit)
         return list(self._session.scalars(statement).all())
