@@ -456,3 +456,20 @@ The roadmap is kept in one place: `Tahseel_AI_Final_Concept.md`, section 12.
 - **Not chosen:** Per-user settings, free-form formulas, or making customization a dependency of T-013.
 - **Why:** One definition per organization avoids coworkers seeing different figures, while deferring configuration keeps the Core receivables engine independent of the Should-tier settings service.
 - **Consequences:** T-013 accepts bucket definitions as an engine input but uses the fixed default unless a caller explicitly supplies another definition. Any future settings UI, API, report-history behavior, and permissions require a separately approved scope and decision.
+
+### D45. Receivables calculation edge semantics `[Ali]`
+- **Chosen:**
+  - All calculations use the supplied `report_date`, never the system date. Invoices and payments dated after it are ignored. As of that date, an invoice balance is its amount less payments dated on or before `report_date`.
+  - `overdue_ratio = overdue_amount / total_outstanding`, stored and returned as a fraction (for example, `0.25` means 25%). Return null when `total_outstanding` is zero. Disputed unpaid invoices are included in aging, overdue amount, overdue ratio, and DSO, and are flagged separately. They are excluded only from the priority queue. This amends any prior exclusion of disputed invoices from overdue exposure.
+  - **Disputed invoices are included in aging/overdue/ratio/DSO; this does not change the D34 days-late risk factor.**
+  - **ADBT:** ADBT is the average of `final_settlement_date - due_date` for fully settled invoices with `period_start <= final_settlement_date <= report_date`. Retain negative values for early payment; display ADBT next to `overdue_ratio`; return null if none qualify.
+  - `opening_ar` is `Decimal | None`. `None` means unknown, is treated as zero, and returns `opening_ar_assumed=true`; an explicit `Decimal(0)` is a genuine zero and does not set the flag.
+  - A zero or negative invoice amount, a zero or negative payment amount, an amount with more than two fractional digits, a payment dated before its invoice date, or a duplicate invoice number within a tenant raises `ValidationError`. The database already enforces tenant-scoped invoice-number uniqueness.
+  - **Credit balance:** For each overpaid invoice, `credit_balance = excess`; do not apply it to another invoice. Any customer-level aggregation is display-only, and `credit_balance` is excluded from `total_outstanding`.
+  - Averages with no eligible invoices and DSO with zero credit sales return null. A period with `start_date > end_date`, or a `report_date` outside the inclusive period, raises `ValidationError`.
+  - An invoice due date may equal its invoice date; an earlier due date raises `ValidationError`. The synthetic data generator must be updated separately to permit equality.
+  - The calculation engine is pure and database-independent, uses `Decimal` for money, performs no rounding, and accepts bucket definitions as a parameter defaulting to the D43 code constant. Tenant-scoped data loading is separate.
+- **Not chosen:** Using the system date for calculations, clamping early payments to zero days, applying excess payments to other invoices, or using binary floating-point or engine-level rounding for money.
+- **Currency assumption:** One currency per tenant. Do not validate or reject currencies in code yet because the invoice model has no currency field.
+- **Why:** Explicit as-of semantics make reports reproducible; disputed amounts remain visible in receivables metrics while the priority queue applies its separate follow-up rule; deterministic decimal arithmetic avoids hidden financial changes.
+- **Consequences:** T-013 tests must cover historical cutoffs, disputed amounts, period-bounded negative ADBT, missing versus explicit-zero opening AR, invalid amounts, overpayments, empty averages, and date validation. Currency validation is out of scope until the model has a currency field. The generator's due-date validation must be updated in a separate task.

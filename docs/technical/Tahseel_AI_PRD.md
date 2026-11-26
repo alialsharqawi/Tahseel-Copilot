@@ -5,8 +5,8 @@
 **Primary Market:** Egypt  
 **Primary Customer:** B2B distributors selling on credit  
 **Status:** Detailed product specification, consolidated  
-**Version:** 1.2
-**Date:** 2026-10-08 (original), 2026-10-31 (consolidated), 2026-11-25 (D43–D44)
+**Version:** 1.3
+**Date:** 2026-10-08 (original), 2026-10-31 (consolidated), 2026-11-25 (D43–D44), 2026-11-26 (D45)
 
 ---
 
@@ -354,11 +354,24 @@ Import rules:
 
 ### 10.2 Receivables Analysis
 
+`report_date` is supplied to the calculation; the engine does not read the system clock. Invoices and payments dated after it are ignored. For each invoice dated on or before `report_date`:
+
 ```text
-Outstanding = Invoice Amount - Paid Amount
+Paid Amount = sum of payments with payment_date <= report_date
+Balance     = max(Invoice Amount - Paid Amount, 0)
 ```
 
-`report_date` is supplied to the calculation; the engine does not read the system clock. An invoice is current when its due date is on or after the report date:
+Payments are the source of truth; any stored `paid_amount` is a cache that is recomputed from eligible payments.
+
+**Credit balance:** For each overpaid invoice, `credit_balance = excess`; do not apply it to another invoice. Any customer-level aggregation is display-only, and `credit_balance` is excluded from `total_outstanding`.
+
+Use `Decimal` for all money and do not round inside the calculation engine. A zero or negative invoice amount, a zero or negative payment amount, or an amount with more than two fractional digits raises `ValidationError`. A payment dated before its invoice date also raises `ValidationError`.
+
+The database enforces unique invoice numbers within a tenant; duplicate invoice numbers must be surfaced as a `ValidationError` at the application/import boundary. An invoice due date may equal its invoice date; an earlier due date raises `ValidationError`. The synthetic-data generator must be updated separately to permit same-day due dates.
+
+**Currency assumption:** One currency per tenant. Do not validate or reject currencies in code yet because the invoice model has no currency field.
+
+An invoice is current when its due date is on or after the report date:
 
 ```text
 Current = Due Date >= report_date
@@ -376,7 +389,7 @@ For an invoice not yet due:
 Days Until Due = max(0, Due Date - report_date)
 ```
 
-Overdue days are computed and never stored. Outstanding is derived from invoice amount and payments; a partially paid invoice contributes only its unpaid balance.
+Overdue days are computed and never stored. A partially paid invoice contributes only its remaining balance. A fully settled invoice has zero balance and is excluded from aging and overdue amount; it may still be eligible for ADBT.
 
 #### Aging buckets
 
@@ -398,14 +411,25 @@ DEFAULT_AGING_BUCKETS = ((1, 30), (31, 60), (61, 90), (91, None))
 
 Each pair is `(lower_day, upper_day)`; `None` means no upper limit. `Current` is fixed and is not part of this sequence.
 
-Unpaid disputed invoices are included in the applicable bucket totals and flagged separately. The disputed subtotal is a breakdown of those totals and must not be added to them again.
+Unpaid disputed invoices are included in the applicable bucket totals and flagged separately. The disputed subtotal is a breakdown of those totals and must not be added to them again. Disputed balances are also included in overdue amount, overdue ratio, and AR used for DSO; they are excluded only from the priority queue.
 
 The pure aging calculation accepts ordered overdue-bucket definitions as an input and defaults to `DEFAULT_AGING_BUCKETS`, the fixed code-level MVP configuration above. It has no database or tenant-settings-service dependency. Supplied ranges must be ordered, contiguous, start at day 1, have no gaps or overlaps, and end with an open-ended range.
 
 ```text
-Overdue Exposure (customer) = sum of Outstanding of the customer's
-                              overdue invoices that are not disputed
+Overdue Amount (customer or portfolio) = sum of remaining balances for
+                                         overdue invoices, disputed or not
 ```
+
+### Portfolio overdue ratio
+
+```text
+Overdue Ratio =
+  overdue_amount
+  /
+  total_outstanding
+```
+
+Return the ratio as a fraction (for example, `0.25` means 25%). Disputed balances are included in both numerator and denominator and flagged separately. If `total_outstanding` is zero, return null/N/A. The priority queue separately excludes disputed invoices.
 
 ### 10.3 Customer-Level Analysis
 
@@ -442,6 +466,8 @@ An explainable rule-based score. It estimates **how likely a customer is to pay 
 | Historical payment delay | 25 | Average days paid after the due date over invoices paid in the last 12 months (invoices paid on time count as 0) | `25 x min(average / cap, 1)` | 45 days |
 | Broken promises | 25 | Promises with status `broken` in the last 12 months | `25 x min(broken / cap, 1)` | 3 promises |
 | Recent payment behavior | 20 | Decline = average delay of invoices paid in the last 90 days minus the 12-month average. No payment in the last 90 days while the customer has overdue invoices gives full points | `20 x min(max(decline, 0) / cap, 1)` | 30 days |
+
+Disputed invoices are included in aging/overdue/ratio/DSO; this does not change the D34 days-late risk factor.
 
 Rules:
 
@@ -699,13 +725,9 @@ Returns:
 
 Returns total outstanding, overdue amount and ratio, average days beyond terms, and DSO for a period (D32).
 
-```text
-Average Days Beyond Terms (period) =
-  average, over invoices paid in the period, of
-  max(0, payment_date - due_date)
-```
+ADBT is the average of `final_settlement_date - due_date` for fully settled invoices with `period_start <= final_settlement_date <= report_date`. Retain negative values for early payment; display ADBT next to `overdue_ratio`; return null if none qualify.
 
-Unpaid overdue invoices are not mixed into this average. They are reported separately: how many, and their average days overdue.
+For invoices with multiple payments, `final_settlement_date` is the date the payment that closes the invoice is applied. A partially paid invoice is not eligible. Report unpaid overdue invoices separately, including their count and average days overdue as of `report_date`.
 
 ```text
 DSO =
@@ -726,7 +748,9 @@ Credit Sales                = sum of invoice amounts with invoice_date in the pe
 Number of Days              = calendar days from period start through period end
 ```
 
-Opening AR is derived from invoice and payment history when that history is available. If opening AR cannot be determined from supplied data, use zero and identify that assumption in the KPI result. If credit sales are zero, return DSO as null/N/A, not zero or infinity. Total-sales DSO is out of scope; the receivables data does not contain a complete sales ledger. Disputed unpaid balances remain receivables; the D43 disputed-invoice decision applies explicitly to aging, while customer overdue exposure above continues to exclude disputed invoices.
+Opening AR is `Decimal | None` and is derived from invoice and payment history when possible. If it is `None`, use zero and return `opening_ar_assumed=true`; an explicit `Decimal(0)` is a genuine zero and does not set the flag. If credit sales are zero, return DSO as null/N/A, not zero or infinity. Total-sales DSO is out of scope; the receivables data does not contain a complete sales ledger. Disputed unpaid balances remain receivables and are included in DSO AR.
+
+Reporting periods are inclusive: a period whose start and end are the same date is valid and has one day. Raise `ValidationError` if `start_date > end_date` or if `report_date` falls outside the period.
 
 Days beyond terms is the primary metric. DSO is the secondary KPI and the unit that converts days into cash in the ROI model.
 
@@ -1689,7 +1713,13 @@ A Collector cannot see unassigned customers and cannot approve a recommendation 
 
 ### AC-015 Portfolio KPI Arithmetic
 
-For an inclusive reporting period, DSO is `(Average AR / Credit Sales) x Days in Period`, where `Average AR = (Opening AR + Closing AR) / 2`. Opening AR is derived from available invoice/payment history; if it cannot be determined, use zero and identify the assumption in the result. Zero credit sales returns null/N/A. Credit sales are invoice amounts dated within the period.
+For an inclusive reporting period, DSO is `(Average AR / Credit Sales) x Days in Period`, where `Average AR = (Opening AR + Closing AR) / 2`. Opening AR is `Decimal | None`; `None` is treated as zero and returns `opening_ar_assumed=true`, while an explicit zero does not set the flag. Zero credit sales returns null/N/A. Credit sales are invoice amounts dated within the period. Disputed balances are included in AR for DSO.
+
+`overdue_ratio = overdue_amount / total_outstanding`, stored and returned as a fraction; disputed balances are included in both amounts. Return null if total outstanding is zero. ADBT is the average of `final_settlement_date - due_date` for fully settled invoices with `period_start <= final_settlement_date <= report_date`. Retain negative values for early payment; display ADBT next to `overdue_ratio`; return null if none qualify. Invoices and payments after `report_date` are excluded from balances. A one-day inclusive period is valid; raise `ValidationError` if the start is after the end or `report_date` is outside the period.
+
+Zero or negative invoice/payment amounts, amounts with more than two fractional digits, payments dated before their invoice date, and duplicate invoice numbers within a tenant raise `ValidationError`; tenant-scoped invoice-number uniqueness is also enforced in the database. An invoice due date may equal its invoice date, but may not be earlier; update the synthetic-data generator separately to allow equality. **Credit balance:** For each overpaid invoice, `credit_balance = excess`; do not apply it to another invoice. Any customer-level aggregation is display-only, and `credit_balance` is excluded from `total_outstanding`. Use `Decimal` with no engine-level rounding.
+
+**Currency assumption:** One currency per tenant. Do not validate or reject currencies in code yet because the invoice model has no currency field. Other approved edge-case rules are recorded in Decision Log D45.
 
 ---
 
