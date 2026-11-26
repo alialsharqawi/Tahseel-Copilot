@@ -43,7 +43,7 @@
 - Synchronized T-013 in `docs/team/backlog.csv`, regenerated `docs/team/BACKLOG.md`, and updated GitHub Issue #27.
 - Opened follow-up Issue #84 for allowing `due_date == invoice_date` in the synthetic-data generator; added it to the task board Backlog.
 - Changed files: `docs/governance/Tahseel_AI_Decision_Log.md`, `docs/technical/Tahseel_AI_PRD.md`, `docs/team/backlog.csv`, `docs/team/BACKLOG.md`, `PROJECT_STATUS.md`.
-- No code or tests were started. The docs-only PR is not open yet.
+- No code or tests were started. The docs-only PR is open (#90), linking issue #27 without closing it.
 
 ## Open items
 
