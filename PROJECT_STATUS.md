@@ -1,10 +1,16 @@
 # Project Status
 
-**Last updated:** 26 November 2026
-**Phase:** Documentation baseline is complete. The repository skeleton is complete through PR #69 (T-002, Issue #16); PRs #72 (T-003), #73 (T-022), and #74 (T-004) are merged, and Issues #18, #6, and #19 are closed. The 54 task issues are on the project board (43 open, 11 closed), and open tasks are assigned to D40 phase milestones by wave. T-003 provides the backend, PostgreSQL/pgvector, frontend, and Docker Compose integration. **Current phase: P1 — Setup and data foundation (due 30 November 2026). Final defense: Tuesday, 15 December 2026.**
+**Last updated:** 28 November 2026
+**Phase:** P1 setup and data foundation is substantially complete, while P2 implementation is under way. PR #93 delivered T-016 (tenant settings and policy-rule services), and PR #92 delivered T-013 (the receivables engine). GitHub currently reports **39 merged pull requests** and **54 task issues: 32 open and 22 closed**. Open tasks are assigned to D40 phase milestones by wave: P1 1 open / 14 closed, P2 14 open / 6 closed, P3 15 open, and P4 2 open. **Final defense: Tuesday, 15 December 2026.**
 
 ## Done
 
+- T-016 tenant configuration and policy-rule services: typed settings schemas, tenant-scoped APIs, source validation, audit logging, settings seeding, confirmed-only policy-rule activation, and access-control tests (PR #93, Issue #28 closed)
+- T-013 receivables engine: pure Decimal calculations for balances, aging, overdue KPIs, disputed balances, ADBT, DSO, and edge validation, with focused tests (PR #92, Issue #27 closed)
+- T-098 synthetic-data due-date fix: invoice due dates may equal invoice dates (PR #89, Issue #84 closed)
+- T-011 authentication and role documentation: JWT login, Argon2id, Owner/Finance Manager/Collector RBAC, assigned-only Collector access, Owner-only user management, and API documentation (PR #87 and #88, Issue #21 closed)
+- T-020 synthetic receivables generator with realistic customer and invoice patterns (PR #81, Issue #29 closed)
+- T-080 HTTPS reverse proxy and deployment setup for Compose/Caddy (PR #82, Issue #23 closed)
 - Docker Compose foundation for T-003: FastAPI health endpoint, bilingual frontend, and PostgreSQL/pgvector integration
 - T-010 database foundation: SQLAlchemy models and an initial Alembic migration for all 19 tables, with schema and migration tests
 - T-011 authentication, users, and the three roles: JWT login (Argon2id), Owner/Finance Manager/Collector RBAC enforced server-side, Collector assigned-only customer access, Owner-only user management, tests (PR #87), and documented Auth/Users endpoints with OpenAPI schemas (PR #88)
@@ -28,15 +34,33 @@
 - The team action dashboard (`docs/team/team-now.html`): refreshes public GitHub issue data and shows task readiness and open dependency owners without credentials
 - The team brief (`docs/team/team-brief-whatsapp.html`): evergreen project and workflow guide; live task status now points to the dashboard
 - The filled skills matrix (`docs/team/skills.csv`) and the skill-weighted assignment suggestion (`docs/team/ASSIGNMENT_SUGGESTION.md`, `docs/team/assignments.csv`)
-- GitHub setup: branch protection on `main`, all five collaborators, the project board, the labels, and one issue per backlog task (54 issues; 43 open and 11 closed); all 54 task issues are on the board, with open tasks assigned to D40 phase milestones by wave
+- GitHub setup: branch protection on `main`, all five collaborators, the project board, the labels, and one issue per backlog task (54 issues; 32 open and 22 closed as of 28 November 2026); all 54 task issues are on the board, with open tasks assigned to D40 phase milestones by wave
 - Legal and security infrastructure: proprietary academic license (`LICENSE`) and vulnerability policy (`.github/SECURITY.md`)
 
 ## Next
 
-1. Finish T-020 review and handoff: canonical fixture generated, focused tests passing, and Ruff checks passing
-2. Continue P1 foundation tasks toward the 30 November gate, following issue dependencies; use `docs/team/team-now.html` for the recommended next task and blocker owners
-3. Build the Core vertical slice in wave order: data foundation, then the AI slice, then integration and guardrails
-4. Slides, demo video, and the evaluation results, with real numbers from the demo and the evaluation (updating the live Canva presentation link submitted on the LMS)
+1. Close the remaining P1 dependencies, including the T-021 seed task and any integration gaps, before treating P1 as fully complete
+2. Continue P2 in dependency order: T-014 risk, T-017 forecast, T-030 import, T-042 policy retrieval, T-043 agent orchestration, T-044 agent tools, and the dashboard tasks
+3. Use `docs/team/team-now.html` for the live next-task and blocker view; work through issues and pull requests with a reviewer
+4. Build the Core vertical slice before expanding polish: receivables and risk, queue and dashboard, policy RAG and memory, drafts, human approval, tasks, and audit
+5. Add slides, demo video, and evaluation results from actual demo runs (updating the live Canva presentation link submitted on the LMS)
+
+## 25–28 November 2026 merge and implementation sync
+
+- **25 November:** PR #81 merged T-020 synthetic receivables generation; PR #82 delivered T-080 HTTPS/Caddy deployment; PR #83 recorded aging/DSO formulas; PR #80 reviewed bilingual Arabic interface text.
+- **26 November:** PR #87 delivered T-011 authentication/RBAC; PR #88 documented the Auth/Users endpoints and marked T-011 complete; PR #89 fixed same-day invoice due dates for T-098; PR #90 and #91 clarified T-013 receivables rules and edge cases.
+- **28 November:** PR #92 merged T-013 after 59 focused receivables tests, and PR #93 merged T-016. The merge work also added policy-rule confirmation-before-activation and access-control coverage.
+- **Not merged:** PR #94 is a closed, docs-only security-baseline audit PR. It was not merged and added no application code or governance decisions.
+- **Repository state:** 39 pull requests are merged. The 54 task issues are now 32 open and 22 closed; the 15 December 2026 defense date is unchanged.
+
+## 28 November 2026 local verification
+
+- Restored the backend dependencies in `backend/.venv` from `backend/requirements-dev.txt`.
+- Backend suite: **118 passed, 6 skipped**; the skipped tests require PostgreSQL integration configuration.
+- Ruff: `ruff check` and `ruff format --check` passed for the backend.
+- Frontend suite: **5 test files passed, 12 tests passed**.
+- Documentation synchronized: `PROJECT_STATUS.md`, `README.md`, and `TEAM.md`.
+- Files changed in this documentation refresh: `PROJECT_STATUS.md`, `README.md`, `TEAM.md`, `CONTRIBUTING.md`.
 
 ## Receivables calculation clarifications (26 November 2026)
 
@@ -61,7 +85,6 @@
 | Project Documentation Guidelines | We do not have a copy. We work from an assumed structure (`LMS_Requirements.md`, section 3). Ask the instructor for it if possible |
 | OpenRouter models | Choose after testing tool calling, structured output, and Arabic quality (D12) |
 | Embedding model | Choose after an Arabic and mixed-language retrieval test (D16) |
-| T-012 PostgreSQL integration run | The tenant-scoped layer and cross-tenant tests are added, but this environment has no PostgreSQL server or Docker; run the integration tests in CI before marking T-012 complete |
 | Strong independent reviewer | T-051 has no strong independent reviewer in the current skills matrix. Pair it or add a qualified reviewer before approval if it is built; otherwise cut it in the agreed order. |
 | T-092 milestone mismatch | GitHub places the presentation slides in P1, while the phase plan lists slides under P4. Confirm the intended phase before treating the issue due date as final. |
 | Business claims marked "To verify" | The VAT threshold, the Odoo job posting, and the cheque sources |
@@ -70,7 +93,7 @@
 
 ## Known gaps in the material
 
-- **Core product features are not yet implemented.** T-003 provides the minimal backend, frontend, and PostgreSQL/pgvector Compose foundations; a seed script remains to be built. T-010 provides the initial migrations. T-004 provides CI, and T-022 provides the synthetic bilingual policy corpus and validation fixtures
+- **The core vertical slice is incomplete.** Foundation, authentication, database, synthetic data, configuration, and the receivables engine exist, but risk/priority, import, policy RAG, the agent, memory, drafts, approval, tasks, and end-to-end dashboards remain to be built or integrated
 - No evaluation results, slides, or demo video yet
 - The core business hypothesis (that a meaningful share of lateness comes from late follow-up, A8) is untested
 - Whether global collection tools offer policy citations or factor-level explanations is not verified
