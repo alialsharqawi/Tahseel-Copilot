@@ -155,3 +155,5 @@
 **From round 1, now verified as truly applied:** #78, #83, #84 (via R1 to R5).
 
 **Newly noted in round 2, awaiting team decision (Info severity, not blockers):** FR-23 and FR-24 are referenced by backlog tasks but not defined in the PRD (add a FR table or drop the refs); the D23 agent *flag-suspected-dispute* capability has no specification home; `customers.contact_person` has no API write path; `agent_runs.run_type` and `status` lack value sets; the job posting (see #93) still needs a recheck; the Arabic wireframes render `+26` score points on the wrong bidi side; 06_UI_UX could label each screen Core or Should; GLOSSARY lacks the six D36 actions and "approval gate".
+
+| 99 | Security-baseline audit report produced (`Tahseel_AI_Audit_Report.md`): 0 Critical, 5 High, 4 Medium findings; no tenant-isolation, approval-gate, or non-negotiable-rule violations in implemented code; Core-tier receivables engine, policy RAG, agent, memory write API, draft API, task API, approval-gate endpoints, and basic eval are not yet built | `docs/governance/Tahseel_AI_Audit_Report.md` | Open | Open |
