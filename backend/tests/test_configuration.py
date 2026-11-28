@@ -272,6 +272,9 @@ def test_policy_rule_create_accepts_an_existing_source_section() -> None:
 
     assert created.source_document_id == document.id
     assert created.source_section == "§2.1"
+    assert created.active is False
+    assert created.confirmed_by is None
+    assert created.confirmed_at is None
     assert [entry.action for entry in access.list(AuditLog)] == ["policy_rule.create"]
 
 
@@ -288,9 +291,12 @@ def test_policy_rule_create_update_and_confirmation_are_audited() -> None:
     created = service.create_policy_rule(actor_id, _policy_payload(document.id))
     assert created.source_document_id == document.id
     assert created.source_section == "§2.1"
+    assert created.active is False
     assert created.confirmed_by is None
+    assert created.confirmed_at is None
 
     confirmed = service.confirm_policy_rule(actor_id, created.id)
+    assert confirmed.active is True
     assert confirmed.confirmed_by == actor_id
     assert confirmed.confirmed_at is not None
     assert confirmed.confirmed_at.tzinfo == timezone.utc
@@ -301,6 +307,7 @@ def test_policy_rule_create_update_and_confirmation_are_audited() -> None:
         PolicyRuleUpdate(outcome={"requires_manager_review": False}),
     )
     assert updated.outcome == {"requires_manager_review": False}
+    assert updated.active is False
     assert updated.confirmed_by is None
     assert updated.confirmed_at is None
 
@@ -311,10 +318,15 @@ def test_policy_rule_create_update_and_confirmation_are_audited() -> None:
         "policy_rule.update",
     ]
     assert audits[0].after["source_document_id"] == str(document.id)
+    assert audits[0].after["active"] is False
     assert audits[1].before["confirmed_by"] is None
+    assert audits[1].before["active"] is False
     assert audits[1].after["confirmed_by"] == str(actor_id)
+    assert audits[1].after["active"] is True
     assert audits[2].before["outcome"] == {"requires_manager_review": True}
+    assert audits[2].before["active"] is True
     assert audits[2].after["outcome"] == {"requires_manager_review": False}
+    assert audits[2].after["active"] is False
 
 
 def test_policy_rule_update_accepts_a_section_from_the_selected_document() -> None:
@@ -530,22 +542,53 @@ def test_policy_rule_api_requires_tenant_source_and_audits_confirmation(
     chunk = _chunk(tenant_id, document.id, "§2.1")
     access.records.setdefault(DocumentChunk, {})[chunk.id] = chunk
     payload["source_document_id"] = str(document.id)
+    payload["active"] = True
+    rejected_active = client.post("/api/v1/policy-rules", json=payload)
+    assert rejected_active.status_code == 422
+    assert access.list(PolicyRule) == []
+    assert access.list(AuditLog) == []
+
+    payload.pop("active")
     created = client.post("/api/v1/policy-rules", json=payload)
     assert created.status_code == 201
     rule = created.json()
     assert rule["source_document_id"] == str(document.id)
     assert rule["source_section"] == "§2.1"
+    assert rule["active"] is False
+    assert rule["confirmed_by"] is None
+    assert rule["confirmed_at"] is None
 
     confirmed = client.post(
         f"/api/v1/policy-rules/{rule['id']}/confirm",
     )
     assert confirmed.status_code == 200
+    assert confirmed.json()["active"] is True
     assert confirmed.json()["confirmed_by"] == str(user_id)
-    assert session.commits == 2
+    assert confirmed.json()["confirmed_at"] is not None
+
+    rejected_patch = client.patch(
+        f"/api/v1/policy-rules/{rule['id']}",
+        json={"active": True},
+    )
+    assert rejected_patch.status_code == 422
+
+    edited = client.patch(
+        f"/api/v1/policy-rules/{rule['id']}",
+        json={"active": False},
+    )
+    assert edited.status_code == 200
+    assert edited.json()["active"] is False
+    assert edited.json()["confirmed_by"] is None
+    assert edited.json()["confirmed_at"] is None
+    assert session.commits == 3
     assert [entry.action for entry in access.list(AuditLog)] == [
         "policy_rule.create",
         "policy_rule.confirm",
+        "policy_rule.update",
     ]
+    assert access.list(AuditLog)[1].after["active"] is True
+    assert access.list(AuditLog)[2].before["active"] is True
+    assert access.list(AuditLog)[2].after["active"] is False
 
 
 def test_policy_rule_api_rejects_missing_source_section_without_writes(

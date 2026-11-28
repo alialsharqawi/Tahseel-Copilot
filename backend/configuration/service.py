@@ -131,6 +131,7 @@ class TenantConfigurationService:
             {
                 **payload.model_dump(mode="json", exclude={"source_document_id"}),
                 "source_document_id": payload.source_document_id,
+                "active": False,
                 "confirmed_by": None,
                 "confirmed_at": None,
             },
@@ -170,6 +171,7 @@ class TenantConfigurationService:
             self._require_source_section(source_document_id, source_section)
 
         before = _rule_data(current)
+        updates["active"] = False
         updates["confirmed_by"] = None
         updates["confirmed_at"] = None
         if not self._access.update(PolicyRule, rule_id, updates):
@@ -196,7 +198,11 @@ class TenantConfigurationService:
         if not self._access.update(
             PolicyRule,
             rule_id,
-            {"confirmed_by": actor_id, "confirmed_at": confirmed_at},
+            {
+                "confirmed_by": actor_id,
+                "confirmed_at": confirmed_at,
+                "active": True,
+            },
         ):
             raise ConfigurationRecordNotFound("Policy rule not found.")
         confirmed = self._access.get(PolicyRule, rule_id)

@@ -101,7 +101,6 @@ class PolicyRuleCreate(StrictSchema):
     outcome: dict[str, JsonValue]
     source_document_id: UUID
     source_section: str = Field(min_length=1)
-    active: bool = True
 
     @field_validator("name", "source_section")
     @classmethod
@@ -139,6 +138,12 @@ class PolicyRuleUpdate(StrictSchema):
             raise ValueError(
                 "source_document_id and source_section must be updated together."
             )
+        return self
+
+    @model_validator(mode="after")
+    def confirmation_controls_activation(self) -> PolicyRuleUpdate:
+        if self.active is True:
+            raise ValueError("Policy rules can only be activated by confirmation.")
         return self
 
 

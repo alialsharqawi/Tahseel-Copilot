@@ -82,9 +82,13 @@ The tenant configuration endpoints are available to Owners and Finance Managers:
 | `GET /api/v1/settings` | Read the authenticated tenant's validated settings |
 | `PUT /api/v1/settings` | Replace settings; the change and its before/after values are audited |
 | `GET /api/v1/policy-rules` | List rules in the authenticated tenant |
-| `POST /api/v1/policy-rules` | Add a rule with a tenant-owned source document and section |
-| `PATCH /api/v1/policy-rules/{rule_id}` | Change a rule; clears any previous confirmation |
-| `POST /api/v1/policy-rules/{rule_id}/confirm` | Confirm a rule as a manager |
+| `POST /api/v1/policy-rules` | Add an inactive rule with a tenant-owned source document and section |
+| `PATCH /api/v1/policy-rules/{rule_id}` | Edit a rule; deactivates it and clears any previous confirmation |
+| `POST /api/v1/policy-rules/{rule_id}/confirm` | Confirm and activate a rule as a manager |
+
+New rules are inactive until a manager confirms them. Any edit deactivates a
+confirmed rule and clears its confirmation, so it must be confirmed again before
+becoming active.
 
 These endpoints manage configuration; they do not execute policy rules or block
 shipping or credit.
