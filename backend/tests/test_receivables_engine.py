@@ -407,6 +407,24 @@ def test_overdue_ratio_is_fraction_and_is_null_at_zero_outstanding() -> None:
     assert empty.overdue_ratio is None
 
 
+def test_fully_paid_past_due_invoice_excluded_from_aging_and_overdue() -> None:
+    inv = invoice(
+        number="PAID-PAST",
+        due_date=date(2026, 10, 1),
+        amount=Decimal("100"),
+    )
+    result = calculate(
+        [inv],
+        [payment(invoice_number="PAID-PAST", amount=Decimal("100"))],
+    )
+    item = result.invoice_results[0]
+    assert item.balance == Decimal("0")
+    assert item.days_overdue is not None
+    assert result.total_outstanding == Decimal("0")
+    assert result.overdue_amount == Decimal("0")
+    assert all(amount == Decimal("0") for amount in result.aging.buckets.values())
+
+
 def test_adbt_settlement_uses_same_day_totals_and_ignores_later_excess() -> None:
     result = calculate(
         [
@@ -439,6 +457,29 @@ def test_adbt_settlement_uses_same_day_totals_and_ignores_later_excess() -> None
     )
 
     assert result.adbt == Decimal("1")
+
+
+def test_adbt_settlement_exactly_on_due_date_is_zero_days() -> None:
+    result = calculate(
+        [
+            invoice(
+                number="ON-DUE",
+                due_date=date(2026, 6, 1),
+                amount=Decimal("100"),
+            )
+        ],
+        [
+            payment(
+                invoice_number="ON-DUE",
+                amount=Decimal("100"),
+                payment_date=date(2026, 6, 1),
+            ),
+        ],
+        report_date=date(2026, 11, 26),
+        period_start=date(2026, 1, 1),
+        period_end=date(2026, 11, 30),
+    )
+    assert result.adbt == Decimal("0")
 
 
 def test_adbt_is_average_across_eligible_fully_settled_invoices() -> None:
@@ -610,6 +651,21 @@ def test_dso_zero_credit_sales_returns_null() -> None:
 
     assert result.dso.credit_sales == Decimal("0")
     assert result.dso.dso is None
+
+
+def test_fully_empty_input_returns_zero_totals_and_null_ratios() -> None:
+    result = calculate([])
+    assert result.total_outstanding == Decimal("0")
+    assert result.overdue_amount == Decimal("0")
+    assert result.overdue_ratio is None
+    assert result.disputed_outstanding == Decimal("0")
+    assert result.adbt is None
+    assert result.dso.dso is None
+    assert result.dso.credit_sales == Decimal("0")
+    assert all(amount == Decimal("0") for amount in result.aging.buckets.values())
+    assert all(
+        amount == Decimal("0") for amount in result.aging.disputed_subtotal.values()
+    )
 
 
 @pytest.mark.parametrize(
