@@ -2,7 +2,7 @@
 
 Thank you for working on Tahseel AI. This file holds the **rules**. The step-by-step guide is in `docs/team/HOW_TO_WORK_ON_A_TASK.md`, the guide for using AI is in `docs/team/AI_WORKING_GUIDE.md`, and how tasks are shared among us is in `docs/team/TASK_ASSIGNMENT.md`.
 
-**New here?** Start with `docs/team/ONBOARDING.md`.
+**New here?** Start with [`PROJECT_STATUS.md`](./PROJECT_STATUS.md) for the live repository state and this file for the rules. `docs/team/ONBOARDING.md` is a historical snapshot from the team's original onboarding phase, not the live status.
 
 ## 1. The rules that matter most
 

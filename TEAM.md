@@ -43,7 +43,7 @@ The roles in the software (Owner, Finance Manager, Collector) are product roles 
 
 ## Contribution log
 
-Repository contribution evidence is based on merged pull requests and issue closures. As of 24 November 2026, the repository has 21 merged pull requests and 11 closed task issues.
+Repository contribution evidence is based on merged pull requests and issue closures. As of 28 November 2026, the repository has 39 merged pull requests and 22 closed task issues across 54 task issues (32 open and 22 closed).
 
 | Date | Member | Contribution |
 |---|---|---|
@@ -57,3 +57,13 @@ Repository contribution evidence is based on merged pull requests and issue clos
 | 23 November 2026 | Fatma Eissa | T-003: Docker Compose foundation for the backend, frontend, and PostgreSQL/pgvector database |
 | 24 November 2026 | Zainab Hazem | T-022: bilingual synthetic policy corpus and validation fixtures |
 | 24 November 2026 | Fatma Eissa | T-004: backend and frontend CI lint/test workflow |
+| 25 November 2026 | Alaa Samy | T-020: synthetic receivables data generator |
+| 25 November 2026 | Fatma Eissa | T-080: HTTPS reverse proxy and deployment setup |
+| 25 November 2026 | Zainab Hazem | T-067: bilingual Arabic interface text review |
+| 25 November 2026 | Ali Al-Sharqawi | D43: receivables aging and DSO formula decisions |
+| 26 November 2026 | Fatma Eissa | T-011: authentication, RBAC, and Owner-only user management |
+| 26 November 2026 | Ali Al-Sharqawi | T-011 API documentation and D45 receivables edge-semantics record |
+| 26 November 2026 | Alaa Samy | T-098: same-day invoice and due dates |
+| 26 November 2026 | Mariam Abd Elhady | T-013: receivables engine implementation and edge-case review |
+| 28 November 2026 | Mariam Abd Elhady | T-013 merged with Decimal calculations and focused validation tests |
+| 28 November 2026 | Zainab Hazem | T-016: tenant settings and policy-rule services |

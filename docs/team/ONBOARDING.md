@@ -1,5 +1,7 @@
 # Onboarding: Start Here
 
+> **Historical purpose:** This file is the original onboarding snapshot used when the team began receiving repository access, before implementation started. It is retained as a record of that starting context, not as the live status or the first-stop guide for current work. For current status, read `PROJECT_STATUS.md`; for current rules, read `CONTRIBUTING.md`.
+
 Welcome. This page gets you from zero to your first task. Reading it takes about 15 minutes; the reading path takes about 90 minutes more.
 
 ## 1. What we are building (in one minute)
