@@ -710,6 +710,44 @@ def test_duplicate_eligible_invoice_numbers_raise() -> None:
         )
 
 
+def test_invalid_invoice_status_raises() -> None:
+    with pytest.raises(ReceivablesValidationError):
+        calculate(
+            [invoice(number="BAD", status="overdue")],
+        )
+
+
+def test_blank_customer_id_raises() -> None:
+    with pytest.raises(ReceivablesValidationError):
+        calculate(
+            [invoice(number="BAD", customer_id="")],
+        )
+
+
+def test_blank_invoice_number_raises() -> None:
+    with pytest.raises(ReceivablesValidationError):
+        calculate(
+            [invoice(number="")],
+        )
+
+
+def test_future_dated_invalid_record_is_ignored_not_validated() -> None:
+    future_date = date(2026, 12, 1)
+    result = calculate(
+        [
+            invoice(
+                number="FUTURE-BAD",
+                invoice_date=future_date,
+                due_date=future_date,
+                amount=Decimal("100"),
+                status="not-a-status",
+                customer_id="",
+            ),
+        ]
+    )
+    assert result.total_outstanding == Decimal("0")
+
+
 @pytest.mark.parametrize(
     ("period_start", "period_end", "report_date"),
     [

@@ -91,6 +91,21 @@ def _validate_amount(amount: Decimal, label: str) -> None:
         raise ReceivablesValidationError(f"{label} must be greater than zero")
 
 
+VALID_STATUSES: tuple[str, ...] = ("open", "paid", "disputed")
+
+
+def _validate_non_empty_string(value: str, label: str) -> None:
+    if not isinstance(value, str) or not value.strip():
+        raise ReceivablesValidationError(f"{label} must be a non-empty string")
+
+
+def _validate_status(status: str, label: str) -> None:
+    if status not in VALID_STATUSES:
+        raise ReceivablesValidationError(
+            f"{label} must be one of {', '.join(VALID_STATUSES)}"
+        )
+
+
 def _bucket_label(bucket: tuple[int, int | None]) -> str:
     lower, upper = bucket
     if upper is None:
@@ -168,6 +183,10 @@ def calculate_receivables(
     invoices_by_key: dict[tuple[str, str], InvoiceInput] = {}
     seen_invoice_numbers: set[str] = set()
     for invoice in eligible_invoices:
+        _validate_non_empty_string(invoice.customer_id, "customer_id")
+        _validate_non_empty_string(invoice.invoice_number, "invoice number")
+        _validate_status(invoice.status, "invoice status")
+
         if invoice.invoice_number in seen_invoice_numbers:
             raise ReceivablesValidationError(
                 f"Duplicate eligible invoice number: {invoice.invoice_number}"
@@ -184,6 +203,8 @@ def calculate_receivables(
     payments_by_key: dict[tuple[str, str], list[PaymentInput]] = defaultdict(list)
     for payment in eligible_payments:
         _validate_amount(payment.amount, "payment amount")
+        _validate_non_empty_string(payment.customer_id, "customer_id")
+        _validate_non_empty_string(payment.invoice_number, "invoice number")
         key = (payment.customer_id, payment.invoice_number)
         matching_invoice = invoices_by_key.get(key)
         if matching_invoice is None:
