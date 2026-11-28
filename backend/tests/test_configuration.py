@@ -171,7 +171,7 @@ def test_tenant_settings_schema_uses_prd_section_11_and_12_defaults() -> None:
     assert settings.urgency.follow_up_interval_days == 7
     assert settings.urgency.default_multiplier == 1.0
     assert settings.escalation_trigger_days == (30, 60, 90)
-    assert settings.promise_grace_days is None
+    assert settings.promise_grace_days == 2
     assert settings.reminder_cap is None
 
 
@@ -479,7 +479,7 @@ def test_seeded_default_settings_omit_unspecified_prd_values() -> None:
         tenant_id, uuid4()
     )
 
-    assert "promise_grace_days" not in record.settings
+    assert record.settings["promise_grace_days"] == 2
     assert "grace_period_days" not in record.settings
     assert "reminder_cap" not in record.settings
     assert "tone_defaults_by_tier" not in record.settings

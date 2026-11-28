@@ -68,8 +68,9 @@ class TenantSettingsSchema(StrictSchema):
     urgency: UrgencySettings = Field(default_factory=UrgencySettings)
     escalation_trigger_days: tuple[int, ...] = (30, 60, 90)
 
-    # These settings are described in the PRD, but §§11–12 do not specify defaults.
-    promise_grace_days: int | None = Field(default=None, ge=0)
+    # promise_grace_days defaults to 2 per PRD §19 (promises_to_pay); PRD §§11–12
+    # do not specify a default for it, so the field-level definition in §19 governs.
+    promise_grace_days: int = Field(default=2, ge=0)
     grace_period_days: dict[str, int] | None = None
     reminder_cap: ReminderCap | None = None
     tone_defaults_by_tier: dict[Literal["strategic", "regular"], Tone] | None = None
