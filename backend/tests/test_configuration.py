@@ -497,7 +497,7 @@ def test_seeded_default_settings_omit_unspecified_prd_values() -> None:
     assert "tone_defaults_by_tier" not in record.settings
 
 
-def test_settings_api_is_manager_only_and_audits_changes(
+def test_settings_api_is_manager_only_and_audits_create_and_update(
     configuration_client: tuple[
         TestClient, TenantAccessStub, dict[str, Role], SessionStub, UUID, UUID
     ],
@@ -516,9 +516,118 @@ def test_settings_api_is_manager_only_and_audits_changes(
     assert created.json()["tenant_id"] == str(tenant_id)
     assert created.json()["updated_by"] == str(user_id)
     assert session.commits == 1
-    assert [entry.action for entry in access.list(AuditLog)] == [
-        "tenant_settings.create"
+
+    updated_payload = TenantSettingsSchema(
+        risk_weights={
+            "days_overdue": 35,
+            "historical_payment_delay": 20,
+            "broken_promises": 25,
+            "recent_payment_behavior": 20,
+        }
+    ).model_dump(mode="json")
+    updated = client.put("/api/v1/settings", json=updated_payload)
+
+    assert updated.status_code == 200
+    assert updated.json()["settings"]["risk_weights"]["days_overdue"] == 35
+    assert session.commits == 2
+    audits = access.list(AuditLog)
+    assert [entry.action for entry in audits] == [
+        "tenant_settings.create",
+        "tenant_settings.update",
     ]
+    assert audits[1].before["risk_weights"]["days_overdue"] == 30
+    assert audits[1].after["risk_weights"]["days_overdue"] == 35
+
+
+def test_settings_api_returns_not_found_when_settings_do_not_exist(
+    configuration_client: tuple[
+        TestClient, TenantAccessStub, dict[str, Role], SessionStub, UUID, UUID
+    ],
+) -> None:
+    client, access, _role, _session, _user_id, _tenant_id = configuration_client
+
+    response = client.get("/api/v1/settings")
+
+    assert response.status_code == 404
+    assert access.list(TenantSettings) == []
+
+
+def test_settings_api_never_returns_another_tenants_settings(
+    configuration_client: tuple[
+        TestClient, TenantAccessStub, dict[str, Role], SessionStub, UUID, UUID
+    ],
+) -> None:
+    client, access, _role, _session, _user_id, _tenant_id = configuration_client
+    other_tenant_id = uuid4()
+    other_access = TenantAccessStub(other_tenant_id)
+    other_settings = TenantConfigurationService(other_access).put_settings(
+        other_tenant_id,
+        uuid4(),
+        TenantSettingsSchema(min_history_invoices=37),
+    )
+    access.records.setdefault(TenantSettings, {})[other_tenant_id] = other_settings
+
+    response = client.get("/api/v1/settings")
+
+    assert response.status_code == 404
+    assert str(other_tenant_id) not in response.text
+    assert "37" not in response.text
+
+
+def test_tenant_cannot_update_or_confirm_another_tenants_policy_rule(
+    configuration_client: tuple[
+        TestClient, TenantAccessStub, dict[str, Role], SessionStub, UUID, UUID
+    ],
+) -> None:
+    client, access, _role, session, _user_id, _tenant_id = configuration_client
+    other_tenant_id = uuid4()
+    other_access = TenantAccessStub(other_tenant_id)
+    document = _document(other_tenant_id)
+    other_access.records.setdefault(Document, {})[document.id] = document
+    chunk = _chunk(other_tenant_id, document.id, "§2.1")
+    other_access.records.setdefault(DocumentChunk, {})[chunk.id] = chunk
+    foreign_rule = TenantConfigurationService(other_access).create_policy_rule(
+        uuid4(),
+        _policy_payload(document.id),
+    )
+    access.records.setdefault(PolicyRule, {})[foreign_rule.id] = foreign_rule
+
+    listed = client.get("/api/v1/policy-rules")
+    updated = client.patch(
+        f"/api/v1/policy-rules/{foreign_rule.id}",
+        json={"name": "Changed by another tenant"},
+    )
+    confirmed = client.post(f"/api/v1/policy-rules/{foreign_rule.id}/confirm")
+
+    assert listed.status_code == 200
+    assert all(rule["id"] != str(foreign_rule.id) for rule in listed.json())
+    assert updated.status_code == 404
+    assert confirmed.status_code == 404
+    assert session.commits == 0
+
+
+def test_collector_is_forbidden_from_settings_and_policy_rule_endpoints(
+    configuration_client: tuple[
+        TestClient, TenantAccessStub, dict[str, Role], SessionStub, UUID, UUID
+    ],
+) -> None:
+    client, access, role, session, _user_id, _tenant_id = configuration_client
+    role["value"] = Role.COLLECTOR
+    payload = _policy_payload(uuid4()).model_dump(mode="json")
+
+    responses = [
+        client.get("/api/v1/settings"),
+        client.get("/api/v1/policy-rules"),
+        client.post("/api/v1/policy-rules", json=payload),
+        client.patch(f"/api/v1/policy-rules/{uuid4()}", json={"name": "Edited"}),
+        client.post(f"/api/v1/policy-rules/{uuid4()}/confirm"),
+    ]
+
+    assert [response.status_code for response in responses] == [403] * 5
+    assert access.list(TenantSettings) == []
+    assert access.list(PolicyRule) == []
+    assert access.list(AuditLog) == []
+    assert session.commits == 0
 
 
 def test_policy_rule_api_requires_tenant_source_and_audits_confirmation(
