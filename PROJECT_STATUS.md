@@ -49,7 +49,7 @@
 
 - Implemented the pure, database-independent engine using `Decimal`, explicit `report_date`, D43 aging buckets, and D45 validation and cutoff semantics.
 - Added focused tests for balances, disputed amounts, payment association, aging, ADBT, DSO, and validation.
-- Validation passed: `python -m pytest tests/test_receivables_engine.py -q` (47 passed); `python -m pytest` (80 passed, 6 skipped); `ruff check backend`; and `ruff format --check backend`.
+- Validation passed: `python -m pytest tests/test_receivables_engine.py -q` (59 passed); full backend suite (98 passed in CI, including the PostgreSQL integration tests); `ruff check backend`; and `ruff format --check backend`.
 - Changed files: `backend/core/receivables.py`, `backend/tests/test_receivables_engine.py`, `PROJECT_STATUS.md`.
 
 
