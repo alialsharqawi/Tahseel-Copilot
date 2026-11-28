@@ -748,6 +748,64 @@ def test_future_dated_invalid_record_is_ignored_not_validated() -> None:
     assert result.total_outstanding == Decimal("0")
 
 
+def test_orphan_payment_is_amount_validated_and_ignored() -> None:
+    inv = invoice(number="REAL", amount=Decimal("100"))
+    result = calculate(
+        [inv],
+        [
+            payment(
+                invoice_number="NO-MATCH",
+                amount=Decimal("40"),
+                customer_id="customer-1",
+            ),
+        ],
+    )
+    assert result.total_outstanding == Decimal("100")
+    assert result.overdue_amount == Decimal("100")
+    assert result.invoice_results[0].balance == Decimal("100")
+    assert result.invoice_results[0].credit_balance == Decimal("0")
+
+
+def test_orphan_payment_invalid_amount_raises() -> None:
+    inv = invoice(number="REAL", amount=Decimal("100"))
+    with pytest.raises(ReceivablesValidationError):
+        calculate(
+            [inv],
+            [
+                payment(
+                    invoice_number="NO-MATCH",
+                    amount=Decimal("-5"),
+                    customer_id="customer-1",
+                ),
+            ],
+        )
+
+
+def test_payment_for_future_invoice_is_ignored() -> None:
+    future_date = date(2026, 12, 1)
+    future_inv = invoice(
+        number="FUTURE-INV",
+        invoice_date=future_date,
+        due_date=future_date,
+        amount=Decimal("100"),
+    )
+    real_inv = invoice(number="REAL", amount=Decimal("100"))
+    result = calculate(
+        [future_inv, real_inv],
+        [
+            payment(
+                invoice_number="FUTURE-INV",
+                amount=Decimal("40"),
+                customer_id="customer-1",
+                payment_date=date(2026, 11, 26),
+            ),
+        ],
+    )
+    assert result.total_outstanding == Decimal("100")
+    assert result.overdue_amount == Decimal("100")
+    assert result.invoice_results[0].invoice_number == "REAL"
+
+
 @pytest.mark.parametrize(
     ("period_start", "period_end", "report_date"),
     [

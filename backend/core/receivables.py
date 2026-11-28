@@ -207,6 +207,10 @@ def calculate_receivables(
         _validate_non_empty_string(payment.invoice_number, "invoice number")
         key = (payment.customer_id, payment.invoice_number)
         matching_invoice = invoices_by_key.get(key)
+        # Payments whose invoice_number matches no eligible invoice (an orphan
+        # number, or a number that exists only on a future-dated invoice) have
+        # already been amount-validated above and are then ignored: they affect
+        # no balance, bucket, overdue total, credit balance, or ADBT figure.
         if matching_invoice is None:
             continue
         if payment.payment_date < matching_invoice.invoice_date:
