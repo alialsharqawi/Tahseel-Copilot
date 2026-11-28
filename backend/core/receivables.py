@@ -291,6 +291,8 @@ def calculate_receivables(
         or not effective_opening_ar.is_finite()
     ):
         raise ReceivablesValidationError("opening_ar must be a finite Decimal or None")
+    if effective_opening_ar < ZERO:
+        raise ReceivablesValidationError("opening_ar must not be negative")
     average_ar = (effective_opening_ar + closing_ar) / TWO
     dso = (
         (average_ar / credit_sales) * Decimal(days_in_period)

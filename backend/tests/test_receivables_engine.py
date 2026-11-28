@@ -565,6 +565,41 @@ def test_dso_missing_opening_ar_is_assumed_but_explicit_zero_is_not() -> None:
     assert explicit.dso.opening_ar_assumed is False
 
 
+def test_negative_opening_ar_raises() -> None:
+    inv = [
+        invoice(
+            number="SALE",
+            invoice_date=date(2026, 11, 15),
+            due_date=date(2026, 11, 15),
+            amount=Decimal("100"),
+        )
+    ]
+    with pytest.raises(ReceivablesValidationError):
+        calculate(
+            inv,
+            report_date=date(2026, 11, 30),
+            opening_ar=Decimal("-10"),
+        )
+
+
+def test_explicit_zero_opening_ar_is_accepted_and_not_flagged() -> None:
+    inv = [
+        invoice(
+            number="SALE",
+            invoice_date=date(2026, 11, 15),
+            due_date=date(2026, 11, 15),
+            amount=Decimal("100"),
+        )
+    ]
+    explicit = calculate(
+        inv,
+        report_date=date(2026, 11, 30),
+        opening_ar=Decimal("0"),
+    )
+    assert explicit.dso.opening_ar_assumed is False
+    assert explicit.dso.average_ar == Decimal("50")
+
+
 def test_dso_zero_credit_sales_returns_null() -> None:
     result = calculate(
         [],
