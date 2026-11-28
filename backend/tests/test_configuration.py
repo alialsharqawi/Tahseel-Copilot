@@ -422,6 +422,29 @@ def test_settings_updates_are_audited_with_before_and_after_values() -> None:
     assert created.tenant_id == updated.tenant_id == tenant_id
 
 
+def test_settings_update_persists_updated_at() -> None:
+    tenant_id = uuid4()
+    actor_id = uuid4()
+    access = TenantAccessStub(tenant_id)
+    service = TenantConfigurationService(access)
+
+    created = service.put_settings(tenant_id, actor_id, TenantSettingsSchema())
+    first_updated_at = created.updated_at
+
+    changed_settings = TenantSettingsSchema(
+        risk_weights={
+            "days_overdue": 35,
+            "historical_payment_delay": 20,
+            "broken_promises": 25,
+            "recent_payment_behavior": 20,
+        }
+    )
+    updated = service.put_settings(tenant_id, actor_id, changed_settings)
+
+    assert updated.updated_at is not None
+    assert updated.updated_at > first_updated_at
+
+
 def test_settings_seed_is_idempotent_and_does_not_overwrite_changes() -> None:
     tenant_id = uuid4()
     actor_id = uuid4()

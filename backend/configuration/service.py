@@ -73,7 +73,7 @@ class TenantConfigurationService:
             if not self._access.update(
                 TenantSettings,
                 tenant_id,
-                {"settings": new_settings, "updated_by": actor_id},
+                {"settings": new_settings, "updated_by": actor_id, "updated_at": now},
             ):
                 raise ConfigurationRecordNotFound("Tenant settings not found.")
             record = self.get_settings(tenant_id)
